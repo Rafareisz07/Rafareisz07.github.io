@@ -1,0 +1,62 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --alert-color: #e74c3c;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #f0f0f0;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.gauge {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+}
+
+.gauge-value {
+    font-size: 2.5em;
+    color: var(--secondary-color);
+    margin: 1rem 0;
+}
+
+.status-card {
+    background: #fff;
+    padding: 1rem;
+    margin: 0.5rem;
+    border-left: 4px solid var(--alert-color);
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--primary-color);
+}
+
+.tab {
+    background: none;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
