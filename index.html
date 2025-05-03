@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solarimetria - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Tabs como no Node-RED -->
+    <div class="tabs">
+        <button class="tab" onclick="openTab('status')">Status Sensores</button>
+        <button class="tab" onclick="openTab('posicao')">Posição Solar</button>
+        <button class="tab" onclick="openTab('luminosidade')">Luminosidade</button>
+    </div>
+
+    <!-- Conteúdo da Tab "Posição Solar" -->
+    <div id="posicao" class="tab-content active">
+        <div class="card">
+            <h3>Localização</h3>
+            <p>Latitude: <span id="latitude">0.0000</span></p>
+            <p>Longitude: <span id="longitude">0.0000</span></p>
+        </div>
+
+        <div class="card">
+            <h3>Ângulos Solares</h3>
+            <p>Zenital: <span id="zenital">0°</span></p>
+            <p>Azimutal: <span id="azimutal">0°</span></p>
+        </div>
+    </div>
+
+    <!-- Conteúdo da Tab "Luminosidade" -->
+    <div id="luminosidade" class="tab-content">
+        <div class="card gauge">
+            <h3>Luminosidade Atual</h3>
+            <div class="gauge-value" id="luminosidadeAtual">0</div>
+        </div>
+        <div class="card chart">
+            <canvas id="graficoLuminosidade"></canvas>
+        </div>
+    </div>
+
+    <!-- Status dos Sensores -->
+    <div id="status" class="tab-content">
+        <div class="status-card" id="status-bussola">
+            <h4>Bússola: <span class="status">OFF</span></h4>
+        </div>
+        <div class="status-card" id="status-giroscopio">
+            <h4>Giroscópio: <span class="status">OFF</span></h4>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
