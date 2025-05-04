@@ -1,5 +1,11 @@
 // Configuração MQTT
-const client = new Paho.MQTT.Client("wss://test.mosquitto.org:8081", "clientId-" + Math.random());
+const client = new Paho.MQTT.Client(
+    "test.mosquitto.org",  // broker
+    8081,                  // porta WebSocket
+    "/mqtt",               // caminho que o Mosquitto espera
+    "clientId-"+Math.random()
+  );
+  
 
 // Gráfico de Luminosidade
 const ctx = document.getElementById('graficoLuminosidade').getContext('2d');
@@ -18,9 +24,12 @@ const chart = new Chart(ctx, {
 // Conexão MQTT
 client.connect({
     onSuccess: () => {
-        client.subscribe("Resp_Node-RED"); // Tópico do ESP32
-    }
-});
+      console.log("Conectado ao broker MQTT!");
+      client.subscribe("careca", { qos: 0 });  // usa o mesmo tópico do MQTTBox
+    },
+    onFailure: err => console.error("Falha ao conectar:", err.errorMessage)
+  });
+  
 
 function testPublish() {
   const demo = {
@@ -33,7 +42,7 @@ function testPublish() {
     luminosidade: Math.floor(Math.random()*10000)
   };
   const msg = new Paho.MQTT.Message(JSON.stringify(demo));
-  msg.destinationName = "Resp_Node-RED";
+  msg.destinationName = "careca";
   client.send(msg);
   console.log("Mensagem de teste enviada:", demo);
 }
@@ -62,3 +71,20 @@ function openTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.getElementById(tabName).classList.add('active');
 }
+
+function testPublish() {
+    const demo = {
+      Latitude:   -23.55,
+      Longitude:  -46.64,
+      declinacao: 13.5,
+      anguloHorario: 50.2,
+      zenital:    60.0,
+      azimute:    132.0,
+      luminosidade: Math.floor(Math.random()*10000)
+    };
+    const msg = new Paho.MQTT.Message(JSON.stringify(demo));
+    msg.destinationName = "careca";
+    client.send(msg);
+    console.log("Mensagem de teste enviada:", demo);
+  }
+  
