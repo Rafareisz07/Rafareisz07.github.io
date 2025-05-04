@@ -1,12 +1,3 @@
-// Configuração MQTT
-const client = new Paho.MQTT.Client(
-    "test.mosquitto.org",  // broker
-    8081,                  // porta WebSocket
-    "/mqtt",               // caminho que o Mosquitto espera
-    "clientId-"+Math.random()
-  );
-  
-
 // Gráfico de Luminosidade
 const ctx = document.getElementById('graficoLuminosidade').getContext('2d');
 const chart = new Chart(ctx, {
@@ -21,15 +12,23 @@ const chart = new Chart(ctx, {
     }
 });
 
-// Conexão MQTT
+//config mqtt e uso do mesmo
+const client = new Paho.MQTT.Client(
+  "test.mosquitto.org",
+    8081,
+    "/mqtt",
+    "clientId-" + Math.random()
+  );
+
 client.connect({
-    onSuccess: () => {
-      console.log("Conectado ao broker MQTT!");
-      client.subscribe("careca", { qos: 0 });  // usa o mesmo tópico do MQTTBox
-    },
-    onFailure: err => console.error("Falha ao conectar:", err.errorMessage)
-  });
-  
+  useSSL: true,
+  onSuccess: () => {
+    console.log("Conectado ao broker MQTT!");
+    client.subscribe("careca", { qos: 0 });
+  },
+  onFailure: err => console.error("Falha ao conectar:", err.errorMessage)
+});
+
 
 function testPublish() {
   const demo = {
