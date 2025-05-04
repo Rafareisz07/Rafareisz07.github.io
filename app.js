@@ -22,6 +22,22 @@ client.connect({
     }
 });
 
+function testPublish() {
+  const demo = {
+    Latitude:   -23.55,
+    Longitude:  -46.63,
+    declinacao: 23.44,
+    anguloHorario: 45.0,
+    zenital:    60.5,
+    azimute:    135.2,
+    luminosidade: Math.floor(Math.random()*10000)
+  };
+  const msg = new Paho.MQTT.Message(JSON.stringify(demo));
+  msg.destinationName = "Resp_Node-RED";
+  client.send(msg);
+  console.log("Mensagem de teste enviada:", demo);
+}
+
 // Processamento de Mensagens
 client.onMessageArrived = (message) => {
     const data = JSON.parse(message.payloadString);
