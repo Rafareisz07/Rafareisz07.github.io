@@ -18,7 +18,7 @@ const chart = new Chart(ctx, {
 // Conexão MQTT
 client.connect({
     onSuccess: () => {
-        client.subscribe("careca"); // Tópico do ESP32
+        client.subscribe("Resp_Node-RED"); // Tópico do ESP32
     }
 });
 
@@ -41,6 +41,8 @@ function testPublish() {
 // Processamento de Mensagens
 client.onMessageArrived = (message) => {
     const data = JSON.parse(message.payloadString);
+    console.log("MQTT chegou:", message.payloadString);
+
     
     // Atualização da UI
     document.getElementById("latitude").textContent = data.Latitude.toFixed(4);
