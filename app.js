@@ -12,7 +12,7 @@ const chart = new Chart(ctx, {
 });
 
 // Configuração e Conexão MQTT
-const client = new Paho.MQTT.Client('test.mosquitto.org', 8081, 'mqtt', 'clientId-' + Math.random());
+var client = new Paho.MQTT.Client('test.mosquitto.org', 8081, 'clientId-' + Math.random());
 client.connect({
   useSSL: true,
   onSuccess: () => {
