@@ -32,7 +32,7 @@ function testPublish() {
     luminosidade: Math.floor(Math.random() * 10000)
   };
   const msg = new Paho.MQTT.Message(JSON.stringify(demo));
-  msg.destinationName = 'careca';
+  msg.destinationName = 'bazingasaas';
   client.send(msg);
   console.log('Mensagem de teste enviada:', demo);
 }
