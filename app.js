@@ -53,8 +53,8 @@ client.onMessageArrived = message => {
   const data = JSON.parse(message.payloadString);
   console.log('MQTT chegou:', data);
 
-  document.getElementById('Latitude').textContent = data.Latitude.toFixed(4);
-  document.getElementById('Longitude').textContent = data.Longitude.toFixed(4);
+  document.getElementById('latitude').textContent = data.Latitude.toFixed(4);
+  document.getElementById('longitude').textContent = data.Longitude.toFixed(4);
   document.getElementById('zenital').textContent = `${data.zenital.toFixed(1)}°`;
   document.getElementById('azimutal').textContent = `${data.azimute.toFixed(1)}°`;
   document.getElementById('luminosidade').textContent = data.luminosidade;
