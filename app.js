@@ -57,7 +57,7 @@ client.onMessageArrived = message => {
   document.getElementById('longitude').textContent = data.Longitude.toFixed(4);
   document.getElementById('zenital').textContent = `${data.zenital.toFixed(1)}°`;
   document.getElementById('azimutal').textContent = `${data.azimute.toFixed(1)}°`;
-  document.getElementById('luminosidade').textContent = data.luminosidade;
+  document.getElementById('luminosidade-valor').textContent = data.luminosidade;
 
   chart.data.labels.push(new Date().toLocaleTimeString());
   chart.data.datasets[0].data.push(data.luminosidade);
