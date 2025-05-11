@@ -13,7 +13,9 @@ const chart = new Chart(ctx, {
 
 //config mqtt e uso do mesmo
 const client = new Paho.Client(
-  "wss://test.mosquitto.org:8081/mqtt",
+    "test.mosquitto.org",
+    8081,
+    "/mqtt",
     "clientId-" + Math.random()
   );
 
