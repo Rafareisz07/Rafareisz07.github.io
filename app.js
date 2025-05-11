@@ -23,7 +23,7 @@ client.connect({
   useSSL: true,
   onSuccess: () => {
     console.log('Conectado ao broker MQTT!');
-    client.subscribe('Resp_ESP32');
+    client.subscribe('Resp_Node-RED');
   },
   onFailure: err => console.error('Falha ao conectar:', err.errorMessage)
 });
@@ -45,7 +45,7 @@ function testPublish() {
       luminosidade: Math.floor(Math.random() * 10000)
   };
   const msg = new Paho.Message(JSON.stringify(demo));
-  msg.destinationName = "Resp_Node-RED";
+  msg.destinationName = "Resp_ESP32";
   client.send(msg);
   console.log('Mensagem de teste enviada:', demo);
 }
