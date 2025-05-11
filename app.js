@@ -21,7 +21,7 @@ client.connect({
   useSSL: true,
   onSuccess: () => {
     console.log('Conectado ao broker MQTT!');
-    client.subscribe('Resp_Node-RED');
+    client.subscribe("Resp_Node-RED");
   },
   onFailure: err => console.error('Falha ao conectar:', err.errorMessage)
 });
