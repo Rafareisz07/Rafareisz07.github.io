@@ -13,7 +13,7 @@ const chart = new Chart(ctx, {
 });
 
 //config mqtt e uso do mesmo
-const client = new Paho.MQTT.Client(
+const client = new Paho.Client(
   "test.mosquitto.org",
     8081,
     "/mqtt",
@@ -31,16 +31,21 @@ client.connect({
 
 
 function testPublish() {
+  if (!client.isConnected()) {
+      console.error("Cliente MQTT não está conectado. Tente novamente mais tarde.");
+      return;
+  }
+
   const demo = {
-    Latitude:   -23.55,
-    Longitude:  -46.63,
-    declinacao: 23.44,
-    anguloHorario: 45.0,
-    zenital:    60.5,
-    azimute:    135.2,
-    luminosidade: Math.floor(Math.random()*10000)
+      Latitude:   -23.55,
+      Longitude:  -46.63,
+      declinacao: 23.44,
+      anguloHorario: 45.0,
+      zenital:    60.5,
+      azimute:    135.2,
+      luminosidade: Math.floor(Math.random() * 10000)
   };
-  const msg = new Paho.MQTT.Message(JSON.stringify(demo));
+  const msg = new Paho.Message(JSON.stringify(demo));
   msg.destinationName = "careca";
   client.send(msg);
   console.log("Mensagem de teste enviada:", demo);
@@ -70,20 +75,3 @@ function openTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.getElementById(tabName).classList.add('active');
 }
-
-function testPublish() {
-    const demo = {
-      Latitude:   -23.55,
-      Longitude:  -46.64,
-      declinacao: 13.5,
-      anguloHorario: 50.2,
-      zenital:    60.0,
-      azimute:    132.0,
-      luminosidade: Math.floor(Math.random()*10000)
-    };
-    const msg = new Paho.MQTT.Message(JSON.stringify(demo));
-    msg.destinationName = "careca";
-    client.send(msg);
-    console.log("Mensagem de teste enviada:", demo);
-  }
-  
