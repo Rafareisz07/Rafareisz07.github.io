@@ -43,7 +43,7 @@ function testPublish() {
       luminosidade: Math.floor(Math.random() * 10000)
   };
   const msg = new Paho.Message(JSON.stringify(demo));
-  msg.destinationName = "Resp_ESP32";
+  msg.destinationName = "Resp_Node-RED";
   client.send(msg);
   console.log('Mensagem de teste enviada:', demo);
 }
