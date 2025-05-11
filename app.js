@@ -13,7 +13,7 @@ const chart = new Chart(ctx, {
 
 //config mqtt e uso do mesmo
 const client = new Paho.Client(
-    "test.mosquitto.org",
+  "test.mosquitto.org",
     8081,
     "/mqtt",
     "clientId-" + Math.random()
@@ -23,7 +23,7 @@ client.connect({
   useSSL: true,
   onSuccess: () => {
     console.log('Conectado ao broker MQTT!');
-    client.subscribe("Resp_Node-RED");
+    client.subscribe('Resp_Node-RED');
   },
   onFailure: err => console.error('Falha ao conectar:', err.errorMessage)
 });
@@ -45,7 +45,7 @@ function testPublish() {
       luminosidade: Math.floor(Math.random() * 10000)
   };
   const msg = new Paho.Message(JSON.stringify(demo));
-  msg.destinationName = "Resp_ESP32";
+  msg.destinationName = "Resp_Node-RED";
   client.send(msg);
   console.log('Mensagem de teste enviada:', demo);
 }
@@ -59,7 +59,7 @@ client.onMessageArrived = message => {
   document.getElementById('longitude').textContent = data.Longitude.toFixed(4);
   document.getElementById('zenital').textContent = `${data.zenital.toFixed(1)}°`;
   document.getElementById('azimutal').textContent = `${data.azimute.toFixed(1)}°`;
-  document.getElementById('luminosidade-valor').textContent = data.luminosidade;
+  document.getElementById('luminosidadeAtual').textContent = data.luminosidade;
 
   chart.data.labels.push(new Date().toLocaleTimeString());
   chart.data.datasets[0].data.push(data.luminosidade);
