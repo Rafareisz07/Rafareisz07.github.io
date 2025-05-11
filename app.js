@@ -55,11 +55,11 @@ client.onMessageArrived = message => {
   const data = JSON.parse(message.payloadString);
   console.log('MQTT chegou:', data);
 
-  document.getElementById('latitude').textContent = data.Latitude.toFixed(4);
-  document.getElementById('longitude').textContent = data.Longitude.toFixed(4);
+  document.getElementById('Latitude').textContent = data.Latitude.toFixed(4);
+  document.getElementById('Longitude').textContent = data.Longitude.toFixed(4);
   document.getElementById('zenital').textContent = `${data.zenital.toFixed(1)}°`;
   document.getElementById('azimutal').textContent = `${data.azimute.toFixed(1)}°`;
-  document.getElementById('luminosidadeAtual').textContent = data.luminosidade;
+  document.getElementById('luminosidade').textContent = data.luminosidade;
 
   chart.data.labels.push(new Date().toLocaleTimeString());
   chart.data.datasets[0].data.push(data.luminosidade);
