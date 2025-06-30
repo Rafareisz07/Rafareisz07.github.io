@@ -52,11 +52,15 @@ function updateUIElements(data) {
         'horarioLocal': data.HorarioLocal,
         'longitudeF': data.LongitudeF?.toFixed(2) || '0.00',
         'Luminosidade': `${data.luz} lx`,
-        'statusINA': data.Status_INA?.toFixed(0) || '0',
+        'statusINA': data.Status_INA,
         'potencia': `${data.Potencia?.toFixed(2) || '0.00'} W`,
         'corrente': `${data.Corrente?.toFixed(2) || '0.00'} A`,
         'volts': `${data.Volts?.toFixed(2) || '0.00'} V`
     };
+    // atualizar os status dos sensores
+    elements['statusLumen'] = data.Status_INA % 2 === 0 ? 'ERROR' : 'OK';
+    elements['statusGiroscopio'] = data.Status_INA % 3 ===  0 ? 'ERROR' : 'OK';
+    elements['statusMotor'] = data.Status_INA % 5 === 0 ? ' ERROR' : 'OK';
 
     Object.entries(elements).forEach(([id, value]) => {
         const element = document.getElementById(id);

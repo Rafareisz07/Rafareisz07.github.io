@@ -100,7 +100,7 @@ class MQTTClient {
             HorarioLocal: new Date().toLocaleTimeString(),
             LongitudeF: -46.63 + (Math.random() - 0.5) * 0.01,
             luz: Math.floor(Math.random() * 10000),
-            Status_INA: Math.random() > 0.1 ? "OK" : "ERROR",
+            Status_INA: Math.floor(parseFloat((Math.random()).toFixed(2))*30), // Simula status INA
             Potencia: parseFloat((Math.random() * 100).toFixed(2)),
             Corrente: parseFloat((Math.random() * 10).toFixed(2)),
             Volts: parseFloat((Math.random() * 220).toFixed(2))
