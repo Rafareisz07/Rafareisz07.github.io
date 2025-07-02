@@ -47,7 +47,7 @@ function decimalToTime(decimal) {
     const minutes = Math.round((decimal - hours) * 60);
     // Garante dois dígitos para horas e minutos
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-}
+} 
  
 function updateUIElements(data) {
     const elements = {
