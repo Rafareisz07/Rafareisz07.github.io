@@ -42,6 +42,12 @@ function handleMQTTMessage(data) {
         console.error('Erro ao processar dados MQTT:', error);
     }
 }
+function decimalToTime(decimal) {
+    const hours = Math.floor(decimal);
+    const minutes = Math.round((decimal - hours) * 60);
+    // Garante dois dígitos para horas e minutos
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
 
 function updateUIElements(data) {
     const elements = {
@@ -49,9 +55,9 @@ function updateUIElements(data) {
         'mes': data.mes,
         'latitude': data.Latitude?.toFixed(4) || '0.0000',
         'longitude': data.Longitude?.toFixed(4) || '0.0000',
-        'horarioLocal': data.HorarioLocal,
+        'HorarioLocal': decimalToTime(Number(data.HorarioLocal)),
         'longitudeF': data.LongitudeF?.toFixed(2) || '0.00',
-        'Luminosidade': `${data.luz} lx`,
+        'Luminosidade': `${data.luz} lumens`,
         'statusINA': data.Status_INA,
         'potencia': `${data.Potencia?.toFixed(2) || '0.00'} W`,
         'corrente': `${data.Corrente?.toFixed(2) || '0.00'} A`,
