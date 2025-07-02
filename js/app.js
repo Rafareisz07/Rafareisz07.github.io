@@ -48,7 +48,7 @@ function decimalToTime(decimal) {
     // Garante dois dígitos para horas e minutos
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 }
-
+ 
 function updateUIElements(data) {
     const elements = {
         'dia': data.dia,
