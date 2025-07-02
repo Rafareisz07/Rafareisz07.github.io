@@ -1,4 +1,4 @@
-// Instâncias globais
+ // Instâncias globais
 let chartManager;
 let mqttClient;
 let gaugeController;
