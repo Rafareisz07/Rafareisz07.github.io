@@ -63,11 +63,14 @@
 
     <!-- Status dos Sensores -->
     <div id="status" class="tab-content">
-        <div class="status-card" id="status-bussola">
-            <h4>Bússola: <span id="statusBussola">--</span></h4>
+        <div class="status-card" id="status-Lumen">
+            <h4>Sensor de Luminosidade: <span id="statusLumen">--</span></h4>
         </div>
         <div class="status-card" id="status-giroscopio">
             <h4>Giroscópio: <span id="statusGiroscopio">--</span></h4>
+        </div>
+        <div class="status-card" id="status-Motor">
+            <h4>Motor: <span id="statusMotor">--</span></h4>
         </div>
         <div class="status-card" id="status-ina">
             <h4>Sensor INA: <span id="statusINA">--</span></h4>
@@ -98,7 +101,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="controls">
         <button onclick="testPublish()" class="test-button">
             ▶️ Enviar Teste MQTT
@@ -111,7 +114,7 @@
             <span id="statusText">Desconectado</span>
         </div>
     </div>
-    
+
     <footer>
         <p>&copy; 2023 Solarimetria Dashboard</p>
     </footer>

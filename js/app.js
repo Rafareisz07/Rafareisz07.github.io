@@ -4,7 +4,7 @@ let mqttClient;
 let gaugeController;
 
 // Inicialização quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeApp();
 });
 
@@ -23,7 +23,7 @@ function initializeApp() {
 
     // Inicializa a primeira aba
     openTab('posicao');
-    
+
     console.log('Dashboard inicializado com sucesso!');
 }
 
@@ -31,13 +31,13 @@ function handleMQTTMessage(data) {
     try {
         // Atualiza elementos da interface
         updateUIElements(data);
-        
+
         // Atualiza gráficos
         updateCharts(data);
-        
+
         // Atualiza gauge de luminosidade
         gaugeController.updateLuminosidadeGauge(data.luz);
-        
+
     } catch (error) {
         console.error('Erro ao processar dados MQTT:', error);
     }
@@ -57,6 +57,10 @@ function updateUIElements(data) {
         'corrente': `${data.Corrente?.toFixed(2) || '0.00'} A`,
         'volts': `${data.Volts?.toFixed(2) || '0.00'} V`
     };
+    // atualizar os status dos sensores
+    elements['statusLumen'] = data.Status_INA % 2 === 0 ? 'ERROR' : 'OK';
+    elements['statusGiroscopio'] = data.Status_INA % 3 ===  0 ? 'ERROR' : 'OK';
+    elements['statusMotor'] = data.Status_INA % 5 === 0 ? ' ERROR' : 'OK';
 
     Object.entries(elements).forEach(([id, value]) => {
         const element = document.getElementById(id);
@@ -67,12 +71,37 @@ function updateUIElements(data) {
 
     // Atualiza status dos sensores com cores
     updateSensorStatus('statusINA', data.Status_INA);
+
+    if (data.Status_INA === 0) {
+        updateSensorStatus('statusINA', 'OK');
+    }
+    else if (data.Status_INA > 0) {
+        updateSensorStatus('statusINA', 'ERROR');
+    }
+
+    if (data.Status_INA % 2 === 0) {
+        updateSensorStatus('statusLumen', 'ERROR');
+    } else {
+        updateSensorStatus('statusLumen', 'OK');
+    }
+
+    if (data.Status_INA % 3 === 0) {
+        updateSensorStatus('statusGiroscopio', 'ERROR');
+    } else {
+        updateSensorStatus('statusGiroscopio', 'OK');
+    }
+
+    if (data.Status_INA % 5 === 0) {
+        updateSensorStatus('statusMotor', 'ERROR');
+    } else {
+        updateSensorStatus('statusMotor', 'OK');
+    }
 }
 
 function updateSensorStatus(elementId, status) {
     const element = document.getElementById(elementId);
     const card = element?.closest('.status-card');
-    
+
     if (card) {
         card.classList.remove('ok', 'warning');
         if (status === 'OK') {
@@ -93,11 +122,11 @@ function updateCharts(data) {
 function updateConnectionStatusUI(status) {
     const statusIndicator = document.getElementById('statusIndicator');
     const statusText = document.getElementById('statusText');
-    
+
     if (!statusIndicator || !statusText) return;
 
     statusIndicator.className = 'status-indicator';
-    
+
     switch (status) {
         case 'connected':
             statusIndicator.classList.add('connected');
@@ -121,14 +150,14 @@ function openTab(tabName) {
     // Remove active de todas as abas e conteúdos
     document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    
+
     // Ativa a aba selecionada
     document.getElementById(tabName).classList.add('active');
-    
+
     // Ativa o botão da aba correspondente
     const tabButtons = document.querySelectorAll('.tab');
     tabButtons.forEach(button => {
-        if (button.textContent.toLowerCase().includes(tabName.toLowerCase()) || 
+        if (button.textContent.toLowerCase().includes(tabName.toLowerCase()) ||
             (tabName === 'posicao' && button.textContent.includes('Posição')) ||
             (tabName === 'status' && button.textContent.includes('Status')) ||
             (tabName === 'luminosidade' && button.textContent.includes('Luminosidade')) ||
@@ -161,7 +190,7 @@ function clearCharts() {
 // Função para exportar dados (opcional)
 function exportData() {
     if (!chartManager) return;
-    
+
     const data = {
         luminosidade: chartManager.getChartData('luminosidade'),
         corrente: chartManager.getChartData('corrente'),
@@ -169,7 +198,7 @@ function exportData() {
         potencia: chartManager.getChartData('potencia'),
         timestamp: new Date().toISOString()
     };
-    
+
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
