@@ -55,7 +55,7 @@ function updateUIElements(data) {
         'mes': data.mes,
         'latitude': data.Latitude?.toFixed(4) || '0.0000',
         'longitude': data.Longitude?.toFixed(4) || '0.0000',
-        'HorarioLocal': decimalToTime(Number(data.HorarioLocal)),
+        'horarioLocal': decimalToTime(Number(data.HorarioLocal)),
         'longitudeF': data.LongitudeF?.toFixed(2) || '0.00',
         'Luminosidade': `${data.luz} lumens`,
         'statusINA': data.Status_INA,
