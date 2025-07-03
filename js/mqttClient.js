@@ -97,7 +97,7 @@ class MQTTClient {
             mes: new Date().getMonth() + 1,
             Latitude: -23.55 + (Math.random() - 0.5) * 0.01,
             Longitude: -46.63 + (Math.random() - 0.5) * 0.01,
-            HorarioLocal: new Date().toLocaleTimeString(),
+            HorarioLocal: parseFloat((Math.random() * 100).toFixed(1)),
             LongitudeF: -46.63 + (Math.random() - 0.5) * 0.01,
             luz: Math.floor(Math.random() * 10000),
             Status_INA: Math.floor(parseFloat((Math.random()).toFixed(2))*30), // Simula status INA
