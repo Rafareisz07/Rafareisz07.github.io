@@ -55,7 +55,7 @@ function updateUIElements(data) {
         'mes': data.mes,
         'latitude': data.Latitude?.toFixed(4) || '0.0000',
         'longitude': data.Longitude?.toFixed(4) || '0.0000',
-        'horarioLocal': decimalToTime(Number(data.HorarioLocal)),
+        'horarioLocal': new Date().toLocaleTimeString(),
         'longitudeF': data.LongitudeF?.toFixed(2) || '0.00',
         'Luminosidade': `${data.luz} lumens`,
         'potencia': `${data.Potencia?.toFixed(2) || '0.00'} mW`,
