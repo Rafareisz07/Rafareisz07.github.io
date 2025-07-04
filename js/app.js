@@ -58,7 +58,6 @@ function updateUIElements(data) {
         'horarioLocal': decimalToTime(Number(data.HorarioLocal)),
         'longitudeF': data.LongitudeF?.toFixed(2) || '0.00',
         'Luminosidade': `${data.luz} lumens`,
-        'statusINA': data.Status_INA,
         'potencia': `${data.Potencia?.toFixed(2) || '0.00'} mW`,
         'corrente': `${data.Corrente?.toFixed(2) || '0.00'} mA`,
         'volts': `${data.Volts?.toFixed(2) || '0.00'} V`
@@ -67,6 +66,7 @@ function updateUIElements(data) {
     elements['statusLumen'] = data.Status_INA % 2 === 0 ? 'ERROR' : 'OK';
     elements['statusGiroscopio'] = data.Status_INA % 3 ===  0 ? 'ERROR' : 'OK';
     elements['statusMotor'] = data.Status_INA % 5 === 0 ? ' ERROR' : 'OK';
+    elements['statusINA'] = data.Status_INA % 7 === 0 ? ' ERROR' : 'OK';
 
     Object.entries(elements).forEach(([id, value]) => {
         const element = document.getElementById(id);
