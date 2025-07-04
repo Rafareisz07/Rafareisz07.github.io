@@ -16,7 +16,7 @@ class ChartManager {
 
         // Chart de Corrente
         this.charts.corrente = this.createChart('graficoCorrente', {
-            label: 'Corrente (A)',
+            label: 'Corrente (mA)',
             borderColor: '#e74c3c',
             backgroundColor: 'rgba(231, 76, 60, 0.1)',
             beginAtZero: true
@@ -26,7 +26,7 @@ class ChartManager {
         this.charts.tensao = this.createChart('graficoTensao', {
             label: 'Tensão (V)',
             borderColor: '#3498db',
-            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+            backgroundColor: 'rgba(50, 147, 211, 0.3)',
             beginAtZero: true
         });
 

@@ -59,8 +59,8 @@ function updateUIElements(data) {
         'longitudeF': data.LongitudeF?.toFixed(2) || '0.00',
         'Luminosidade': `${data.luz} lumens`,
         'statusINA': data.Status_INA,
-        'potencia': `${data.Potencia?.toFixed(2) || '0.00'} W`,
-        'corrente': `${data.Corrente?.toFixed(2) || '0.00'} A`,
+        'potencia': `${data.Potencia?.toFixed(2) || '0.00'} mW`,
+        'corrente': `${data.Corrente?.toFixed(2) || '0.00'} mA`,
         'volts': `${data.Volts?.toFixed(2) || '0.00'} V`
     };
     // atualizar os status dos sensores

@@ -101,9 +101,9 @@ class MQTTClient {
             LongitudeF: -46.63 + (Math.random() - 0.5) * 0.01,
             luz: Math.floor(Math.random() * 10000),
             Status_INA: Math.floor(parseFloat((Math.random()).toFixed(2))*30), // Simula status INA
-            Potencia: parseFloat((Math.random() * 100).toFixed(2)),
-            Corrente: parseFloat((Math.random() * 10).toFixed(2)),
-            Volts: parseFloat((Math.random() * 220).toFixed(2))
+            Potencia: parseFloat((Math.random() * 5000).toFixed(2)),// Potência em mW
+            Corrente: parseFloat((Math.random() * 1000). toFixed(2)), // Corrente em mA
+            Volts: parseFloat((Math.random() * 5).toFixed(2))// Tensão em V
         };
 
         try {
