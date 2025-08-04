@@ -213,3 +213,70 @@ function exportData() {
     a.click();
     URL.revokeObjectURL(url);
 }
+
+
+
+//calculo aux
+
+function transformarEmRad(graus) {
+    return (graus * Math.PI) / 180.0;
+}
+function transformarEmGraus(rad) {
+    return (rad * 180.0) / Math.PI;
+}
+function declinacaoSolarRad(dia) {
+    var anguloGraus = (360.0 / 365.0) * (284 + dia);
+    return transformarEmRad(23.45 * Math.sin(transformarEmRad(anguloGraus)));
+}
+function equacaoDoTempo(dia) {
+    var B = transformarEmRad((360.0 / 365.0) * (dia - 81));
+    return 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);  // em minutos
+}
+function horarioSolarVerdadeiro(horaLocal, longitudeReal, longitudeFuso, dia) {
+    var EoT = equacaoDoTempo(dia);                                // minutos
+    var correcaoLongitude = 4 * (longitudeReal - longitudeFuso);  // minutos
+    var minutosSolares = (horaLocal * 60.0) + EoT + correcaoLongitude;
+    return minutosSolares / 60.0;  // horas solares verdadeiras
+}
+function anguloHorarioEmRad(horarioSolarHoras) {
+    return transformarEmRad((horarioSolarHoras - 12.0) * 15.0);
+}
+function anguloAltitudeRad(declinacao, latitudeRad, anguloHorario) {
+    return Math.asin(Math.sin(declinacao) * Math.sin(latitudeRad) + Math.cos(declinacao) * Math.cos(latitudeRad) * Math.cos(anguloHorario));
+}
+function anguloAzimuteRad(declinacao, latitudeRad, anguloHorario, altitude) {
+    var numerador = Math.sin(declinacao) - Math.sin(altitude) * Math.sin(latitudeRad);
+    var denominador = Math.cos(altitude) * Math.cos(latitudeRad);
+    var azimute = Math.acos(numerador / denominador);
+    if (anguloHorario > 0) {
+        azimute = 2 * Math.PI - azimute;
+    }
+    return azimute;
+}
+
+//Função para o cálculo auxiliar
+function calculo_aux() {
+    const CorrecaoMes = [0, 1, -1, 0, 0, 1, 1, 2, 3, 3, 4, 4];
+    var agora = new Date;
+    var ano = agora.getFullYear();
+    var mes = agora.getMonth() + 1; // Começa no mês 0 e vai até o mês 11
+    var dia = agora.getDate();
+    var minutos = agora.getMinutes();
+    var horaLocal = agora.getHours() + Number(minutos / 60);
+    var latitude = -23.5, longitude = -46.6, longitudeFuso = -45;
+
+    var diaDoAno = dia + ((mes - 1) * 30) + CorrecaoMes[mes - 1];
+
+    var decl = declinacaoSolarRad(diaDoAno);
+    var latRad = transformarEmRad(latitude);
+    var horaSolar = horarioSolarVerdadeiro(horaLocal, longitude, longitudeFuso, diaDoAno);
+    var anguloHora = anguloHorarioEmRad(horaSolar);
+    var alt = anguloAltitudeRad(decl, latRad, anguloHora);
+    var azimute = transformarEmGraus(anguloAzimuteRad(decl, latRad, anguloHora, alt));
+    return azimute;
+}
+var aux = 0;
+
+function toggle(){
+    aux == 1 ? 0 : 1;
+}
