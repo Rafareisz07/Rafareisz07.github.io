@@ -1,4 +1,4 @@
- // Instâncias globais
+// Instâncias globais
 let chartManager;
 let mqttClient;
 let gaugeController;
@@ -47,8 +47,8 @@ function decimalToTime(decimal) {
     const minutes = Math.round((decimal - hours) * 60);
     // Garante dois dígitos para horas e minutos
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-} 
- 
+}
+
 function updateUIElements(data) {
     const elements = {
         'dia': data.dia,
@@ -64,7 +64,7 @@ function updateUIElements(data) {
     };
     // atualizar os status dos sensores
     elements['statusLumen'] = data.Status_INA % 2 === 0 ? 'ERROR' : 'OK';
-    elements['statusGiroscopio'] = data.Status_INA % 3 ===  0 ? 'ERROR' : 'OK';
+    elements['statusGiroscopio'] = data.Status_INA % 3 === 0 ? 'ERROR' : 'OK';
     elements['statusMotor'] = data.Status_INA % 5 === 0 ? ' ERROR' : 'OK';
     elements['statusINA'] = data.Status_INA % 7 === 0 ? ' ERROR' : 'OK';
 
@@ -216,7 +216,7 @@ function exportData() {
 
 
 
-//calculo aux
+//Cálculo auxiliar
 
 function transformarEmRad(graus) {
     return (graus * Math.PI) / 180.0;
@@ -273,10 +273,34 @@ function calculo_aux() {
     var anguloHora = anguloHorarioEmRad(horaSolar);
     var alt = anguloAltitudeRad(decl, latRad, anguloHora);
     var azimute = transformarEmGraus(anguloAzimuteRad(decl, latRad, anguloHora, alt));
+    console.log("Azimute: " + azimute.toFixed(2) + "°");
     return azimute;
 }
-var aux = 0;
 
-function toggle(){
-    aux == 1 ? 0 : 1;
+var ligado = 0;
+
+
+// Função para o botão
+function toggle() {
+    console.log("f. toggle() chamada");
+    ligado == 0 ? ligado = 1 : ligado = 0;
+    console.log("Ligado: " + ligado);
+
+    const togglebutton = document.querySelector('.toggle-button'); // Seleciona pelo nome da classe
+    togglebutton.className = 'toggle-button';
+
+    if (ligado) {
+        intervaloAtualizacao = setInterval(atualizarResultado, 1000);
+        togglebutton.classList.add('on');
+    } else {
+        clearInterval(intervaloAtualizacao);
+        document.getElementById('azimutecalc').textContent = '-----°';
+    }
+}
+
+function atualizarResultado() {
+        const valor = calculo_aux().toFixed(2);
+        console.log("Valor do cálculo auxiliar: " + valor);
+        document.getElementById('azimutecalc').textContent = valor + '°';
+
 }
