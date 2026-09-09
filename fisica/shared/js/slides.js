@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (index < 0 || index >= totalSlides) return;
 
     slides.forEach((slide, idx) => {
+      if (idx === index) slide.scrollTop = 0;
       slide.classList.toggle('active', idx === index);
     });
 

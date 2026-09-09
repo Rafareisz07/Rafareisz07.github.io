@@ -224,9 +224,9 @@ class SlideAnnotator {
       canvas.className = 'slide-annotation-layer';
       canvas.style.cssText = `
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: 100%;
         pointer-events: none;
         z-index: 35;
         border-radius: inherit;
@@ -251,9 +251,13 @@ class SlideAnnotator {
     const dpr = window.devicePixelRatio || 1;
 
     this.slideLayers.forEach(layer => {
-      const rect = layer.slide.getBoundingClientRect();
+      const slide = layer.slide;
+      const rect = slide.getBoundingClientRect();
       const w = Math.round(rect.width) || 1160;
-      const h = Math.round(rect.height) || 652;
+      const h = Math.max(Math.round(rect.height), slide.scrollHeight || 0) || 652;
+      
+      layer.canvas.style.width = `${w}px`;
+      layer.canvas.style.height = `${h}px`;
 
       const targetW = w * dpr;
       const targetH = h * dpr;
