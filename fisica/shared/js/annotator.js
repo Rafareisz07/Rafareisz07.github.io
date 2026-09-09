@@ -4,7 +4,8 @@
  * 
  * Recursos:
  * - Camadas de anotação vinculadas DIRETAMENTE a cada slide (não flutuam na tela)
- * - Cursor em formato de Ponto de Precisão (circulo dinâmico colorido, sem traço vertical)
+ * - Traço 100% contínuo, suave e isolado por slide (sem propagação entre slides)
+ * - Cursor em formato de Ponto de Precisão (círculo dinâmico colorido, sem traço vertical)
  * - Lousa Virtual com múltiplos quadros e fundos (Lousa grafite, Quadriculado, Branco)
  * - Armazenamento 100% sem cookies: localStorage + Exportação de Caderno (.png / .json / PDF)
  * - Modal "Caderno de Estudos da Aluna" para visualização e impressão completa pós-aula
@@ -15,9 +16,7 @@ class SlideAnnotator {
     this.isActive = false;
     this.currentTool = 'pen'; // 'pen', 'highlighter', 'eraser'
     this.color = '#facc15';   // Amarelo giz por padrão
-    this.lineWidth = 3;
-    this.isDrawing = false;
-    this.lastPoint = null;
+    this.lineWidth = 3.5;
     
     // Identificador único do tópico atual (ex: 'topico1')
     this.topicKey = window.location.pathname.split('/').pop().replace('.html', '') || 'topico';
@@ -29,6 +28,8 @@ class SlideAnnotator {
     this.boardBgType = 'dark';
 
     this.slideLayers = []; // Referência aos canvases de cada slide
+    
+    // Determina o slide ativo inicial
     const initialActive = document.querySelector('.slide.active');
     const allSlidesList = Array.from(document.querySelectorAll('.slide'));
     this.currentSlideIndex = initialActive ? Math.max(0, allSlidesList.indexOf(initialActive)) : 0;
@@ -36,6 +37,7 @@ class SlideAnnotator {
     this.initDOM();
     this.setupSlideLayers();
     this.setupCursorDot();
+    this.setupDrawingListeners();
     this.setupEvents();
     this.loadSavedAnnotations();
   }
@@ -71,7 +73,7 @@ class SlideAnnotator {
         </div>
         
         <div class="brush-types">
-          <button id="btn-pen" class="mini-btn active" title="Caneta de Precisão (Ponto)">✏️</button>
+          <button id="btn-pen" class="mini-btn active" title="Caneta de Precisão">✏️</button>
           <button id="btn-highlighter" class="mini-btn" title="Marca-Texto">🖍️</button>
           <button id="btn-eraser" class="mini-btn" title="Borracha">🧹</button>
         </div>
@@ -93,7 +95,7 @@ class SlideAnnotator {
       z-index: 99999;
       display: none;
       transform: translate(-50%, -50%);
-      transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease;
+      transition: width 0.12s ease, height 0.12s ease, background-color 0.12s ease;
       box-shadow: 0 0 3px rgba(0,0,0,0.8), 0 0 0 1.5px #ffffff;
     `;
     document.body.appendChild(this.cursorDot);
@@ -188,7 +190,7 @@ class SlideAnnotator {
     document.body.appendChild(this.notebookModal);
   }
 
-  // Cria uma camada de canvas DEDICADA dentro de CADA slide
+  // Camada de canvas DEDICADA para CADA slide
   setupSlideLayers() {
     const slides = document.querySelectorAll('.slide');
     this.slideLayers = [];
@@ -211,11 +213,10 @@ class SlideAnnotator {
 
       const ctx = canvas.getContext('2d');
       this.slideLayers.push({ slide, canvas, ctx, index });
-
-      this.bindSlideDrawing(slide, canvas, ctx, index);
     });
 
     this.resizeSlideCanvases();
+    this.updateSlidePointerEvents();
   }
 
   resizeSlideCanvases() {
@@ -254,6 +255,144 @@ class SlideAnnotator {
       this.wbCanvas.height = wbH * dpr;
       this.wbCtx.scale(dpr, dpr);
     }
+  }
+
+  getActiveLayer() {
+    // Retorna explicitamente o layer do slide ativo atual
+    if (this.slideLayers[this.currentSlideIndex]) {
+      return this.slideLayers[this.currentSlideIndex];
+    }
+    return this.slideLayers.find(l => l.slide.classList.contains('active')) || null;
+  }
+
+  updateSlidePointerEvents() {
+    this.slideLayers.forEach((layer, idx) => {
+      layer.canvas.style.pointerEvents = (this.isActive && idx === this.currentSlideIndex) ? 'auto' : 'none';
+    });
+  }
+
+  // MOTOR DE DESENHO ROBUSTO: Único controlador global, sem replicação entre slides
+  setupDrawingListeners() {
+    let currentDrawingLayer = null;
+    let isDrawing = false;
+    let lastPoint = null;
+
+    const getCanvasPoint = (e, layer) => {
+      const rect = layer.slide.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const dpr = window.devicePixelRatio || 1;
+
+      const scaleX = (layer.canvas.width / dpr) / rect.width;
+      const scaleY = (layer.canvas.height / dpr) / rect.height;
+
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    };
+
+    const onStart = (e) => {
+      if (!this.isActive) return;
+      
+      // Desenha EXCLUSIVAMENTE no slide que estiver ativo no momento
+      const activeLayer = this.getActiveLayer();
+      if (!activeLayer) return;
+
+      currentDrawingLayer = activeLayer;
+      isDrawing = true;
+      lastPoint = getCanvasPoint(e, currentDrawingLayer);
+
+      // Marca ponto inicial (garante clique único com ponto nítido)
+      const ctx = currentDrawingLayer.ctx;
+      ctx.save();
+      if (this.currentTool === 'eraser') {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(lastPoint.x, lastPoint.y, 14, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (this.currentTool === 'highlighter') {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = 0.35;
+        ctx.beginPath();
+        ctx.arc(lastPoint.x, lastPoint.y, 9, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Caneta
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(lastPoint.x, lastPoint.y, this.lineWidth / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
+    const onMove = (e) => {
+      if (!isDrawing || !this.isActive || !currentDrawingLayer) return;
+      e.preventDefault();
+
+      const currentPoint = getCanvasPoint(e, currentDrawingLayer);
+      const ctx = currentDrawingLayer.ctx;
+
+      ctx.save();
+      if (this.currentTool === 'eraser') {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.lineWidth = 28;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(lastPoint.x, lastPoint.y);
+        ctx.lineTo(currentPoint.x, currentPoint.y);
+        ctx.stroke();
+      } else if (this.currentTool === 'highlighter') {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = this.color;
+        ctx.globalAlpha = 0.35;
+        ctx.lineWidth = 18;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(lastPoint.x, lastPoint.y);
+        ctx.lineTo(currentPoint.x, currentPoint.y);
+        ctx.stroke();
+      } else {
+        // Linha Contínua Suave (Ponta Redonda e Junção Perfeita)
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = this.lineWidth;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(lastPoint.x, lastPoint.y);
+        ctx.lineTo(currentPoint.x, currentPoint.y);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      lastPoint = currentPoint;
+    };
+
+    const onStop = () => {
+      if (!isDrawing) return;
+      isDrawing = false;
+      lastPoint = null;
+      currentDrawingLayer = null;
+      this.persistSlideAnnotations();
+    };
+
+    // Anexa mousedown a cada canvas de slide
+    this.slideLayers.forEach(layer => {
+      layer.canvas.addEventListener('mousedown', onStart);
+      layer.canvas.addEventListener('touchstart', onStart, { passive: false });
+    });
+
+    // Único listener de movimento e soltura registrado na window
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onStop);
+    window.addEventListener('touchmove', onMove, { passive: false });
+    window.addEventListener('touchend', onStop);
   }
 
   setupCursorDot() {
@@ -303,92 +442,13 @@ class SlideAnnotator {
       this.cursorDot.style.opacity = '0.7';
       this.cursorDot.style.boxShadow = '0 0 4px rgba(0,0,0,0.9), 0 0 0 1.5px #ffffff';
     } else {
+      // Caneta de precisão (ponto cirúrgico nítido)
       this.cursorDot.style.width = '8px';
       this.cursorDot.style.height = '8px';
       this.cursorDot.style.background = this.color;
       this.cursorDot.style.opacity = '1';
       this.cursorDot.style.boxShadow = '0 0 3px rgba(0,0,0,0.9), 0 0 0 1.5px #ffffff';
     }
-  }
-
-  getActiveLayer() {
-    return this.slideLayers[this.currentSlideIndex] || this.slideLayers.find(l => l.slide.classList.contains('active'));
-  }
-
-  bindSlideDrawing(slide, canvas, ctx, slideIndex) {
-    const getCoords = (e) => {
-      const rect = slide.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const dpr = window.devicePixelRatio || 1;
-
-      const scaleX = (canvas.width / dpr) / rect.width;
-      const scaleY = (canvas.height / dpr) / rect.height;
-
-      return {
-        x: (clientX - rect.left) * scaleX,
-        y: (clientY - rect.top) * scaleY
-      };
-    };
-
-    const start = (e) => {
-      if (!this.isActive) return;
-      this.isDrawing = true;
-      this.lastPoint = getCoords(e);
-    };
-
-    const draw = (e) => {
-      if (!this.isDrawing || !this.isActive) return;
-      e.preventDefault();
-      const currentPoint = getCoords(e);
-
-      ctx.save();
-      if (this.currentTool === 'eraser') {
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.lineWidth = 26;
-        ctx.beginPath();
-        ctx.arc(currentPoint.x, currentPoint.y, 13, 0, Math.PI * 2);
-        ctx.fill();
-      } else if (this.currentTool === 'highlighter') {
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.strokeStyle = this.color;
-        ctx.globalAlpha = 0.35;
-        ctx.lineWidth = 18;
-        ctx.lineCap = 'square';
-        ctx.beginPath();
-        ctx.moveTo(this.lastPoint.x, this.lastPoint.y);
-        ctx.lineTo(currentPoint.x, currentPoint.y);
-        ctx.stroke();
-      } else {
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.lineWidth;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.beginPath();
-        ctx.moveTo(this.lastPoint.x, this.lastPoint.y);
-        ctx.lineTo(currentPoint.x, currentPoint.y);
-        ctx.stroke();
-      }
-      ctx.restore();
-
-      this.lastPoint = currentPoint;
-    };
-
-    const stop = () => {
-      if (!this.isDrawing) return;
-      this.isDrawing = false;
-      this.lastPoint = null;
-      this.persistSlideAnnotations();
-    };
-
-    canvas.addEventListener('mousedown', start);
-    window.addEventListener('mousemove', draw);
-    window.addEventListener('mouseup', stop);
-
-    canvas.addEventListener('touchstart', start, { passive: false });
-    window.addEventListener('touchmove', draw, { passive: false });
-    window.addEventListener('touchend', stop);
   }
 
   togglePen(forceState = null) {
@@ -400,9 +460,7 @@ class SlideAnnotator {
     if (penToggle) penToggle.classList.toggle('active', this.isActive);
     if (penControls) penControls.style.display = this.isActive ? 'flex' : 'none';
 
-    this.slideLayers.forEach((layer, idx) => {
-      layer.canvas.style.pointerEvents = (this.isActive && idx === this.currentSlideIndex) ? 'auto' : 'none';
-    });
+    this.updateSlidePointerEvents();
 
     if (!this.isActive && this.cursorDot) {
       this.cursorDot.style.display = 'none';
@@ -434,7 +492,7 @@ class SlideAnnotator {
     if (btnPen) {
       btnPen.addEventListener('click', () => {
         this.currentTool = 'pen';
-        this.lineWidth = 3;
+        this.lineWidth = 3.5;
         this.updateToolButtons([btnPen, btnHighlighter, btnEraser], btnPen);
         this.updateCursorVisual();
       });
@@ -522,11 +580,10 @@ class SlideAnnotator {
       }
     });
 
+    // Troca de slide: atualiza índice e restringe pointer-events
     window.addEventListener('slideChanged', (e) => {
       this.currentSlideIndex = e.detail.slideIndex;
-      this.slideLayers.forEach((layer, idx) => {
-        layer.canvas.style.pointerEvents = (this.isActive && idx === this.currentSlideIndex) ? 'auto' : 'none';
-      });
+      this.updateSlidePointerEvents();
     });
   }
 
@@ -554,7 +611,7 @@ class SlideAnnotator {
           data[i] = layer.canvas.toDataURL();
         }
       });
-      localStorage.setItem(`fisica_caderno_${this.topicKey}`, JSON.stringify(data));
+      localStorage.setItem(`fisica_caderno_v2_${this.topicKey}`, JSON.stringify(data));
     } catch (e) {
       console.warn('Erro ao salvar anotações no localStorage:', e);
     }
@@ -562,7 +619,10 @@ class SlideAnnotator {
 
   loadSavedAnnotations() {
     try {
-      const raw = localStorage.getItem(`fisica_caderno_${this.topicKey}`);
+      // Remove legado com propagação caso exista
+      localStorage.removeItem(`fisica_caderno_${this.topicKey}`);
+
+      const raw = localStorage.getItem(`fisica_caderno_v2_${this.topicKey}`);
       if (!raw) return;
       const data = JSON.parse(raw);
       const dpr = window.devicePixelRatio || 1;
@@ -601,8 +661,6 @@ class SlideAnnotator {
         </p>
       </div>
     `;
-
-    const dpr = window.devicePixelRatio || 1;
 
     this.slideLayers.forEach((layer, idx) => {
       const card = document.createElement('div');
@@ -666,7 +724,7 @@ class SlideAnnotator {
   }
 
   exportSessionJson() {
-    const raw = localStorage.getItem(`fisica_caderno_${this.topicKey}`) || '{}';
+    const raw = localStorage.getItem(`fisica_caderno_v2_${this.topicKey}`) || '{}';
     const blob = new Blob([raw], { type: 'application/json' });
     const link = document.createElement('a');
     link.download = `anotacoes-aula-${this.topicKey}.json`;
@@ -681,7 +739,7 @@ class SlideAnnotator {
     reader.onload = (ev) => {
       try {
         const data = JSON.parse(ev.target.result);
-        localStorage.setItem(`fisica_caderno_${this.topicKey}`, JSON.stringify(data));
+        localStorage.setItem(`fisica_caderno_v2_${this.topicKey}`, JSON.stringify(data));
         this.loadSavedAnnotations();
         this.renderNotebookPreview();
         alert('Anotações carregadas com sucesso no caderno!');
