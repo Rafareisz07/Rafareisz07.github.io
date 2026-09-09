@@ -9,12 +9,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="if(window.initKaTeX) window.initKaTeX();"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css?v=2.3.0">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
 </head>
 <body>
 
@@ -329,9 +349,677 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js?v=2.3.0"></script>
-  <script src="./shared/js/annotator.js?v=2.3.0"></script>
-  <script src="./shared/js/simulators.js?v=2.3.0"></script>
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      PhysicsSims.initTopic8();
+    });
+  </script>
+</body>
+</html>
+, right: '
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 08</span>
+      <h1 class="topic-title-header">Transmissão de Pressão e Vasos Comunicantes</h1>
+    </div>
+
+    
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: O PRINCÍPIO DE PASCAL -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Hidrodinâmica & Hidrostática</span>
+          <h2 class="slide-title">O Princípio de Pascal (1652)</h2>
+          <p class="slide-subtitle">Como a pressão viaja instantaneamente através de todo o fluido.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$\Delta p_1 = \Delta p_2 = \dots = \Delta p_n = \text{constante}$$
+          </div>
+          <div class="formula-legend">
+            <span>"O acréscimo de pressão aplicado a qualquer ponto de um fluido incompressível em equilíbrio transmite-se integralmente a todos os pontos do líquido e às paredes do recipiente."</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🍷 O Barril de Pascal</div>
+            <p>Blaise Pascal fez uma experiência famosa:</p>
+            <ul>
+              <li>Encaixou um tubo fino e muito alto (10 metros) no topo de um barril de vinho robusto e cheio d'água.</li>
+              <li>Despejou apenas <strong>um copo d'água</strong> dentro do tubo fino.</li>
+              <li>A coluna fina de 10 metros gerou uma pressão de $1\text{ atm}$ extra em todo o interior do barril, <strong>fazendo o barril de madeira estourar em pedaços</strong>!</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🚗 Aplicações no Mundo Moderno</div>
+            <p>O Princípio de Pascal é o cérebro por trás de:</p>
+            <ul>
+              <li><strong>Freios hidráulicos automotivos:</strong> A leve pisada no pedal pressiona o óleo, que transmite a pressão simultaneamente para as 4 pinças de freio das rodas.</li>
+              <li><strong>Direção hidráulica</strong> e retroescavadeiras de construção.</li>
+              <li><strong>Elevadores e macacos hidráulicos</strong> de oficinas mecânicas e cadeiras de dentista.</li>
+            </ul>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 2: A PRENSA HIDRÁULICA & MULTIPLICAÇÃO DE FORÇAS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Máquinas Hidráulicas</span>
+          <h2 class="slide-title">A Prensa Hidráulica: Multiplicando Forças</h2>
+          <p class="slide-subtitle">Como erguer um caminhão de 2 toneladas com a força de uma criança.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$\frac{F_1}{A_1} = \frac{F_2}{A_2} \implies F_2 = F_1 \cdot \left(\frac{A_2}{A_1}\right)$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$F_1, F_2$:</strong> Forças nos êmbolos ($\text{N}$)</span>
+            <span><strong>$A_1, A_2$:</strong> Áreas dos pistões ($\text{m}^2$)</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">⚠️ Ponto de Atenção Crucial: A Relação com o Quadrado do Raio!</div>
+            <p>Os êmbolos quase sempre são circulares de raio $R$ ou diâmetro $D$ ($A = \pi R^2$):</p>
+            <div class="callout danger" style="margin: 10px 0;">
+              $$\frac{A_2}{A_1} = \frac{\pi R_2^2}{\pi R_1^2} = \left(\frac{R_2}{R_1}\right)^2$$
+            </div>
+            <p><strong>CUIDADO:</strong> Se o raio do êmbolo maior for o <strong>DOBRO</strong> do raio menor, a força $F_2$ NÃO dobra! Ela é multiplicada por <strong>$2^2 = 4$ VEZES</strong>!</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">Se o raio for $10\times$ maior, a força é multiplicada por $100\times$!</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">💡 Exemplo Prático</div>
+            <p>Um macaco hidráulico com:</p>
+            <ul>
+              <li>Pistão menor: $A_1 = 10\text{ cm}^2$</li>
+              <li>Pistão maior: $A_2 = 500\text{ cm}^2$ ($50\times$ maior)</li>
+            </ul>
+            <p style="margin-top: 8px;">Se você aplicar uma força de apenas $F_1 = 40\text{ N}$ (peso de $4\text{ kg}$):</p>
+            <p style="text-align: center; font-size: 1.2rem; font-weight: 700; color: var(--accent-cyan); margin: 6px 0;">
+              $$F_2 = 40 \times 50 = \mathbf{2.000\text{ N}}$$
+            </p>
+            <p>Você ergue uma carga de $200\text{ kg}$ sem nenhum esforço!</p>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 3: CONSERVAÇÃO DO TRABALHO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Termodinâmica & Trabalho</span>
+          <h2 class="slide-title">Conservação do Trabalho na Prensa</h2>
+          <p class="slide-subtitle">Não existe almoço grátis na física: o que se ganha em força perde-se em distância!</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">💧 Conservação do Volume Deslocado</div>
+            <p>Como o líquido não pode ser comprimido, o volume de óleo que desce no pistão 1 ($V_1$) é rigorosamente igual ao volume que sobe no pistão 2 ($V_2$):</p>
+            <p style="text-align: center; margin: 10px 0; font-weight: 700; color: var(--accent-cyan);">
+              $$V_1 = V_2 \implies A_1 \cdot d_1 = A_2 \cdot d_2$$
+            </p>
+            <p>$$\frac{d_1}{d_2} = \frac{A_2}{A_1}$$</p>
+            <p>Ou seja: o pistão maior se desloca uma distância <strong>muito menor</strong> que o pistão menor!</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚡ O Trabalho é Rigorosamente Conservado</div>
+            <p>Multiplicando a força pelo deslocamento correspondente:</p>
+            <p style="margin: 8px 0;">$$F_1 \cdot d_1 = F_2 \cdot d_2 \iff W_1 = W_2$$</p>
+            <div class="callout success">
+              <strong>O Balanço Perfeito:</strong><br>
+              Se a força foi multiplicada por $100$ vezes ($F_2 = 100 F_1$), o pistão maior só vai subir $\frac{1}{100}$ do que você empurrou ($d_2 = \frac{d_1}{100}$)!
+              <br><br>
+              Para erguer o carro em $10\text{ cm}$, você terá que bombear o pistão pequeno por $1.000\text{ cm}$ ($10\text{ metros}$ no total)!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 4: VASOS COMUNICANTES & LÍQUIDOS IMISCÍVEIS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Equilíbrio em Tubos</span>
+          <h2 class="slide-title">Vasos Comunicantes e Líquidos Imiscíveis</h2>
+          <p class="slide-subtitle">A regra dos tubos em U que define o equilíbrio hidrostático.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🚰 Mesmo Líquido Homogêneo</div>
+            <p>Quando vasos de qualquer formato estão conectados pela base:</p>
+            <ul>
+              <li>Pelo Teorema de Stevin, na base comum a pressão é a mesma.</li>
+              <li>Portanto, as superfícies livres ficam <strong>todas no mesmo plano horizontal</strong>, não importando a largura ou inclinação dos tubos!</li>
+              <li>Aplicações: Nível de mangueira usado por pedreiros, caixa d'água e sifão da pia.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🧪 Tubo em U com Líquidos Imiscíveis</div>
+            <p>Colocando dois líquidos que não se misturam (ex: Água e Óleo):</p>
+            <ol style="padding-left: 18px; margin-top: 6px; line-height: 1.6;">
+              <li>Trace uma <strong>linha horizontal de referência na interface mais baixa</strong> entre os dois líquidos.</li>
+              <li>Nessa linha, a pressão nos dois ramos é igual: $p_A = p_B$.</li>
+              <li>$$\rho_1 \cdot g \cdot h_1 = \rho_2 \cdot g \cdot h_2$$</li>
+            </ol>
+            <div class="formula-card" style="margin-top: 8px; padding: 10px;">
+              <div class="formula-main" style="font-size: 1.3rem;">
+                $$\rho_1 \cdot h_1 = \rho_2 \cdot h_2$$
+              </div>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--accent-cyan); font-weight: 600; text-align: center;">
+              O líquido MENOS denso sempre atinge a MAIOR altura livre!
+            </p>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR DE TUBO EM U -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Tubo em U com 2 Líquidos</h2>
+          <p class="slide-subtitle">Ajuste as densidades e a altura de um ramo para ver o equilíbrio das colunas em tempo real.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area">
+            <canvas id="sim-canvas-vasos" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="sim-control-group">
+              <label>Densidade Líquido 1 ($\rho_1$):</label>
+              <input type="range" id="vas-rho1" min="0.5" max="2.5" step="0.1" value="0.8">
+            </div>
+            <div class="sim-control-group">
+              <label>Densidade Líquido 2 ($\rho_2$):</label>
+              <input type="range" id="vas-rho2" min="0.5" max="2.5" step="0.1" value="1.0">
+            </div>
+            <div class="sim-control-group">
+              <label>Altura Líquido 1 ($h_1$):</label>
+              <input type="range" id="vas-h1" min="10" max="60" step="2" value="40">
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Líquido 1 (Óleo/Vermelho)</div>
+              <div id="out-vas-rho1" class="readout-value">0.80 g/cm³</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Líquido 2 (Água/Azul)</div>
+              <div id="out-vas-rho2" class="readout-value">1.00 g/cm³</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Altura Equilíbrio ($h_2$)</div>
+              <div id="out-vas-h2" class="readout-value">32.0 cm</div>
+            </div>
+          </div>
+
+          <div id="out-vas-regra" class="callout success" style="margin-top: 4px; font-size: 0.85rem;">
+            Líquido 1 é menos denso que Líquido 2 → atinge maior altura (h₁ > h₂).
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática</span>
+          <h2 class="slide-title">Exercício Resolvido: Elevador Hidráulico e Carro</h2>
+          <p class="slide-subtitle">Problema de prova clássico envolvendo áreas circulares e conservação de trabalho.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / FUVEST</span>
+          <p class="exercise-enunciation">
+            Em um posto de serviços, um elevador hidráulico é utilizado para erguer um automóvel de massa $M = 1.200\text{ kg}$. O pistão menor tem raio $R_1 = 10\text{ cm}$ e o pistão maior, que sustenta o carro, tem raio $R_2 = 50\text{ cm}$. Considere $g = 10\text{ m/s}^2$.<br>
+            <strong>a)</strong> Calcule a força mínima $F_1$ que deve ser aplicada ao pistão menor para equilibrar o carro.<br>
+            <strong>b)</strong> Para elevar o automóvel a uma altura de $h_2 = 20\text{ cm}$, qual deve ser o deslocamento $h_1$ realizado pelo pistão menor?
+          </p>
+
+          <button class="solution-toggle">💡 Ver Resolução Passo a Passo</button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Força no Pistão Menor (Princípio de Pascal)</strong>
+              <p>O peso do carro no pistão maior é: $F_2 = M \cdot g = 1.200 \times 10 = 12.000\text{ N}$.</p>
+              <p>A razão entre as áreas circulares depende do quadrado dos raios:</p>
+              <p>$$\frac{A_2}{A_1} = \left(\frac{R_2}{R_1}\right)^2 = \left(\frac{50}{10}\right)^2 = 5^2 = 25$$</p>
+              <p>Pela Prensa Hidráulica:</p>
+              <p>$$\frac{F_1}{A_1} = \frac{F_2}{A_2} \implies F_1 = \frac{F_2}{25} = \frac{12.000}{25} = \mathbf{480\text{ N}}$$</p>
+              <p><em>Equivalente:</em> Uma força de apenas $48\text{ kgf}$ consegue erguer um carro de $1.200\text{ kg}$!</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Deslocamento do Pistão Menor (Incompressibilidade)</strong>
+              <p>$$V_1 = V_2 \implies A_1 \cdot h_1 = A_2 \cdot h_2$$</p>
+              <p>$$h_1 = h_2 \cdot \left(\frac{A_2}{A_1}\right) = 20\text{ cm} \times 25 = 500\text{ cm} = \mathbf{5\text{ metros}}$$</p>
+              <p><em>Verificação do Trabalho:</em></p>
+              <p>$$W_1 = F_1 \cdot h_1 = 480\text{ N} \times 5\text{ m} = 2.400\text{ J}$$</p>
+              <p>$$W_2 = F_2 \cdot h_2 = 12.000\text{ N} \times 0{,}2\text{ m} = 2.400\text{ J}$$</p>
+              <p>O trabalho é rigorosamente conservado: $W_1 = W_2$!</p>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      </div>
+  </footer>
+
+  
+  </div>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      PhysicsSims.initTopic8();
+    });
+  </script>
+</body>
+</html>
+, display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 08</span>
+      <h1 class="topic-title-header">Transmissão de Pressão e Vasos Comunicantes</h1>
+    </div>
+
+    
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: O PRINCÍPIO DE PASCAL -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Hidrodinâmica & Hidrostática</span>
+          <h2 class="slide-title">O Princípio de Pascal (1652)</h2>
+          <p class="slide-subtitle">Como a pressão viaja instantaneamente através de todo o fluido.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$\Delta p_1 = \Delta p_2 = \dots = \Delta p_n = \text{constante}$$
+          </div>
+          <div class="formula-legend">
+            <span>"O acréscimo de pressão aplicado a qualquer ponto de um fluido incompressível em equilíbrio transmite-se integralmente a todos os pontos do líquido e às paredes do recipiente."</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🍷 O Barril de Pascal</div>
+            <p>Blaise Pascal fez uma experiência famosa:</p>
+            <ul>
+              <li>Encaixou um tubo fino e muito alto (10 metros) no topo de um barril de vinho robusto e cheio d'água.</li>
+              <li>Despejou apenas <strong>um copo d'água</strong> dentro do tubo fino.</li>
+              <li>A coluna fina de 10 metros gerou uma pressão de $1\text{ atm}$ extra em todo o interior do barril, <strong>fazendo o barril de madeira estourar em pedaços</strong>!</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🚗 Aplicações no Mundo Moderno</div>
+            <p>O Princípio de Pascal é o cérebro por trás de:</p>
+            <ul>
+              <li><strong>Freios hidráulicos automotivos:</strong> A leve pisada no pedal pressiona o óleo, que transmite a pressão simultaneamente para as 4 pinças de freio das rodas.</li>
+              <li><strong>Direção hidráulica</strong> e retroescavadeiras de construção.</li>
+              <li><strong>Elevadores e macacos hidráulicos</strong> de oficinas mecânicas e cadeiras de dentista.</li>
+            </ul>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 2: A PRENSA HIDRÁULICA & MULTIPLICAÇÃO DE FORÇAS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Máquinas Hidráulicas</span>
+          <h2 class="slide-title">A Prensa Hidráulica: Multiplicando Forças</h2>
+          <p class="slide-subtitle">Como erguer um caminhão de 2 toneladas com a força de uma criança.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$\frac{F_1}{A_1} = \frac{F_2}{A_2} \implies F_2 = F_1 \cdot \left(\frac{A_2}{A_1}\right)$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$F_1, F_2$:</strong> Forças nos êmbolos ($\text{N}$)</span>
+            <span><strong>$A_1, A_2$:</strong> Áreas dos pistões ($\text{m}^2$)</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">⚠️ Ponto de Atenção Crucial: A Relação com o Quadrado do Raio!</div>
+            <p>Os êmbolos quase sempre são circulares de raio $R$ ou diâmetro $D$ ($A = \pi R^2$):</p>
+            <div class="callout danger" style="margin: 10px 0;">
+              $$\frac{A_2}{A_1} = \frac{\pi R_2^2}{\pi R_1^2} = \left(\frac{R_2}{R_1}\right)^2$$
+            </div>
+            <p><strong>CUIDADO:</strong> Se o raio do êmbolo maior for o <strong>DOBRO</strong> do raio menor, a força $F_2$ NÃO dobra! Ela é multiplicada por <strong>$2^2 = 4$ VEZES</strong>!</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">Se o raio for $10\times$ maior, a força é multiplicada por $100\times$!</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">💡 Exemplo Prático</div>
+            <p>Um macaco hidráulico com:</p>
+            <ul>
+              <li>Pistão menor: $A_1 = 10\text{ cm}^2$</li>
+              <li>Pistão maior: $A_2 = 500\text{ cm}^2$ ($50\times$ maior)</li>
+            </ul>
+            <p style="margin-top: 8px;">Se você aplicar uma força de apenas $F_1 = 40\text{ N}$ (peso de $4\text{ kg}$):</p>
+            <p style="text-align: center; font-size: 1.2rem; font-weight: 700; color: var(--accent-cyan); margin: 6px 0;">
+              $$F_2 = 40 \times 50 = \mathbf{2.000\text{ N}}$$
+            </p>
+            <p>Você ergue uma carga de $200\text{ kg}$ sem nenhum esforço!</p>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 3: CONSERVAÇÃO DO TRABALHO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Termodinâmica & Trabalho</span>
+          <h2 class="slide-title">Conservação do Trabalho na Prensa</h2>
+          <p class="slide-subtitle">Não existe almoço grátis na física: o que se ganha em força perde-se em distância!</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">💧 Conservação do Volume Deslocado</div>
+            <p>Como o líquido não pode ser comprimido, o volume de óleo que desce no pistão 1 ($V_1$) é rigorosamente igual ao volume que sobe no pistão 2 ($V_2$):</p>
+            <p style="text-align: center; margin: 10px 0; font-weight: 700; color: var(--accent-cyan);">
+              $$V_1 = V_2 \implies A_1 \cdot d_1 = A_2 \cdot d_2$$
+            </p>
+            <p>$$\frac{d_1}{d_2} = \frac{A_2}{A_1}$$</p>
+            <p>Ou seja: o pistão maior se desloca uma distância <strong>muito menor</strong> que o pistão menor!</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚡ O Trabalho é Rigorosamente Conservado</div>
+            <p>Multiplicando a força pelo deslocamento correspondente:</p>
+            <p style="margin: 8px 0;">$$F_1 \cdot d_1 = F_2 \cdot d_2 \iff W_1 = W_2$$</p>
+            <div class="callout success">
+              <strong>O Balanço Perfeito:</strong><br>
+              Se a força foi multiplicada por $100$ vezes ($F_2 = 100 F_1$), o pistão maior só vai subir $\frac{1}{100}$ do que você empurrou ($d_2 = \frac{d_1}{100}$)!
+              <br><br>
+              Para erguer o carro em $10\text{ cm}$, você terá que bombear o pistão pequeno por $1.000\text{ cm}$ ($10\text{ metros}$ no total)!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 4: VASOS COMUNICANTES & LÍQUIDOS IMISCÍVEIS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Equilíbrio em Tubos</span>
+          <h2 class="slide-title">Vasos Comunicantes e Líquidos Imiscíveis</h2>
+          <p class="slide-subtitle">A regra dos tubos em U que define o equilíbrio hidrostático.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🚰 Mesmo Líquido Homogêneo</div>
+            <p>Quando vasos de qualquer formato estão conectados pela base:</p>
+            <ul>
+              <li>Pelo Teorema de Stevin, na base comum a pressão é a mesma.</li>
+              <li>Portanto, as superfícies livres ficam <strong>todas no mesmo plano horizontal</strong>, não importando a largura ou inclinação dos tubos!</li>
+              <li>Aplicações: Nível de mangueira usado por pedreiros, caixa d'água e sifão da pia.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🧪 Tubo em U com Líquidos Imiscíveis</div>
+            <p>Colocando dois líquidos que não se misturam (ex: Água e Óleo):</p>
+            <ol style="padding-left: 18px; margin-top: 6px; line-height: 1.6;">
+              <li>Trace uma <strong>linha horizontal de referência na interface mais baixa</strong> entre os dois líquidos.</li>
+              <li>Nessa linha, a pressão nos dois ramos é igual: $p_A = p_B$.</li>
+              <li>$$\rho_1 \cdot g \cdot h_1 = \rho_2 \cdot g \cdot h_2$$</li>
+            </ol>
+            <div class="formula-card" style="margin-top: 8px; padding: 10px;">
+              <div class="formula-main" style="font-size: 1.3rem;">
+                $$\rho_1 \cdot h_1 = \rho_2 \cdot h_2$$
+              </div>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--accent-cyan); font-weight: 600; text-align: center;">
+              O líquido MENOS denso sempre atinge a MAIOR altura livre!
+            </p>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR DE TUBO EM U -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Tubo em U com 2 Líquidos</h2>
+          <p class="slide-subtitle">Ajuste as densidades e a altura de um ramo para ver o equilíbrio das colunas em tempo real.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area">
+            <canvas id="sim-canvas-vasos" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="sim-control-group">
+              <label>Densidade Líquido 1 ($\rho_1$):</label>
+              <input type="range" id="vas-rho1" min="0.5" max="2.5" step="0.1" value="0.8">
+            </div>
+            <div class="sim-control-group">
+              <label>Densidade Líquido 2 ($\rho_2$):</label>
+              <input type="range" id="vas-rho2" min="0.5" max="2.5" step="0.1" value="1.0">
+            </div>
+            <div class="sim-control-group">
+              <label>Altura Líquido 1 ($h_1$):</label>
+              <input type="range" id="vas-h1" min="10" max="60" step="2" value="40">
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Líquido 1 (Óleo/Vermelho)</div>
+              <div id="out-vas-rho1" class="readout-value">0.80 g/cm³</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Líquido 2 (Água/Azul)</div>
+              <div id="out-vas-rho2" class="readout-value">1.00 g/cm³</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Altura Equilíbrio ($h_2$)</div>
+              <div id="out-vas-h2" class="readout-value">32.0 cm</div>
+            </div>
+          </div>
+
+          <div id="out-vas-regra" class="callout success" style="margin-top: 4px; font-size: 0.85rem;">
+            Líquido 1 é menos denso que Líquido 2 → atinge maior altura (h₁ > h₂).
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática</span>
+          <h2 class="slide-title">Exercício Resolvido: Elevador Hidráulico e Carro</h2>
+          <p class="slide-subtitle">Problema de prova clássico envolvendo áreas circulares e conservação de trabalho.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / FUVEST</span>
+          <p class="exercise-enunciation">
+            Em um posto de serviços, um elevador hidráulico é utilizado para erguer um automóvel de massa $M = 1.200\text{ kg}$. O pistão menor tem raio $R_1 = 10\text{ cm}$ e o pistão maior, que sustenta o carro, tem raio $R_2 = 50\text{ cm}$. Considere $g = 10\text{ m/s}^2$.<br>
+            <strong>a)</strong> Calcule a força mínima $F_1$ que deve ser aplicada ao pistão menor para equilibrar o carro.<br>
+            <strong>b)</strong> Para elevar o automóvel a uma altura de $h_2 = 20\text{ cm}$, qual deve ser o deslocamento $h_1$ realizado pelo pistão menor?
+          </p>
+
+          <button class="solution-toggle">💡 Ver Resolução Passo a Passo</button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Força no Pistão Menor (Princípio de Pascal)</strong>
+              <p>O peso do carro no pistão maior é: $F_2 = M \cdot g = 1.200 \times 10 = 12.000\text{ N}$.</p>
+              <p>A razão entre as áreas circulares depende do quadrado dos raios:</p>
+              <p>$$\frac{A_2}{A_1} = \left(\frac{R_2}{R_1}\right)^2 = \left(\frac{50}{10}\right)^2 = 5^2 = 25$$</p>
+              <p>Pela Prensa Hidráulica:</p>
+              <p>$$\frac{F_1}{A_1} = \frac{F_2}{A_2} \implies F_1 = \frac{F_2}{25} = \frac{12.000}{25} = \mathbf{480\text{ N}}$$</p>
+              <p><em>Equivalente:</em> Uma força de apenas $48\text{ kgf}$ consegue erguer um carro de $1.200\text{ kg}$!</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Deslocamento do Pistão Menor (Incompressibilidade)</strong>
+              <p>$$V_1 = V_2 \implies A_1 \cdot h_1 = A_2 \cdot h_2$$</p>
+              <p>$$h_1 = h_2 \cdot \left(\frac{A_2}{A_1}\right) = 20\text{ cm} \times 25 = 500\text{ cm} = \mathbf{5\text{ metros}}$$</p>
+              <p><em>Verificação do Trabalho:</em></p>
+              <p>$$W_1 = F_1 \cdot h_1 = 480\text{ N} \times 5\text{ m} = 2.400\text{ J}$$</p>
+              <p>$$W_2 = F_2 \cdot h_2 = 12.000\text{ N} \times 0{,}2\text{ m} = 2.400\text{ J}$$</p>
+              <p>O trabalho é rigorosamente conservado: $W_1 = W_2$!</p>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      </div>
+  </footer>
+
+  
+  </div>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic8();

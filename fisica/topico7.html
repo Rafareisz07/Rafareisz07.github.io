@@ -9,12 +9,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="if(window.initKaTeX) window.initKaTeX();"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css?v=2.3.0">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
 </head>
 <body>
 
@@ -341,9 +361,701 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js?v=2.3.0"></script>
-  <script src="./shared/js/annotator.js?v=2.3.0"></script>
-  <script src="./shared/js/simulators.js?v=2.3.0"></script>
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      PhysicsSims.initTopic7();
+    });
+  </script>
+</body>
+</html>
+, right: '
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 07</span>
+      <h1 class="topic-title-header">Pressão nos Líquidos e Limites de Sucção</h1>
+    </div>
+
+    
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: CONCEITO DE PRESSÃO -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fundamentos de Hidrostática</span>
+          <h2 class="slide-title">O Conceito Físico de Pressão</h2>
+          <p class="slide-subtitle">Como uma mesma força pode não ter efeito ou perfurar uma superfície.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$p = \frac{F_{\perp}}{A}$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$p$:</strong> Pressão ($\text{N/m}^2$ ou Pascal - $\text{Pa}$)</span>
+            <span><strong>$F_{\perp}$:</strong> Força perpendicular à área ($\text{N}$)</span>
+            <span><strong>$A$:</strong> Área de contato ($\text{m}^2$)</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📌 Agulhas vs. Sapatos de Neve</div>
+            <p>Por que uma agulha fina entra facilmente na pele com um toque leve, enquanto um tijolo colocado sobre o braço não perfura nada?</p>
+            <ul>
+              <li>A área da ponta da agulha é minúscula ($A \to 0$). Logo, a <strong>pressão $p = F/A$ atinge valores astronômicos</strong>!</li>
+              <li>Sapatos de neve e esteiras de tanques militares fazem o inverso: aumentam a área de contato para que a pressão sobre o solo caia, evitando afundar.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">📏 Unidades Mais Usadas</div>
+            <ul>
+              <li><strong>Pascal (Pa):</strong> $1\text{ Pa} = 1\text{ N/m}^2$ (Unidade do S.I.)</li>
+              <li><strong>Atmosfera (atm):</strong> $1\text{ atm} \approx 101.325\text{ Pa} \approx 10^5\text{ Pa}$</li>
+              <li><strong>Milímetros de Mercúrio:</strong> $1\text{ atm} = 760\text{ mmHg} = 76\text{ cmHg}$</li>
+              <li><strong>Bar:</strong> $1\text{ bar} = 10^5\text{ Pa} \approx 1\text{ atm}$</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 10px;">
+              Em provas do ENEM, quase sempre se aproxima: $$1\text{ atm} \approx 1{,}0 \times 10^5\text{ Pa}$$
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 2: TEOREMA DE STEVIN -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">A Lei Fundamental</span>
+          <h2 class="slide-title">Teorema de Stevin (Pressão Hidrostática)</h2>
+          <p class="slide-subtitle">A pressão aumenta linearmente com a profundidade no líquido.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$p = p_0 + \rho \cdot g \cdot h \iff \Delta p = \rho \cdot g \cdot \Delta h$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$p$:</strong> Pressão Absoluta no ponto</span>
+            <span><strong>$p_0$:</strong> Pressão na superfície livre (geralmente $p_{atm}$)</span>
+            <span><strong>$\rho$:</strong> Densidade do líquido ($\text{kg/m}^3$)</span>
+            <span><strong>$h$:</strong> Profundidade ($\text{m}$)</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🏊 Regra Prática de Mergulho na Água</div>
+            <p>Para a água doce ou do mar ($\rho \approx 1.000\text{ kg/m}^3$):</p>
+            <p style="margin: 8px 0; text-align: center; font-weight: 700; color: var(--accent-cyan);">
+              $$\Delta p = (1000) \cdot (10) \cdot (10) = 100.000\text{ Pa} = 1\text{ atm}$$
+            </p>
+            <div class="callout success">
+              <strong>REGRA DOS 10 METROS:</strong><br>
+              A cada <strong>10 metros de profundidade</strong> que você mergulha na água, a pressão hidrostática aumenta exatamente <strong>1 atm</strong>!
+              <ul>
+                <li>Na superfície: $1\text{ atm}$</li>
+                <li>A $10\text{ m}$: $2\text{ atm}$</li>
+                <li>A $20\text{ m}$: $3\text{ atm}$</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🏺 O Paradoxo Hidrostático</div>
+            <p>Considere vasos com formatos totalmente diferentes (um afunilado, um largo e um cilíndrico), mas todos preenchidos com o <strong>mesmo líquido até a mesma altura $h$</strong>:</p>
+            <div class="callout warning" style="margin-top: 8px;">
+              <strong>A PRESSÃO NO FUNDO É EXATAMENTE A MESMA EM TODOS ELES!</strong>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 6px;">
+              A pressão depende única e exclusivamente da profundidade $h$ e da densidade $\rho$, e <strong>NÃO</strong> do volume ou formato do vaso!
+            </p>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 3: O EXPERIMENTO DE TORRICELLI -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">História & Barômetro</span>
+          <h2 class="slide-title">O Experimento Histórico de Torricelli (1643)</h2>
+          <p class="slide-subtitle">Como Evangelista Torricelli pesou a atmosfera da Terra pela primeira vez.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🧪 O Procedimento Experimental</div>
+            <ol style="padding-left: 18px; line-height: 1.7;">
+              <li>Torricelli encheu um tubo de vidro de $1\text{ metro}$ fechado em uma ponta com <strong>mercúrio líquido (Hg)</strong>.</li>
+              <li>Tampou com o dedo e inverteu o tubo dentro de uma bacia cheia de mercúrio.</li>
+              <li>Ao soltar o dedo, o mercúrio desceu um pouco e parou numa altura exatamente igual a <strong>$76\text{ cm}$ ($760\text{ mm}$)</strong> acima do nível da bacia!</li>
+              <li>No topo do tubo fechado formou-se o <strong>Vácuo de Torricelli</strong> ($p \approx 0$).</li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <div class="card-title">💡 Por Que Ele Usou Mercúrio?</div>
+            <p>Pelo Teorema de Stevin, na superfície da bacia: $$p_{atm} = \rho \cdot g \cdot h$$</p>
+            <p>O mercúrio é incrivelmente denso: $\rho_{Hg} = 13.600\text{ kg/m}^3$ (13,6 vezes mais denso que a água!).</p>
+            <div class="callout danger" style="margin-top: 10px;">
+              <strong>E SE ELE TIVESSE USADO ÁGUA?</strong><br>
+              $$h_{\text{água}} = \frac{p_{atm}}{\rho_{\text{água}} \cdot g} = \frac{101.325}{1.000 \times 9{,}8} \approx \mathbf{10{,}33\text{ metros}}!$$
+              Torricelli teria precisado de um tubo de vidro de mais de 10 metros de altura (um prédio de 3 andares)!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 4: OS LIMITES FÍSICOS DA SUCÇÃO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Tema Quente de Prova!</span>
+          <h2 class="slide-title">Os Limites Físicos da Sucção</h2>
+          <p class="slide-subtitle">Por que bombas de sucção e canudinhos não conseguem puxar água além de ~10,3 metros.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🧃 A Ilusão de "Puxar" o Líquido</div>
+            <p>Quando você toma refrigerante com um canudo:</p>
+            <ul>
+              <li>Você <strong>NÃO está puxando</strong> o refrigerante com força de atração!</li>
+              <li>O que você faz é expandir seus pulmões e boca, <strong>diminuindo a pressão do ar</strong> dentro do canudo ($p_{canudo} < p_{atm}$).</li>
+              <li>É a <strong>PRESSÃO ATMOSFÉRICA EXTERNA</strong> sobre o copo que empurra o refrigerante goela acima!</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 10px;">
+              Se você colocasse um canudinho em um copo na Lua ou no vácuo do espaço, você <strong>nunca conseguiria beber uma única gota</strong>, não importa a força que fizesse!
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⛏️ O Limite de 10 Metros dos Poços</div>
+            <p>Mesmo que uma bomba na superfície crie um <strong>VÁCUO ABSOLUTO PERFEITO</strong> ($p_{interna} = 0$):</p>
+            <div class="formula-card" style="margin: 10px 0; padding: 12px;">
+              <div class="formula-main" style="font-size: 1.3rem;">
+                $$h_{máx} = \frac{p_{atm}}{\rho g} \approx \frac{100.000}{1000 \times 9{,}8} \approx \mathbf{10{,}33\text{ metros}}$$
+              </div>
+            </div>
+            <div class="callout success">
+              <strong>Solução da Engenharia:</strong><br>
+              Para tirar água de poços artesianos profundos (ex: 50 ou 100 metros), é impossível usar bomba de sucção na superfície. A bomba precisa ser <strong>submersa e colocada no fundo do poço para EMPURRAR</strong> a água para cima!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO: BARÔMETRO & SUCÇÃO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Barômetro e Limite de Sucção</h2>
+          <p class="slide-subtitle">Alterne o líquido e a pressão de topo para testar a coluna hidrostática máxima.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area">
+            <canvas id="sim-canvas-succao" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="sim-control-group">
+              <label>Fluido:</label>
+              <select id="suc-liquido" style="padding: 8px; border-radius: 6px; background: #0f172a; color: #f8fafc; border: 1px solid var(--border-color);">
+                <option value="agua" selected>Água Doce (1.000 kg/m³)</option>
+                <option value="hg">Mercúrio (13.600 kg/m³)</option>
+                <option value="alcool">Álcool Etílico (800 kg/m³)</option>
+              </select>
+            </div>
+            <div class="sim-control-group">
+              <label>Pressão Atmosférica Ext.:</label>
+              <input type="range" id="suc-patm" min="70" max="130" step="5" value="101">
+            </div>
+            <div class="sim-control-group">
+              <label>Pressão no Topo (Sucção):</label>
+              <input type="range" id="suc-ptop" min="0" max="80" step="5" value="0">
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Densidade do Fluido</div>
+              <div id="out-densidade" class="readout-value">1.000 kg/m³</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Altura Real da Coluna</div>
+              <div id="out-hreal" class="readout-value">10.33 m</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Limite Físico Máximo ($h_{máx}$)</div>
+              <div id="out-hmax" class="readout-value">10.33 m</div>
+            </div>
+          </div>
+
+          <div id="out-suc-exp" class="callout success" style="margin-top: 4px; font-size: 0.85rem;">
+            Vácuo Perfeito no topo! Coluna atingiu o LIMITE FÍSICO MÁXIMO da atmosfera: 10,33m.
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática</span>
+          <h2 class="slide-title">Exercício Resolvido: Sucção de Combustível</h2>
+          <p class="slide-subtitle">Cálculo de pressão hidrostática e altura máxima de aspiração.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / UNICAMP</span>
+          <p class="exercise-enunciation">
+            Uma bomba de sucção instalada na parte superior de um tanque tenta aspirar óleo diesel de densidade $\rho = 850\text{ kg/m}^3$. A pressão atmosférica no local é de $p_{atm} = 1{,}02 \times 10^5\text{ Pa}$ e adote a aceleração da gravidade $g = 10\text{ m/s}^2$.<br>
+            <strong>a)</strong> Se a bomba conseguir reduzir a pressão no topo do cano até $p_{\text{topo}} = 0{,}17 \times 10^5\text{ Pa}$, qual será a altura da coluna de óleo que sobe pelo cano?<br>
+            <strong>b)</strong> Qual é o limite físico teórico máximo que essa bomba conseguiria erguer o óleo diesel com vácuo perfeito?<br>
+            <strong>c)</strong> Esse limite seria maior ou menor se o fluido fosse água pura ($\rho = 1.000\text{ kg/m}^3$)?
+          </p>
+
+          <button class="solution-toggle">💡 Ver Resolução Passo a Passo</button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Altura da Coluna de Óleo</strong>
+              <p>A diferença de pressão entre a atmosfera e o topo empurra o óleo:</p>
+              <p>$$\Delta p = p_{atm} - p_{\text{topo}} = (1{,}02 - 0{,}17) \times 10^5 = 0{,}85 \times 10^5 = 85.000\text{ Pa}$$</p>
+              <p>$$\Delta p = \rho \cdot g \cdot h \implies h = \frac{\Delta p}{\rho g} = \frac{85.000}{850 \times 10} = \frac{85.000}{8.500} = \mathbf{10\text{ metros}}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Limite Teórico Máximo (Vácuo Perfeito $p_{topo} = 0$)</strong>
+              <p>$$h_{máx} = \frac{p_{atm}}{\rho g} = \frac{1{,}02 \times 10^5}{850 \times 10} = \frac{102.000}{8.500} = \mathbf{12\text{ metros}}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 3: Comparação com Água Pura</strong>
+              <p>$$h_{\text{água}} = \frac{102.000}{1000 \times 10} = 10{,}2\text{ metros}$$</p>
+              <p><em>Resposta:</em> Seria <strong>menor</strong> para a água ($10{,}2\text{ m} < 12\text{ m}$). Quanto mais denso for o líquido, mais pesada é sua coluna e menor é a altura máxima sustentada pela atmosfera!</p>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      
+    </div>
+  </footer>
+
+  
+  </div>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      PhysicsSims.initTopic7();
+    });
+  </script>
+</body>
+</html>
+, display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 07</span>
+      <h1 class="topic-title-header">Pressão nos Líquidos e Limites de Sucção</h1>
+    </div>
+
+    
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: CONCEITO DE PRESSÃO -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fundamentos de Hidrostática</span>
+          <h2 class="slide-title">O Conceito Físico de Pressão</h2>
+          <p class="slide-subtitle">Como uma mesma força pode não ter efeito ou perfurar uma superfície.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$p = \frac{F_{\perp}}{A}$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$p$:</strong> Pressão ($\text{N/m}^2$ ou Pascal - $\text{Pa}$)</span>
+            <span><strong>$F_{\perp}$:</strong> Força perpendicular à área ($\text{N}$)</span>
+            <span><strong>$A$:</strong> Área de contato ($\text{m}^2$)</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📌 Agulhas vs. Sapatos de Neve</div>
+            <p>Por que uma agulha fina entra facilmente na pele com um toque leve, enquanto um tijolo colocado sobre o braço não perfura nada?</p>
+            <ul>
+              <li>A área da ponta da agulha é minúscula ($A \to 0$). Logo, a <strong>pressão $p = F/A$ atinge valores astronômicos</strong>!</li>
+              <li>Sapatos de neve e esteiras de tanques militares fazem o inverso: aumentam a área de contato para que a pressão sobre o solo caia, evitando afundar.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">📏 Unidades Mais Usadas</div>
+            <ul>
+              <li><strong>Pascal (Pa):</strong> $1\text{ Pa} = 1\text{ N/m}^2$ (Unidade do S.I.)</li>
+              <li><strong>Atmosfera (atm):</strong> $1\text{ atm} \approx 101.325\text{ Pa} \approx 10^5\text{ Pa}$</li>
+              <li><strong>Milímetros de Mercúrio:</strong> $1\text{ atm} = 760\text{ mmHg} = 76\text{ cmHg}$</li>
+              <li><strong>Bar:</strong> $1\text{ bar} = 10^5\text{ Pa} \approx 1\text{ atm}$</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 10px;">
+              Em provas do ENEM, quase sempre se aproxima: $$1\text{ atm} \approx 1{,}0 \times 10^5\text{ Pa}$$
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 2: TEOREMA DE STEVIN -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">A Lei Fundamental</span>
+          <h2 class="slide-title">Teorema de Stevin (Pressão Hidrostática)</h2>
+          <p class="slide-subtitle">A pressão aumenta linearmente com a profundidade no líquido.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$p = p_0 + \rho \cdot g \cdot h \iff \Delta p = \rho \cdot g \cdot \Delta h$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$p$:</strong> Pressão Absoluta no ponto</span>
+            <span><strong>$p_0$:</strong> Pressão na superfície livre (geralmente $p_{atm}$)</span>
+            <span><strong>$\rho$:</strong> Densidade do líquido ($\text{kg/m}^3$)</span>
+            <span><strong>$h$:</strong> Profundidade ($\text{m}$)</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🏊 Regra Prática de Mergulho na Água</div>
+            <p>Para a água doce ou do mar ($\rho \approx 1.000\text{ kg/m}^3$):</p>
+            <p style="margin: 8px 0; text-align: center; font-weight: 700; color: var(--accent-cyan);">
+              $$\Delta p = (1000) \cdot (10) \cdot (10) = 100.000\text{ Pa} = 1\text{ atm}$$
+            </p>
+            <div class="callout success">
+              <strong>REGRA DOS 10 METROS:</strong><br>
+              A cada <strong>10 metros de profundidade</strong> que você mergulha na água, a pressão hidrostática aumenta exatamente <strong>1 atm</strong>!
+              <ul>
+                <li>Na superfície: $1\text{ atm}$</li>
+                <li>A $10\text{ m}$: $2\text{ atm}$</li>
+                <li>A $20\text{ m}$: $3\text{ atm}$</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🏺 O Paradoxo Hidrostático</div>
+            <p>Considere vasos com formatos totalmente diferentes (um afunilado, um largo e um cilíndrico), mas todos preenchidos com o <strong>mesmo líquido até a mesma altura $h$</strong>:</p>
+            <div class="callout warning" style="margin-top: 8px;">
+              <strong>A PRESSÃO NO FUNDO É EXATAMENTE A MESMA EM TODOS ELES!</strong>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 6px;">
+              A pressão depende única e exclusivamente da profundidade $h$ e da densidade $\rho$, e <strong>NÃO</strong> do volume ou formato do vaso!
+            </p>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 3: O EXPERIMENTO DE TORRICELLI -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">História & Barômetro</span>
+          <h2 class="slide-title">O Experimento Histórico de Torricelli (1643)</h2>
+          <p class="slide-subtitle">Como Evangelista Torricelli pesou a atmosfera da Terra pela primeira vez.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🧪 O Procedimento Experimental</div>
+            <ol style="padding-left: 18px; line-height: 1.7;">
+              <li>Torricelli encheu um tubo de vidro de $1\text{ metro}$ fechado em uma ponta com <strong>mercúrio líquido (Hg)</strong>.</li>
+              <li>Tampou com o dedo e inverteu o tubo dentro de uma bacia cheia de mercúrio.</li>
+              <li>Ao soltar o dedo, o mercúrio desceu um pouco e parou numa altura exatamente igual a <strong>$76\text{ cm}$ ($760\text{ mm}$)</strong> acima do nível da bacia!</li>
+              <li>No topo do tubo fechado formou-se o <strong>Vácuo de Torricelli</strong> ($p \approx 0$).</li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <div class="card-title">💡 Por Que Ele Usou Mercúrio?</div>
+            <p>Pelo Teorema de Stevin, na superfície da bacia: $$p_{atm} = \rho \cdot g \cdot h$$</p>
+            <p>O mercúrio é incrivelmente denso: $\rho_{Hg} = 13.600\text{ kg/m}^3$ (13,6 vezes mais denso que a água!).</p>
+            <div class="callout danger" style="margin-top: 10px;">
+              <strong>E SE ELE TIVESSE USADO ÁGUA?</strong><br>
+              $$h_{\text{água}} = \frac{p_{atm}}{\rho_{\text{água}} \cdot g} = \frac{101.325}{1.000 \times 9{,}8} \approx \mathbf{10{,}33\text{ metros}}!$$
+              Torricelli teria precisado de um tubo de vidro de mais de 10 metros de altura (um prédio de 3 andares)!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 4: OS LIMITES FÍSICOS DA SUCÇÃO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Tema Quente de Prova!</span>
+          <h2 class="slide-title">Os Limites Físicos da Sucção</h2>
+          <p class="slide-subtitle">Por que bombas de sucção e canudinhos não conseguem puxar água além de ~10,3 metros.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🧃 A Ilusão de "Puxar" o Líquido</div>
+            <p>Quando você toma refrigerante com um canudo:</p>
+            <ul>
+              <li>Você <strong>NÃO está puxando</strong> o refrigerante com força de atração!</li>
+              <li>O que você faz é expandir seus pulmões e boca, <strong>diminuindo a pressão do ar</strong> dentro do canudo ($p_{canudo} < p_{atm}$).</li>
+              <li>É a <strong>PRESSÃO ATMOSFÉRICA EXTERNA</strong> sobre o copo que empurra o refrigerante goela acima!</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 10px;">
+              Se você colocasse um canudinho em um copo na Lua ou no vácuo do espaço, você <strong>nunca conseguiria beber uma única gota</strong>, não importa a força que fizesse!
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⛏️ O Limite de 10 Metros dos Poços</div>
+            <p>Mesmo que uma bomba na superfície crie um <strong>VÁCUO ABSOLUTO PERFEITO</strong> ($p_{interna} = 0$):</p>
+            <div class="formula-card" style="margin: 10px 0; padding: 12px;">
+              <div class="formula-main" style="font-size: 1.3rem;">
+                $$h_{máx} = \frac{p_{atm}}{\rho g} \approx \frac{100.000}{1000 \times 9{,}8} \approx \mathbf{10{,}33\text{ metros}}$$
+              </div>
+            </div>
+            <div class="callout success">
+              <strong>Solução da Engenharia:</strong><br>
+              Para tirar água de poços artesianos profundos (ex: 50 ou 100 metros), é impossível usar bomba de sucção na superfície. A bomba precisa ser <strong>submersa e colocada no fundo do poço para EMPURRAR</strong> a água para cima!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO: BARÔMETRO & SUCÇÃO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Barômetro e Limite de Sucção</h2>
+          <p class="slide-subtitle">Alterne o líquido e a pressão de topo para testar a coluna hidrostática máxima.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area">
+            <canvas id="sim-canvas-succao" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="sim-control-group">
+              <label>Fluido:</label>
+              <select id="suc-liquido" style="padding: 8px; border-radius: 6px; background: #0f172a; color: #f8fafc; border: 1px solid var(--border-color);">
+                <option value="agua" selected>Água Doce (1.000 kg/m³)</option>
+                <option value="hg">Mercúrio (13.600 kg/m³)</option>
+                <option value="alcool">Álcool Etílico (800 kg/m³)</option>
+              </select>
+            </div>
+            <div class="sim-control-group">
+              <label>Pressão Atmosférica Ext.:</label>
+              <input type="range" id="suc-patm" min="70" max="130" step="5" value="101">
+            </div>
+            <div class="sim-control-group">
+              <label>Pressão no Topo (Sucção):</label>
+              <input type="range" id="suc-ptop" min="0" max="80" step="5" value="0">
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Densidade do Fluido</div>
+              <div id="out-densidade" class="readout-value">1.000 kg/m³</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Altura Real da Coluna</div>
+              <div id="out-hreal" class="readout-value">10.33 m</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Limite Físico Máximo ($h_{máx}$)</div>
+              <div id="out-hmax" class="readout-value">10.33 m</div>
+            </div>
+          </div>
+
+          <div id="out-suc-exp" class="callout success" style="margin-top: 4px; font-size: 0.85rem;">
+            Vácuo Perfeito no topo! Coluna atingiu o LIMITE FÍSICO MÁXIMO da atmosfera: 10,33m.
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática</span>
+          <h2 class="slide-title">Exercício Resolvido: Sucção de Combustível</h2>
+          <p class="slide-subtitle">Cálculo de pressão hidrostática e altura máxima de aspiração.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / UNICAMP</span>
+          <p class="exercise-enunciation">
+            Uma bomba de sucção instalada na parte superior de um tanque tenta aspirar óleo diesel de densidade $\rho = 850\text{ kg/m}^3$. A pressão atmosférica no local é de $p_{atm} = 1{,}02 \times 10^5\text{ Pa}$ e adote a aceleração da gravidade $g = 10\text{ m/s}^2$.<br>
+            <strong>a)</strong> Se a bomba conseguir reduzir a pressão no topo do cano até $p_{\text{topo}} = 0{,}17 \times 10^5\text{ Pa}$, qual será a altura da coluna de óleo que sobe pelo cano?<br>
+            <strong>b)</strong> Qual é o limite físico teórico máximo que essa bomba conseguiria erguer o óleo diesel com vácuo perfeito?<br>
+            <strong>c)</strong> Esse limite seria maior ou menor se o fluido fosse água pura ($\rho = 1.000\text{ kg/m}^3$)?
+          </p>
+
+          <button class="solution-toggle">💡 Ver Resolução Passo a Passo</button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Altura da Coluna de Óleo</strong>
+              <p>A diferença de pressão entre a atmosfera e o topo empurra o óleo:</p>
+              <p>$$\Delta p = p_{atm} - p_{\text{topo}} = (1{,}02 - 0{,}17) \times 10^5 = 0{,}85 \times 10^5 = 85.000\text{ Pa}$$</p>
+              <p>$$\Delta p = \rho \cdot g \cdot h \implies h = \frac{\Delta p}{\rho g} = \frac{85.000}{850 \times 10} = \frac{85.000}{8.500} = \mathbf{10\text{ metros}}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Limite Teórico Máximo (Vácuo Perfeito $p_{topo} = 0$)</strong>
+              <p>$$h_{máx} = \frac{p_{atm}}{\rho g} = \frac{1{,}02 \times 10^5}{850 \times 10} = \frac{102.000}{8.500} = \mathbf{12\text{ metros}}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 3: Comparação com Água Pura</strong>
+              <p>$$h_{\text{água}} = \frac{102.000}{1000 \times 10} = 10{,}2\text{ metros}$$</p>
+              <p><em>Resposta:</em> Seria <strong>menor</strong> para a água ($10{,}2\text{ m} < 12\text{ m}$). Quanto mais denso for o líquido, mais pesada é sua coluna e menor é a altura máxima sustentada pela atmosfera!</p>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      
+    </div>
+  </footer>
+
+  
+  </div>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic7();

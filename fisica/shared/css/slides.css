@@ -1238,23 +1238,35 @@ body::before {
   gap: 6px;
 }
 
+
+
+.wb-size-dot {
+  display: inline-block;
+  border-radius: 50%;
+  background: currentColor;
+}
+.wb-size-dot.dot-sm { width: 4px; height: 4px; }
+.wb-size-dot.dot-md { width: 8px; height: 8px; }
+.wb-size-dot.dot-lg { width: 14px; height: 14px; }
+
 .wb-tool-btn, .wb-size-btn {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--text-secondary);
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 6px;
+  font-size: 1.15rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  padding: 0;
 }
 
 .wb-tool-btn:hover, .wb-size-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
 }
 
@@ -1262,5 +1274,5 @@ body::before {
   background: var(--accent-blue);
   color: #ffffff;
   border-color: var(--accent-cyan);
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
 }

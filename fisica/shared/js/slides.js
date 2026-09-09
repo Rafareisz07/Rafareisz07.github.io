@@ -147,28 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  // 6. Modo Professor / Notas Pedagógicas (P)
-  function toggleTeacherMode() {
-    document.body.classList.toggle('teacher-mode-active');
-    const isActive = document.body.classList.contains('teacher-mode-active');
-    if (teacherToggleBtn) teacherToggleBtn.classList.toggle('active', isActive);
-    localStorage.setItem('fisica_teacher_mode', isActive ? 'true' : 'false');
-  }
-
-  
-  if (localStorage.getItem('fisica_teacher_mode') === 'true') {
-    document.body.classList.add('teacher-mode-active');
-    if (teacherToggleBtn) teacherToggleBtn.classList.add('active');
-  }
-
-  // 7. Tema Claro / Escuro
-  function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('fisica_theme', theme);
-    if (themeToggleBtn) {
-      themeToggleBtn.innerHTML = theme === 'light' ? '🌙' : '☀️';
-    }
-  }
+  // Modo professor removido
+  try { localStorage.removeItem('fisica_teacher_mode'); } catch(err) {}
 
   const savedTheme = localStorage.getItem('fisica_theme') || 'dark';
   setTheme(savedTheme);
@@ -216,23 +196,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 11. Render KaTeX com auto-retry e suporte assíncrono garantido
+  // 11. Render KaTeX com auto-retry e suporte a múltiplos eventos
   function runKaTeX(attempts = 0) {
     if (typeof window.renderMathInElement === 'function') {
       try {
         window.renderMathInElement(document.body, {
           delimiters: [
-            { left: '$$', right: '$$', display: true },
-            { left: '$', right: '$', display: false },
+            { left: '$', right: '$', display: true },
+            { left: ', right: ', display: false },
             { left: '\\(', right: '\\)', display: false },
-            { left: '\\[', right: '\\[', display: true }
+            { left: '\\[', right: '\\]', display: true }
           ],
           throwOnError: false
         });
       } catch (err) {
         console.warn('KaTeX render warning:', err);
       }
-    } else if (attempts < 40) {
+    } else if (attempts < 60) {
       setTimeout(() => runKaTeX(attempts + 1), 50);
     }
   }
@@ -240,4 +220,5 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initKaTeX = runKaTeX;
   runKaTeX();
   window.addEventListener('load', () => runKaTeX());
+  window.addEventListener('slideChanged', () => runKaTeX());
 });

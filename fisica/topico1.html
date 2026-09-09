@@ -9,12 +9,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="if(window.initKaTeX) window.initKaTeX();"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css?v=2.3.0">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
 </head>
 <body>
 
@@ -350,9 +370,719 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js?v=2.3.0"></script>
-  <script src="./shared/js/annotator.js?v=2.3.0"></script>
-  <script src="./shared/js/simulators.js?v=2.3.0"></script>
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      PhysicsSims.initTopic1();
+    });
+  </script>
+</body>
+</html>
+, right: '
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 01</span>
+      <h1 class="topic-title-header">Potência Média e Instantânea</h1>
+    </div>
+
+    
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: INTRODUÇÃO & CONCEITO -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fundamentos da Dinâmica</span>
+          <h2 class="slide-title">Por que Precisamos do Conceito de Potência?</h2>
+          <p class="slide-subtitle">A diferença fundamental entre "quanto trabalho foi feito" e "com que rapidez ele foi feito".</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">⚡ O Cotidiano vs. A Física</div>
+            <p>Imagine carregar <strong>100 tijolos</strong> até o 3º andar de um prédio:</p>
+            <ul>
+              <li>Se você levar <strong>uma hora</strong> carregando um a um pela escada, realiza um trabalho $W = mgh$.</li>
+              <li>Se um guindaste elétrico erguer todos os 100 tijolos em <strong>10 segundos</strong>, o trabalho total realizado é <strong>exatamente o mesmo</strong>!</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 14px;">
+              <strong>Conclusão Física:</strong> O trabalho mede a energia transferida. A <strong>Potência</strong> mede a <strong>taxa temporal</strong> de transferência dessa energia!
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🎯 No Que Prestar Atenção</div>
+            <p>Nos vestibulares e exames, os problemas gostam de misturar:</p>
+            <ul>
+              <li><strong>Trabalho da gravidade</strong> ($W = mgh$) com tempo de subida de elevadores e bombas de água.</li>
+              <li><strong>Energia cinética</strong> ($W = \Delta E_c = \frac{1}{2}mv^2$) com carros acelerando de 0 a 100 km/h.</li>
+              <li><strong>Potência elétrica</strong> consumida vs. potência mecânica útil gerada (rendimento).</li>
+            </ul>
+            <div class="callout success" style="margin-top: 14px;">
+              <strong>Dica de Ouro:</strong> Sempre que o enunciado perguntar <em>"qual motor é mais eficiente"</em> ou der grandezas por segundo (como vazão de água em litros/s), pense em <strong>Potência</strong>!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 2: POTÊNCIA MÉDIA & UNIDADES -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Definição Formal</span>
+          <h2 class="slide-title">Potência Média e suas Unidades no S.I.</h2>
+          <p class="slide-subtitle">Fórmula fundamental, conversões clássicas e a correta interpretação do quilowatt-hora.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$P_m = \frac{\Delta W}{\Delta t} = \frac{\Delta E}{\Delta t}$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$P_m$:</strong> Potência Média (Watt - $\text{W}$)</span>
+            <span><strong>$\Delta W$:</strong> Trabalho realizado (Joule - $\text{J}$)</span>
+            <span><strong>$\Delta t$:</strong> Intervalo de tempo (segundos - $\text{s}$)</span>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title">📏 No Sistema Internacional</div>
+            <p>A unidade oficial é o <strong>Watt (W)</strong> em homenagem a James Watt:</p>
+            <p style="margin-top: 8px;">$$1\text{ W} = 1\text{ Joule por segundo } (1\text{ J/s})$$</p>
+            <p>Múltiplos usuais:</p>
+            <ul>
+              <li>$1\text{ kW} = 10^3\text{ W} = 1.000\text{ W}$</li>
+              <li>$1\text{ MW} = 10^6\text{ W} = 1.000.000\text{ W}$</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🐎 Motores: cv e hp</div>
+            <p>Unidades práticas originadas no início da Revolução Industrial:</p>
+            <ul>
+              <li><strong>Cavalo-Vapor (cv):</strong><br>$1\text{ cv} \approx 735{,}5\text{ W}$</li>
+              <li><strong>Horsepower (hp):</strong><br>$1\text{ hp} \approx 745{,}7\text{ W}$</li>
+            </ul>
+            <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">Geralmente, nos vestibulares brasileiros aproxima-se $1\text{ cv} \approx 735\text{ W}$ ou $750\text{ W}$.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚠️ Ponto Crítico: O Quilowatt-Hora (kWh)</div>
+            <div class="callout danger" style="padding: 10px;">
+              <strong>CUIDADO:</strong> O <em>quilowatt-hora</em> ($\text{kWh}$) da conta de luz <strong>NÃO é unidade de potência</strong>, é unidade de <strong>ENERGIA</strong>!
+            </div>
+            <p style="margin-top: 8px;">$$E = P \cdot \Delta t$$</p>
+            <p>$$1\text{ kWh} = (1000\text{ W}) \cdot (3600\text{ s}) = 3{,}6 \times 10^6\text{ J}$$</p>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 3: POTÊNCIA INSTANTÂNEA -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Mecânica Avançada</span>
+          <h2 class="slide-title">Potência Instantânea: $P = \vec{F} \cdot \vec{v}$</h2>
+          <p class="slide-subtitle">Como calcular a potência em um momento exato quando a velocidade varia.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div>
+            <div class="formula-card">
+              <div class="formula-main">
+                $$P = \vec{F} \cdot \vec{v} = F \cdot v \cdot \cos(\theta)$$
+              </div>
+              <div class="formula-legend">
+                <span><strong>$F$:</strong> Força aplicada ($\text{N}$)</span>
+                <span><strong>$v$:</strong> Velocidade instantânea ($\text{m/s}$)</span>
+                <span><strong>$\theta$:</strong> Ângulo entre $\vec{F}$ e $\vec{v}$</span>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px;">
+              <div class="card-title">🔍 De Onde Vem Essa Fórmula?</div>
+              <p>Lembre-se que Trabalho é $W = F \cdot d \cdot \cos\theta$.</p>
+              <p>Substituindo na fórmula de potência média para um intervalo infinitesimal:</p>
+              <p style="margin: 8px 0; text-align: center;">$$P = \lim_{\Delta t \to 0} \frac{F \cdot \Delta s \cdot \cos\theta}{\Delta t} = F \cdot \left(\lim_{\Delta t \to 0} \frac{\Delta s}{\Delta t}\right) \cdot \cos\theta = F \cdot v \cdot \cos\theta$$</p>
+              <p>Se a força for no mesmo sentido do movimento ($\theta = 0^\circ \implies \cos 0^\circ = 1$):</p>
+              <p style="text-align: center; color: var(--accent-cyan); font-weight: 700;">$$P = F \cdot v$$</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🚗 Aplicação Real em Veículos</div>
+            <p>Em um carro andando a <strong>velocidade constante</strong> em linha reta:</p>
+            <ul>
+              <li>A aceleração é zero ($\sum \vec{F} = 0$).</li>
+              <li>Logo, a força motora do motor precisa ser exatamente igual à soma das resistências (atrito com o solo + resistência do ar): $$F_{motor} = F_{resistência}$$</li>
+              <li>A potência consumida pelo motor para manter essa velocidade é: $$P = F_{resistência} \cdot v$$</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 14px;">
+              <strong>Por que o carro gasta muito mais combustível a 120 km/h do que a 80 km/h?</strong><br>
+              A força do ar cresce com o quadrado da velocidade ($F_{ar} \propto v^2$). Logo, a potência requerida cresce com o <strong>cubo da velocidade</strong> ($P \propto v^3$)!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 4: GRÁFICO P x t & RENDIMENTO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Análise Gráfica & Eficiência</span>
+          <h2 class="slide-title">Diagramas $P \times t$ e Rendimento ($\eta$)</h2>
+          <p class="slide-subtitle">Como extrair o trabalho graficamente e calcular a energia útil de uma máquina.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📈 Propriedade Gráfica Fundamental</div>
+            <p>Em qualquer gráfico de <strong>Potência em função do Tempo ($P \times t$)</strong>:</p>
+            <div class="callout success" style="margin: 12px 0; text-align: center; font-size: 1.1rem;">
+              <strong>ÁREA DO GRÁFICO $\stackrel{N}{=}$ TRABALHO REALIZADO ($\Delta W$)</strong>
+            </div>
+            <p>Se a potência for constante, a área é um retângulo ($P \cdot \Delta t$).</p>
+            <p>Se a potência variar linearmente com o tempo (ex: durante a aceleração de uma turbina), a área será um trapézio ou triângulo:</p>
+            <p style="text-align: center; margin-top: 8px;">$$\Delta W = \text{Área sob a curva} = \int P \, dt$$</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚙️ Rendimento Mecânico ($\eta$)</div>
+            <p>Nenhuma máquina real consegue converter 100% da potência recebida em trabalho útil. Sempre há perdas por atrito, aquecimento e ruído:</p>
+            <div class="formula-card" style="margin: 10px 0;">
+              <div class="formula-main">
+                $$\eta = \frac{P_{útil}}{P_{total}} = \frac{W_{útil}}{W_{total}}$$
+              </div>
+              <div class="formula-legend">
+                <span>$P_{total} = P_{útil} + P_{dissipada}$</span>
+                <span>$0 \le \eta < 1$ (ou em %)</span>
+              </div>
+            </div>
+            <div class="callout danger" style="margin-top: 10px;">
+              <strong>Atenção:</strong> $\eta$ é uma grandeza <strong>adimensional</strong> (não tem unidade). Se der $\eta = 0{,}75$, significa rendimento de $75\%$.
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Potência de Veículo em Subida</h2>
+          <p class="slide-subtitle">Ajuste massa, rampa, atrito e velocidade para ver o motor calcular a potência necessária em tempo real.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area">
+            <canvas id="sim-canvas-potencia" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <label>Massa do Carro: <span id="val-massa">1200 kg</span></label>
+              <input type="range" id="slider-massa" min="600" max="2500" step="50" value="1200">
+            </div>
+            <div class="sim-control-group">
+              <label>Inclinação da Rampa: <span id="val-angulo">12°</span></label>
+              <input type="range" id="slider-angulo" min="0" max="35" step="1" value="12">
+            </div>
+            <div class="sim-control-group">
+              <label>Velocidade Constante: <span id="val-velocidade">72 km/h</span></label>
+              <input type="range" id="slider-velocidade" min="20" max="140" step="5" value="72">
+            </div>
+            <div class="sim-control-group">
+              <label>Coeficiente Atrito (μ): <span id="val-atrito">0.05</span></label>
+              <input type="range" id="slider-atrito" min="0.01" max="0.2" step="0.01" value="0.05">
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Força Motora ($F_{mot}$)</div>
+              <div id="out-forca" class="readout-value">3.024 N</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Potência (Watts)</div>
+              <div id="out-watts" class="readout-value">60.480 W</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Potência em Cavalos</div>
+              <div id="out-cv" class="readout-value">82.2 cv</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Energia em 10s</div>
+              <div id="out-energia" class="readout-value">604.8 kJ</div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática</span>
+          <h2 class="slide-title">Exercício Resolvido: Elevador de Carga</h2>
+          <p class="slide-subtitle">Modelo clássico de vestibular com cálculo de potência média e rendimento.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / FUVEST Clássico</span>
+          <p class="exercise-enunciation">
+            Um guindaste em uma obra ergue uma carga de massa $m = 500\text{ kg}$ a uma altura de $h = 24\text{ metros}$ com velocidade constante, gastando um tempo de $\Delta t = 20\text{ segundos}$. Adote $g = 10\text{ m/s}^2$.<br>
+            <strong>a)</strong> Calcule o trabalho realizado pela força do cabo do guindaste.<br>
+            <strong>b)</strong> Determine a potência média útil desenvolvida pelo motor do guindaste.<br>
+            <strong>c)</strong> Se o motor elétrico possui um rendimento de $\eta = 75\%$, qual deve ser a potência total consumida da rede elétrica?
+          </p>
+
+          <button class="solution-toggle">💡 Ver Resolução Passo a Passo</button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Trabalho Realizado (Contra a Gravidade)</strong>
+              <p>Como o movimento ocorre com velocidade constante, a tração no cabo equilibra o peso: $F = P = mg$.</p>
+              <p>$$W = F \cdot h = m \cdot g \cdot h = 500 \cdot 10 \cdot 24 = 120.000\text{ J} = 120\text{ kJ}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Potência Média Útil</strong>
+              <p>$$P_{útil} = \frac{W}{\Delta t} = \frac{120.000\text{ J}}{20\text{ s}} = 6.000\text{ W} = 6\text{ kW}$$</p>
+              <p>Em cavalos-vapor ($\approx 750\text{ W}$): $P_{útil} = \frac{6000}{750} = 8\text{ cv}$.</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 3: Potência Total Consumida (Rendimento)</strong>
+              <p>$$\eta = \frac{P_{útil}}{P_{total}} \implies P_{total} = \frac{P_{útil}}{\eta} = \frac{6.000}{0{,}75} = 8.000\text{ W} = 8\text{ kW}$$</p>
+              <p><em>Interpretação:</em> O motor puxa 8 kW da tomada, aproveita 6 kW para erguer a carga e dissipa 2 kW em calor/atrito mecânico.</p>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      
+    </div>
+  </footer>
+
+  
+  </div>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      PhysicsSims.initTopic1();
+    });
+  </script>
+</body>
+</html>
+, display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.4.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 01</span>
+      <h1 class="topic-title-header">Potência Média e Instantânea</h1>
+    </div>
+
+    
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: INTRODUÇÃO & CONCEITO -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fundamentos da Dinâmica</span>
+          <h2 class="slide-title">Por que Precisamos do Conceito de Potência?</h2>
+          <p class="slide-subtitle">A diferença fundamental entre "quanto trabalho foi feito" e "com que rapidez ele foi feito".</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">⚡ O Cotidiano vs. A Física</div>
+            <p>Imagine carregar <strong>100 tijolos</strong> até o 3º andar de um prédio:</p>
+            <ul>
+              <li>Se você levar <strong>uma hora</strong> carregando um a um pela escada, realiza um trabalho $W = mgh$.</li>
+              <li>Se um guindaste elétrico erguer todos os 100 tijolos em <strong>10 segundos</strong>, o trabalho total realizado é <strong>exatamente o mesmo</strong>!</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 14px;">
+              <strong>Conclusão Física:</strong> O trabalho mede a energia transferida. A <strong>Potência</strong> mede a <strong>taxa temporal</strong> de transferência dessa energia!
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🎯 No Que Prestar Atenção</div>
+            <p>Nos vestibulares e exames, os problemas gostam de misturar:</p>
+            <ul>
+              <li><strong>Trabalho da gravidade</strong> ($W = mgh$) com tempo de subida de elevadores e bombas de água.</li>
+              <li><strong>Energia cinética</strong> ($W = \Delta E_c = \frac{1}{2}mv^2$) com carros acelerando de 0 a 100 km/h.</li>
+              <li><strong>Potência elétrica</strong> consumida vs. potência mecânica útil gerada (rendimento).</li>
+            </ul>
+            <div class="callout success" style="margin-top: 14px;">
+              <strong>Dica de Ouro:</strong> Sempre que o enunciado perguntar <em>"qual motor é mais eficiente"</em> ou der grandezas por segundo (como vazão de água em litros/s), pense em <strong>Potência</strong>!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 2: POTÊNCIA MÉDIA & UNIDADES -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Definição Formal</span>
+          <h2 class="slide-title">Potência Média e suas Unidades no S.I.</h2>
+          <p class="slide-subtitle">Fórmula fundamental, conversões clássicas e a correta interpretação do quilowatt-hora.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$P_m = \frac{\Delta W}{\Delta t} = \frac{\Delta E}{\Delta t}$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$P_m$:</strong> Potência Média (Watt - $\text{W}$)</span>
+            <span><strong>$\Delta W$:</strong> Trabalho realizado (Joule - $\text{J}$)</span>
+            <span><strong>$\Delta t$:</strong> Intervalo de tempo (segundos - $\text{s}$)</span>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title">📏 No Sistema Internacional</div>
+            <p>A unidade oficial é o <strong>Watt (W)</strong> em homenagem a James Watt:</p>
+            <p style="margin-top: 8px;">$$1\text{ W} = 1\text{ Joule por segundo } (1\text{ J/s})$$</p>
+            <p>Múltiplos usuais:</p>
+            <ul>
+              <li>$1\text{ kW} = 10^3\text{ W} = 1.000\text{ W}$</li>
+              <li>$1\text{ MW} = 10^6\text{ W} = 1.000.000\text{ W}$</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🐎 Motores: cv e hp</div>
+            <p>Unidades práticas originadas no início da Revolução Industrial:</p>
+            <ul>
+              <li><strong>Cavalo-Vapor (cv):</strong><br>$1\text{ cv} \approx 735{,}5\text{ W}$</li>
+              <li><strong>Horsepower (hp):</strong><br>$1\text{ hp} \approx 745{,}7\text{ W}$</li>
+            </ul>
+            <p style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">Geralmente, nos vestibulares brasileiros aproxima-se $1\text{ cv} \approx 735\text{ W}$ ou $750\text{ W}$.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚠️ Ponto Crítico: O Quilowatt-Hora (kWh)</div>
+            <div class="callout danger" style="padding: 10px;">
+              <strong>CUIDADO:</strong> O <em>quilowatt-hora</em> ($\text{kWh}$) da conta de luz <strong>NÃO é unidade de potência</strong>, é unidade de <strong>ENERGIA</strong>!
+            </div>
+            <p style="margin-top: 8px;">$$E = P \cdot \Delta t$$</p>
+            <p>$$1\text{ kWh} = (1000\text{ W}) \cdot (3600\text{ s}) = 3{,}6 \times 10^6\text{ J}$$</p>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 3: POTÊNCIA INSTANTÂNEA -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Mecânica Avançada</span>
+          <h2 class="slide-title">Potência Instantânea: $P = \vec{F} \cdot \vec{v}$</h2>
+          <p class="slide-subtitle">Como calcular a potência em um momento exato quando a velocidade varia.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div>
+            <div class="formula-card">
+              <div class="formula-main">
+                $$P = \vec{F} \cdot \vec{v} = F \cdot v \cdot \cos(\theta)$$
+              </div>
+              <div class="formula-legend">
+                <span><strong>$F$:</strong> Força aplicada ($\text{N}$)</span>
+                <span><strong>$v$:</strong> Velocidade instantânea ($\text{m/s}$)</span>
+                <span><strong>$\theta$:</strong> Ângulo entre $\vec{F}$ e $\vec{v}$</span>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px;">
+              <div class="card-title">🔍 De Onde Vem Essa Fórmula?</div>
+              <p>Lembre-se que Trabalho é $W = F \cdot d \cdot \cos\theta$.</p>
+              <p>Substituindo na fórmula de potência média para um intervalo infinitesimal:</p>
+              <p style="margin: 8px 0; text-align: center;">$$P = \lim_{\Delta t \to 0} \frac{F \cdot \Delta s \cdot \cos\theta}{\Delta t} = F \cdot \left(\lim_{\Delta t \to 0} \frac{\Delta s}{\Delta t}\right) \cdot \cos\theta = F \cdot v \cdot \cos\theta$$</p>
+              <p>Se a força for no mesmo sentido do movimento ($\theta = 0^\circ \implies \cos 0^\circ = 1$):</p>
+              <p style="text-align: center; color: var(--accent-cyan); font-weight: 700;">$$P = F \cdot v$$</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🚗 Aplicação Real em Veículos</div>
+            <p>Em um carro andando a <strong>velocidade constante</strong> em linha reta:</p>
+            <ul>
+              <li>A aceleração é zero ($\sum \vec{F} = 0$).</li>
+              <li>Logo, a força motora do motor precisa ser exatamente igual à soma das resistências (atrito com o solo + resistência do ar): $$F_{motor} = F_{resistência}$$</li>
+              <li>A potência consumida pelo motor para manter essa velocidade é: $$P = F_{resistência} \cdot v$$</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 14px;">
+              <strong>Por que o carro gasta muito mais combustível a 120 km/h do que a 80 km/h?</strong><br>
+              A força do ar cresce com o quadrado da velocidade ($F_{ar} \propto v^2$). Logo, a potência requerida cresce com o <strong>cubo da velocidade</strong> ($P \propto v^3$)!
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 4: GRÁFICO P x t & RENDIMENTO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Análise Gráfica & Eficiência</span>
+          <h2 class="slide-title">Diagramas $P \times t$ e Rendimento ($\eta$)</h2>
+          <p class="slide-subtitle">Como extrair o trabalho graficamente e calcular a energia útil de uma máquina.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📈 Propriedade Gráfica Fundamental</div>
+            <p>Em qualquer gráfico de <strong>Potência em função do Tempo ($P \times t$)</strong>:</p>
+            <div class="callout success" style="margin: 12px 0; text-align: center; font-size: 1.1rem;">
+              <strong>ÁREA DO GRÁFICO $\stackrel{N}{=}$ TRABALHO REALIZADO ($\Delta W$)</strong>
+            </div>
+            <p>Se a potência for constante, a área é um retângulo ($P \cdot \Delta t$).</p>
+            <p>Se a potência variar linearmente com o tempo (ex: durante a aceleração de uma turbina), a área será um trapézio ou triângulo:</p>
+            <p style="text-align: center; margin-top: 8px;">$$\Delta W = \text{Área sob a curva} = \int P \, dt$$</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚙️ Rendimento Mecânico ($\eta$)</div>
+            <p>Nenhuma máquina real consegue converter 100% da potência recebida em trabalho útil. Sempre há perdas por atrito, aquecimento e ruído:</p>
+            <div class="formula-card" style="margin: 10px 0;">
+              <div class="formula-main">
+                $$\eta = \frac{P_{útil}}{P_{total}} = \frac{W_{útil}}{W_{total}}$$
+              </div>
+              <div class="formula-legend">
+                <span>$P_{total} = P_{útil} + P_{dissipada}$</span>
+                <span>$0 \le \eta < 1$ (ou em %)</span>
+              </div>
+            </div>
+            <div class="callout danger" style="margin-top: 10px;">
+              <strong>Atenção:</strong> $\eta$ é uma grandeza <strong>adimensional</strong> (não tem unidade). Se der $\eta = 0{,}75$, significa rendimento de $75\%$.
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Potência de Veículo em Subida</h2>
+          <p class="slide-subtitle">Ajuste massa, rampa, atrito e velocidade para ver o motor calcular a potência necessária em tempo real.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area">
+            <canvas id="sim-canvas-potencia" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <label>Massa do Carro: <span id="val-massa">1200 kg</span></label>
+              <input type="range" id="slider-massa" min="600" max="2500" step="50" value="1200">
+            </div>
+            <div class="sim-control-group">
+              <label>Inclinação da Rampa: <span id="val-angulo">12°</span></label>
+              <input type="range" id="slider-angulo" min="0" max="35" step="1" value="12">
+            </div>
+            <div class="sim-control-group">
+              <label>Velocidade Constante: <span id="val-velocidade">72 km/h</span></label>
+              <input type="range" id="slider-velocidade" min="20" max="140" step="5" value="72">
+            </div>
+            <div class="sim-control-group">
+              <label>Coeficiente Atrito (μ): <span id="val-atrito">0.05</span></label>
+              <input type="range" id="slider-atrito" min="0.01" max="0.2" step="0.01" value="0.05">
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Força Motora ($F_{mot}$)</div>
+              <div id="out-forca" class="readout-value">3.024 N</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Potência (Watts)</div>
+              <div id="out-watts" class="readout-value">60.480 W</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Potência em Cavalos</div>
+              <div id="out-cv" class="readout-value">82.2 cv</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Energia em 10s</div>
+              <div id="out-energia" class="readout-value">604.8 kJ</div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática</span>
+          <h2 class="slide-title">Exercício Resolvido: Elevador de Carga</h2>
+          <p class="slide-subtitle">Modelo clássico de vestibular com cálculo de potência média e rendimento.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / FUVEST Clássico</span>
+          <p class="exercise-enunciation">
+            Um guindaste em uma obra ergue uma carga de massa $m = 500\text{ kg}$ a uma altura de $h = 24\text{ metros}$ com velocidade constante, gastando um tempo de $\Delta t = 20\text{ segundos}$. Adote $g = 10\text{ m/s}^2$.<br>
+            <strong>a)</strong> Calcule o trabalho realizado pela força do cabo do guindaste.<br>
+            <strong>b)</strong> Determine a potência média útil desenvolvida pelo motor do guindaste.<br>
+            <strong>c)</strong> Se o motor elétrico possui um rendimento de $\eta = 75\%$, qual deve ser a potência total consumida da rede elétrica?
+          </p>
+
+          <button class="solution-toggle">💡 Ver Resolução Passo a Passo</button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Trabalho Realizado (Contra a Gravidade)</strong>
+              <p>Como o movimento ocorre com velocidade constante, a tração no cabo equilibra o peso: $F = P = mg$.</p>
+              <p>$$W = F \cdot h = m \cdot g \cdot h = 500 \cdot 10 \cdot 24 = 120.000\text{ J} = 120\text{ kJ}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Potência Média Útil</strong>
+              <p>$$P_{útil} = \frac{W}{\Delta t} = \frac{120.000\text{ J}}{20\text{ s}} = 6.000\text{ W} = 6\text{ kW}$$</p>
+              <p>Em cavalos-vapor ($\approx 750\text{ W}$): $P_{útil} = \frac{6000}{750} = 8\text{ cv}$.</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 3: Potência Total Consumida (Rendimento)</strong>
+              <p>$$\eta = \frac{P_{útil}}{P_{total}} \implies P_{total} = \frac{P_{útil}}{\eta} = \frac{6.000}{0{,}75} = 8.000\text{ W} = 8\text{ kW}$$</p>
+              <p><em>Interpretação:</em> O motor puxa 8 kW da tomada, aproveita 6 kW para erguer a carga e dissipa 2 kW em calor/atrito mecânico.</p>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      
+    </div>
+  </footer>
+
+  
+  </div>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.4.0"></script>
+  <script src="./shared/js/annotator.js?v=2.4.0"></script>
+  <script src="./shared/js/simulators.js?v=2.4.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic1();

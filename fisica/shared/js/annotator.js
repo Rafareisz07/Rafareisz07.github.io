@@ -126,13 +126,9 @@ class SlideAnnotator {
       <div class="whiteboard-body bg-dark">
         <canvas id="whiteboard-canvas"></canvas>
 
-        <!-- ESTOJO DA LOUSA (Bandeja de Giz, Canetas e Apagador) -->
+        <!-- ESTOJO DA LOUSA (Bandeja Minimalista de Giz, Canetas e Apagador - Sem Textos) -->
         <div class="whiteboard-estojo">
-          <div class="estojo-label">🧰 Estojo da Lousa</div>
-          
-          <div class="estojo-separator"></div>
-
-          <!-- Cores de Giz -->
+          <!-- Cores de Giz / Caneta -->
           <div class="estojo-colors">
             <button class="wb-color-btn active" data-color="#facc15" style="background: #facc15;" title="Amarelo Giz"></button>
             <button class="wb-color-btn" data-color="#38bdf8" style="background: #38bdf8;" title="Ciano Elétrico"></button>
@@ -144,20 +140,20 @@ class SlideAnnotator {
 
           <div class="estojo-separator"></div>
 
-          <!-- Ferramentas do Estojo -->
+          <!-- Ferramentas do Estojo: Apenas Ícones Sem Texto -->
           <div class="estojo-tools">
-            <button id="wb-tool-pen" class="wb-tool-btn active" title="Giz / Caneta">✏️ Caneta</button>
-            <button id="wb-tool-highlighter" class="wb-tool-btn" title="Marca-Texto">🖍️ Marca-Texto</button>
-            <button id="wb-tool-eraser" class="wb-tool-btn" title="Apagador">🧹 Apagador</button>
+            <button id="wb-tool-pen" class="wb-tool-btn active" title="Giz / Caneta (Tecla D)">✏️</button>
+            <button id="wb-tool-highlighter" class="wb-tool-btn" title="Marca-Texto">🖍️</button>
+            <button id="wb-tool-eraser" class="wb-tool-btn" title="Apagador">🧹</button>
           </div>
 
           <div class="estojo-separator"></div>
 
-          <!-- Espessura do Traço -->
+          <!-- Espessura do Traço: Pontos Visuais Sem Texto -->
           <div class="estojo-sizes">
-            <button class="wb-size-btn" data-size="3" title="Traço Fino">Fino</button>
-            <button class="wb-size-btn active" data-size="6" title="Traço Médio">Médio</button>
-            <button class="wb-size-btn" data-size="12" title="Traço Grosso">Grosso</button>
+            <button class="wb-size-btn" data-size="3" title="Traço Fino"><span class="wb-size-dot dot-sm"></span></button>
+            <button class="wb-size-btn active" data-size="6" title="Traço Médio"><span class="wb-size-dot dot-md"></span></button>
+            <button class="wb-size-btn" data-size="12" title="Traço Grosso"><span class="wb-size-dot dot-lg"></span></button>
           </div>
         </div>
       </div>
