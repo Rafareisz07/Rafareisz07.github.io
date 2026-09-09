@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tópico 5: Equilíbrio de Ponto Material | Aulas de Física</title>
+  
+  <!-- Google Fonts & KaTeX -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <a href="index.html" class="home-btn">← Todos os Tópicos</a>
+      <span class="topic-badge">Módulo 05</span>
+      <h1 class="topic-title-header">Equilíbrio de um Ponto Material</h1>
+    </div>
+
+    <div class="nav-center">
+      <select id="topic-select" class="topic-select">
+        <option value="index.html">🏠 Menu Principal</option>
+        <option value="topico1.html">1. Potência Média e Instantânea</option>
+        <option value="topico2.html">2. Impulso e Força Variável</option>
+        <option value="topico3.html">3. Sistemas Isolados e Conservação de Q</option>
+        <option value="topico4.html">4. Tipos de Colisões e Coeficiente e</option>
+        <option value="topico5.html" selected>5. Equilíbrio de Ponto Material</option>
+        <option value="topico6.html">6. Equilíbrio de Rotação e Torque</option>
+        <option value="topico7.html">7. Pressão e Limites de Sucção</option>
+        <option value="topico8.html">8. Pressão em Fluidos e Vasos Comunicantes</option>
+      </select>
+    </div>
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      <button id="shortcuts-btn" class="btn-icon" title="Atalhos do Teclado (Tecla ?)">⌨️</button>
+      <button id="toggle-drawer-btn" class="btn-icon" title="Índice de Slides (Tecla M)">☰</button>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: CONCEITO DE PONTO MATERIAL -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Estática Fundamental</span>
+          <h2 class="slide-title">O Que é um Ponto Material?</h2>
+          <p class="slide-subtitle">A simplificação física onde o corpo não pode girar, apenas transladar.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📍 Definição Rigorosa</div>
+            <p>Um corpo é considerado um <strong>Ponto Material</strong> (ou partícula) quando suas dimensões geométricas são desprezíveis em relação às distâncias envolvidas no problema.</p>
+            <ul>
+              <li><strong>Consequência Física Vital:</strong> Todas as forças que atuam sobre ele têm suas linhas de ação passando pelo <strong>mesmo ponto</strong> (forças concorrentes).</li>
+              <li>Não existe "braço de alavanca", logo <strong>NÃO HÁ ROTAÇÃO</strong>!</li>
+              <li>O único movimento possível é a <strong>translação</strong> pura.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚖️ Estático vs. Dinâmico</div>
+            <p>Estar em equilíbrio <strong>não significa</strong> necessariamente estar parado!</p>
+            <ul>
+              <li><strong>Equilíbrio Estático:</strong> O corpo está em <strong>repouso</strong> absoluto ($\vec{v} = \vec{0}$) e aceleração nula ($\vec{a} = \vec{0}$).</li>
+              <li><strong>Equilíbrio Dinâmico:</strong> O corpo move-se em <strong>Movimento Retilíneo Uniforme (MRU)</strong> ($\vec{v} = \text{constante} \ne \vec{0}$) com aceleração nula ($\vec{a} = \vec{0}$).</li>
+            </ul>
+            <div class="callout success" style="margin-top: 10px;">
+              Em ambos os casos, a força resultante sobre a partícula é rigorosamente <strong>ZERO</strong>!
+            </div>
+          </div>
+        </div>
+
+        <div class="teacher-notes">
+          <div class="teacher-notes-title">🎓 Pergunta Conceitual para a Aluna</div>
+          <p>"Um satélite em órbita circular ao redor da Terra com velocidade escalar constante está em equilíbrio?" Resposta: NÃO! Há aceleração centrípeta apontando para o centro da Terra ($\vec{a}_c \ne \vec{0}$), logo a força resultante (gravidade) não é nula!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: CONDIÇÃO DE EQUILÍBRIO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">1ª Lei de Newton</span>
+          <h2 class="slide-title">A Condição Fundamental de Equilíbrio</h2>
+          <p class="slide-subtitle">A soma vetorial de todas as forças atuantes deve se anular.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$\sum \vec{F} = \vec{F}_{res} = \vec{0}$$
+          </div>
+          <div class="formula-legend">
+            <span>Para o equilíbrio de qualquer ponto material no espaço</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📐 Decomposição em Eixos Cartesianos ($XY$)</div>
+            <p>Como vetores se decompõem em coordenadas ortogonais independentes, a equação vetorial se divide em duas equações escalares simples:</p>
+            <div class="formula-card" style="margin: 12px 0; padding: 12px;">
+              <div class="formula-main" style="font-size: 1.25rem;">
+                $$\begin{cases} \sum F_x = 0 \implies F_{\text{direita}} = F_{\text{esquerda}} \\ \sum F_y = 0 \implies F_{\text{cima}} = F_{\text{baixo}} \end{cases}$$
+              </div>
+            </div>
+            <p>Esse sistema resolve 99% dos problemas de nós de cabos, planos inclinados e blocos suspensos!</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">📝 O Roteiro Infalível de 4 Passos</div>
+            <ol style="padding-left: 18px; line-height: 1.7;">
+              <li><strong>Isole o Ponto Material:</strong> Escolha o nó de união dos cabos ou o centro do bloco.</li>
+              <li><strong>Desenhe o Diagrama de Corpo Livre (DCL):</strong> Marque todas as forças atuantes (Peso, Normal, Trações, Atrito).</li>
+              <li><strong>Adote os Eixos $X$ e $Y$:</strong> No plano inclinado, incline os eixos na direção da rampa!</li>
+              <li><strong>Decomponha as forças diagonais:</strong> Use $\cos\theta$ para o eixo adjacente e $\sin\theta$ para o oposto.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="teacher-notes">
+          <div class="teacher-notes-title">🎓 Dica de Condução</div>
+          <p>Insista para a aluna sempre desenhar o Diagrama de Corpo Livre (DCL) grande e limpo no papel antes de colocar qualquer número. Quase todos os erros acontecem por esquecer uma força ou errar o seno/cosseno da decomposição.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: MÉTODOS GEOMÉTRICOS & TEOREMA DE LAMY -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Técnicas Avançadas</span>
+          <h2 class="slide-title">Polígono Fechado e o Teorema de Lamy</h2>
+          <p class="slide-subtitle">Duas armas secretas para resolver sistemas de 3 forças em segundos.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🔺 1. Método do Triângulo Fechado</div>
+            <p>Se três forças estão em equilíbrio ($\vec{F}_1 + \vec{F}_2 + \vec{F}_3 = \vec{0}$), desenhá-las em sequência ("ponta-com-rabo") obrigatoriamente forma um <strong>triângulo fechado</strong>!</p>
+            <ul>
+              <li>Se o triângulo for retângulo ($90^\circ$), use Pitágoras e trigonometria básica: $$\sin\theta = \frac{Oposto}{Hipotenusa} \quad \cos\theta = \frac{Adjacente}{Hipotenusa}$$</li>
+              <li>Você resolve o problema sem precisar decompor nenhuma força em $X$ e $Y$!</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🎯 2. Teorema de Lamy (Lei dos Senos)</div>
+            <p>Para 3 forças concorrentes e coplanares em equilíbrio, a intensidade de cada força é diretamente proporcional ao seno do ângulo oposto entre as outras duas:</p>
+            <div class="formula-card" style="margin: 10px 0; padding: 12px;">
+              <div class="formula-main" style="font-size: 1.25rem;">
+                $$\frac{F_1}{\sin\alpha} = \frac{F_2}{\sin\beta} = \frac{F_3}{\sin\gamma}$$
+              </div>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Onde $\alpha$ é o ângulo entre $\vec{F}_2$ e $\vec{F}_3$, $\beta$ é o ângulo entre $\vec{F}_1$ e $\vec{F}_3$, e $\gamma$ entre $\vec{F}_1$ e $\vec{F}_2$.
+            </p>
+          </div>
+        </div>
+
+        <div class="teacher-notes">
+          <div class="teacher-notes-title">🎓 Quando Usar Lamy</div>
+          <p>Explique: "Lamy é perfeito quando o enunciado dá os ângulos diretos entre os fios (por exemplo, 120°, 150°, 90°). Em 2 linhas de conta você acha as trações sem montar sistema de equações!".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: CASOS CLÁSSICOS: PLANO INCLINADO & CABOS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Casos Notáveis</span>
+          <h2 class="slide-title">Plano Inclinado e Cabos Assimétricos</h2>
+          <p class="slide-subtitle">A anatomia das forças na rampa e a sustentação por cordas.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📐 O Bloco na Rampa com Atrito Estático</div>
+            <p>Decompondo a força Peso nos eixos paralelo e perpendicular à rampa:</p>
+            <ul>
+              <li><strong>Componente normal:</strong> $P_y = mg \cos\theta \implies N = mg \cos\theta$</li>
+              <li><strong>Componente tangencial:</strong> $P_x = mg \sin\theta$ (tende a fazer o bloco escorregar para baixo)</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 10px;">
+              <strong>Condição para NÃO escorregar:</strong><br>
+              $$F_{at,estático} = P_x \le \mu_e \cdot N \implies mg \sin\theta \le \mu_e \cdot mg \cos\theta$$
+              $$\tan\theta \le \mu_e$$
+              O ângulo máximo da rampa antes de escorregar depende apenas do atrito: $\theta_{máx} = \arctan(\mu_e)$!
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🪢 Cabos com Ângulos Diferentes</div>
+            <p>Se um peso é sustentado por dois fios, o fio que estiver <strong>mais vertical</strong> (maior ângulo com a horizontal) suportará a <strong>maior parcela do peso</strong>!</p>
+            <div class="callout danger" style="margin-top: 10px;">
+              <strong>O Fio Quase Horizontal:</strong><br>
+              É fisicamente impossível esticar um cabo com um peso no meio até ficar 100% reto na horizontal ($0^\circ$). Para equilibrar o peso vertical com $\theta \to 0$, a tração no cabo tenderia ao infinito ($T = \frac{P}{2\sin\theta} \to \infty$) e o cabo se romperia!
+            </div>
+          </div>
+        </div>
+
+        <div class="teacher-notes">
+          <div class="teacher-notes-title">🎓 Curiosidade Prática</div>
+          <p>Pergunte: "Por que os fios de alta tensão nos postes nunca são instalados perfeitamente esticados em linha reta e sempre têm uma barriga (catenária)?" Resposta: para não romperem pela tração infinita necessária para sustentar o próprio peso horizontalmente!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR DE CABOS SUSPENSOS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Equilíbrio de Cabos Suspensos</h2>
+          <p class="slide-subtitle">Varie os ângulos de sustentação $\theta_1$ e $\theta_2$ e observe as trações se equilibrarem.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area">
+            <canvas id="sim-canvas-ponto" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <label>Ângulo Cabo 1 ($\theta_1$):</label>
+              <input type="range" id="eq-theta1" min="20" max="75" step="1" value="45">
+            </div>
+            <div class="sim-control-group">
+              <label>Ângulo Cabo 2 ($\theta_2$):</label>
+              <input type="range" id="eq-theta2" min="20" max="75" step="1" value="45">
+            </div>
+            <div class="sim-control-group">
+              <label>Massa Suspensa ($m$):</label>
+              <input type="range" id="eq-mass" min="5" max="100" step="5" value="20">
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Peso Suspenso ($P$)</div>
+              <div id="out-peso" class="readout-value">196.0 N</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Tração Cabo 1 ($T_1$)</div>
+              <div id="out-t1" class="readout-value">138.6 N</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Tração Cabo 2 ($T_2$)</div>
+              <div id="out-t2" class="readout-value">138.6 N</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="teacher-notes">
+          <div class="teacher-notes-title">🎓 Experimento Guiado</div>
+          <p>Deixe $\theta_1 = 70^\circ$ (quase vertical) e $\theta_2 = 25^\circ$ (quase horizontal). Mostre que o cabo 1 carrega muito mais força vertical, mas o cabo 2 é puxado forte para compensar a força lateral em $X$!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática</span>
+          <h2 class="slide-title">Exercício Resolvido: Semáforo Suspenso</h2>
+          <p class="slide-subtitle">Resolução completa por decomposição cartesiana e conferência geométrica.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">FUVEST / ENEM</span>
+          <p class="exercise-enunciation">
+            Um semáforo de peso $P = 120\text{ N}$ está suspenso no centro de um cruzamento através de um nó preso a dois cabos ideais, $AC$ e $BC$. O cabo $AC$ forma um ângulo de $30^\circ$ com a horizontal e o cabo $BC$ forma um ângulo de $60^\circ$ com a horizontal. Adote $\sin 30^\circ = \cos 60^\circ = 0{,}5$ e $\cos 30^\circ = \sin 60^\circ = \frac{\sqrt{3}}{2} \approx 0{,}86$.<br>
+            <strong>a)</strong> Escreva as equações de equilíbrio para as componentes horizontal ($X$) e vertical ($Y$).<br>
+            <strong>b)</strong> Calcule a tração $T_A$ no cabo $AC$.<br>
+            <strong>c)</strong> Calcule a tração $T_B$ no cabo $BC$.
+          </p>
+
+          <button class="solution-toggle">💡 Ver Resolução Passo a Passo</button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Equilíbrio Horizontal ($\sum F_x = 0$)</strong>
+              <p>As forças laterais devem se anular:</p>
+              <p>$$T_A \cos(30^\circ) = T_B \cos(60^\circ)$$</p>
+              <p>$$T_A \cdot \left(\frac{\sqrt{3}}{2}\right) = T_B \cdot (0{,}5) \implies T_B = T_A \sqrt{3}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Equilíbrio Vertical ($\sum F_y = 0$)</strong>
+              <p>A soma das forças para cima equilibra o peso do semáforo:</p>
+              <p>$$T_A \sin(30^\circ) + T_B \sin(60^\circ) = P$$</p>
+              <p>Substituindo $T_B = T_A \sqrt{3}$:</p>
+              <p>$$T_A (0{,}5) + (T_A \sqrt{3}) \left(\frac{\sqrt{3}}{2}\right) = 120$$</p>
+              <p>$$0{,}5 T_A + 1{,}5 T_A = 120 \implies 2 T_A = 120 \implies \mathbf{T_A = 60\text{ N}}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 3: Tração $T_B$</strong>
+              <p>$$T_B = T_A \sqrt{3} = 60 \sqrt{3} \approx 60 \times 1{,}73 = \mathbf{104\text{ N}}$$</p>
+              <p><em>Verificação física:</em> O cabo $BC$ (com ângulo de $60^\circ$) é mais inclinado para cima e, portanto, suporta maior parte do peso ($104\text{ N}$ vs $60\text{ N}$). Além disso, $60^2 + 104^2 = 3600 + 10816 = 14416 \approx 120^2$, confirmando o triângulo retângulo de forças!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="teacher-notes">
+          <div class="teacher-notes-title">🎓 Dica de Resolução Rápida</div>
+          <p>Mostre que $30^\circ + 60^\circ = 90^\circ$! Isso significa que os dois fios são perpendiculares entre si. Num triângulo retângulo de forças, $T_A = P \sin(30^\circ) = 120 \times 0{,}5 = 60\text{ N}$ e $T_B = P \sin(60^\circ) = 60\sqrt{3}\text{ N}$ direto em uma linha!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      <a href="topico6.html" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">Tópico 6: Rotação e Torque ➔</a>
+    </div>
+  </footer>
+
+  <!-- Drawer Menu -->
+  <aside id="drawer" class="drawer">
+    <div class="drawer-header">
+      <h3 class="drawer-title">Índice do Módulo</h3>
+      <button id="close-drawer-btn" class="btn-icon">✕</button>
+    </div>
+    <div class="drawer-content">
+      <ul id="drawer-list" class="drawer-list"></ul>
+    </div>
+  </aside>
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+
+  <!-- Shortcuts Modal -->
+  <div id="shortcuts-modal" class="shortcuts-modal">
+    <div class="shortcuts-card">
+      <div class="shortcuts-header">
+        <h3>Atalhos do Teclado</h3>
+        <button id="close-shortcuts-btn" class="btn-icon">✕</button>
+      </div>
+      <div class="shortcuts-list">
+        <div class="shortcut-row"><span>Avançar Slide</span><span class="shortcut-key">→ ou Espaço</span></div>
+        <div class="shortcut-row"><span>Voltar Slide</span><span class="shortcut-key">←</span></div>
+        <div class="shortcut-row"><span>Primeiro / Último</span><span class="shortcut-key">Home / End</span></div>
+        <div class="shortcut-row"><span>Modo Professor (Notas)</span><span class="shortcut-key">P</span></div>
+        <div class="shortcut-row"><span>Tela Cheia</span><span class="shortcut-key">F</span></div>
+        <div class="shortcut-row"><span>Menu de Slides</span><span class="shortcut-key">M</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js"></script>
+  <script src="./shared/js/simulators.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      PhysicsSims.initTopic5();
+    });
+  </script>
+</body>
+</html>

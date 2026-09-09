@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aulas de Física | Apresentações e Simuladores Interativos</title>
+  
+  <!-- Google Fonts & KaTeX -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css">
+  <style>
+    /* Estilos específicos da Landing Page / Hub */
+    body {
+      overflow-y: auto !important;
+      height: auto !important;
+      min-height: 100vh;
+    }
+    .hub-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px 24px;
+      position: relative;
+      z-index: 10;
+    }
+    .hero-section {
+      text-align: center;
+      margin-bottom: 48px;
+      padding: 30px 20px;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(17, 24, 39, 0) 100%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    [data-theme="light"] .hero-title {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin: 0 auto 24px auto;
+      line-height: 1.6;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 22px;
+      margin-bottom: 50px;
+    }
+    .topic-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .topic-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-cyan);
+      box-shadow: var(--shadow-md), var(--shadow-glow);
+    }
+    .topic-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
+      opacity: 0.7;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .card-number {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .card-duration {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .card-heading {
+      font-size: 1.28rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+    .card-desc {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+    .card-formulas {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px dashed var(--border-color);
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      text-align: center;
+      color: var(--accent-cyan);
+    }
+    [data-theme="light"] .card-formulas {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    .card-btn {
+      width: 100%;
+      text-decoration: none;
+    }
+    .cheatsheet-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-md);
+    }
+    .cheatsheet-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cheatsheet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .formula-pill {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+    }
+    .formula-pill-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Hub Bar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Física Ensino Médio & Vestibular</span>
+      <h1 class="topic-title-header">Plataforma de Aulas Particulares</h1>
+    </div>
+
+    <div class="nav-right">
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia">⛶</button>
+      <a href="https://github.com/Rafareisz07/Rafareisz07.github.io" target="_blank" class="home-btn" title="Repositório GitHub">GitHub Repo ↗</a>
+    </div>
+  </header>
+
+  <div class="hub-container" style="margin-top: 70px;">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">🎓 Material Didático Interativo Online</div>
+      <h2 class="hero-title">Física: Mecânica, Colisões e Hidrostática</h2>
+      <p class="hero-subtitle">
+        Apresentações de slides completas, organizadas por tópico independente, prontas para conduzir a aula particular e permitir que a aluna estude, teste os simuladores e revise os exercícios passo a passo quando quiser.
+      </p>
+      <div class="hero-actions">
+        <a href="topico1.html" class="btn btn-primary" style="padding: 12px 24px; font-size: 1rem;">🚀 Começar pela Aula 1: Potência</a>
+        <a href="#cheatsheet" class="btn btn-secondary" style="padding: 12px 24px; font-size: 1rem;">📑 Resumo Geral de Fórmulas</a>
+      </div>
+    </section>
+
+    <!-- Grid de Tópicos -->
+    <section class="topics-grid">
+
+      <!-- Tópico 1 -->
+      <article class="topic-card">
+        <div>
+          <div class="card-meta">
+            <span class="card-number">TÓPICO 01</span>
+            <span class="card-duration">6 Slides • Simulador de Motor</span>
+          </div>
+          <h3 class="card-heading">Potência Média e Instantânea</h3>
+          <p class="card-desc">
+            Definição de potência, unidades no S.I. (Watt), cavalo-vapor (cv), análise gráfica de trabalho no diagrama $P \times t$, rendimento mecânico ($\eta$) e a fórmula instantânea $P = F \cdot v$.
+          </p>
+          <div class="card-formulas">
+            $$P_m = \frac{\Delta W}{\Delta t} \quad | \quad P = \vec{F} \cdot \vec{v} \quad | \quad \eta = \frac{P_{útil}}{P_{total}}$$
+          </div>
+        </div>
+        <a href="topico1.html" class="btn btn-primary card-btn">Abrir Apresentação (Tópico 1) ➔</a>
+      </article>
+
+      <!-- Tópico 2 -->
+      <article class="topic-card">
+        <div>
+          <div class="card-meta">
+            <span class="card-number">TÓPICO 02</span>
+            <span class="card-duration">6 Slides • Simulador de Impacto</span>
+          </div>
+          <h3 class="card-heading">Impulso, Força Variável e Colisões</h3>
+          <p class="card-desc">
+            O vetor impulso, a força variável calculada pela área sob a curva do gráfico $F \times t$, o Teorema do Impulso ($\vec{I} = \Delta \vec{Q}$) e o papel salvador de vidas do airbag e zonas deformáveis.
+          </p>
+          <div class="card-formulas">
+            $$\vec{I} = \vec{F} \Delta t \quad | \quad I = \text{Área } (F \times t) \quad | \quad \vec{I} = \Delta \vec{Q}$$
+          </div>
+        </div>
+        <a href="topico2.html" class="btn btn-primary card-btn">Abrir Apresentação (Tópico 2) ➔</a>
+      </article>
+
+      <!-- Tópico 3 -->
+      <article class="topic-card">
+        <div>
+          <div class="card-meta">
+            <span class="card-number">TÓPICO 03</span>
+            <span class="card-duration">6 Slides • Simulador de Canhão</span>
+          </div>
+          <h3 class="card-heading">Sistemas Isolados e Conservação de Q</h3>
+          <p class="card-desc">
+            A Quantidade de Movimento ($\vec{Q} = m\vec{v}$), forças internas vs. externas, como a Terceira Lei de Newton garante a conservação de $\vec{Q}$, recuo de armas e propulsão de foguetes no vácuo.
+          </p>
+          <div class="card-formulas">
+            $$\sum \vec{F}_{ext} = \vec{0} \implies \vec{Q}_{antes} = \vec{Q}_{depois}$$
+          </div>
+        </div>
+        <a href="topico3.html" class="btn btn-primary card-btn">Abrir Apresentação (Tópico 3) ➔</a>
+      </article>
+
+      <!-- Tópico 4 -->
+      <article class="topic-card">
+        <div>
+          <div class="card-meta">
+            <span class="card-number">TÓPICO 04</span>
+            <span class="card-duration">6 Slides • Trilho de Ar Interativo</span>
+          </div>
+          <h3 class="card-heading">Tipos de Colisões e Coeficiente de Restituição</h3>
+          <p class="card-desc">
+            Colisão elástica ($e=1$), parcialmente elástica ($0<e<1$) e inelástica ($e=0$). Cálculo do coeficiente de restituição, troca de velocidade de massas iguais e o pêndulo balístico.
+          </p>
+          <div class="card-formulas">
+            $$e = \frac{v_{afast}}{v_{aprox}} \quad | \quad e = \sqrt{\frac{h'}{h}} \quad | \quad \Delta E_c$$
+          </div>
+        </div>
+        <a href="topico4.html" class="btn btn-primary card-btn">Abrir Apresentação (Tópico 4) ➔</a>
+      </article>
+
+      <!-- Tópico 5 -->
+      <article class="topic-card">
+        <div>
+          <div class="card-meta">
+            <span class="card-number">TÓPICO 05</span>
+            <span class="card-duration">6 Slides • Simulador de Cabos</span>
+          </div>
+          <h3 class="card-heading">Equilíbrio de um Ponto Material</h3>
+          <p class="card-desc">
+            Condição fundamental ($\sum \vec{F} = \vec{0}$), equilíbrio estático vs. dinâmico, método da decomposição cartesiana, regra do polígono fechado e Teorema de Lamy aplicado a cabos e rampa.
+          </p>
+          <div class="card-formulas">
+            $$\sum F_x = 0 \quad | \quad \sum F_y = 0 \quad | \quad \frac{F_1}{\sin\alpha} = \frac{F_2}{\sin\beta}$$
+          </div>
+        </div>
+        <a href="topico5.html" class="btn btn-primary card-btn">Abrir Apresentação (Tópico 5) ➔</a>
+      </article>
+
+      <!-- Tópico 6 -->
+      <article class="topic-card">
+        <div>
+          <div class="card-meta">
+            <span class="card-number">TÓPICO 06</span>
+            <span class="card-duration">6 Slides • Simulador de Gangorra</span>
+          </div>
+          <h3 class="card-heading">Equilíbrio: Translação e Rotação</h3>
+          <p class="card-desc">
+            Transição para o corpo extenso, Momento de uma força (Torque $\tau = F \cdot d$), as duas condições de equilíbrio completo, classes de alavancas e o truque da escolha inteligente do polo.
+          </p>
+          <div class="card-formulas">
+            $$\tau = \pm F \cdot d \cdot \sin\theta \quad | \quad \sum \vec{F} = \vec{0} \quad | \quad \sum \tau = 0$$
+          </div>
+        </div>
+        <a href="topico6.html" class="btn btn-primary card-btn">Abrir Apresentação (Tópico 6) ➔</a>
+      </article>
+
+      <!-- Tópico 7 -->
+      <article class="topic-card">
+        <div>
+          <div class="card-meta">
+            <span class="card-number">TÓPICO 07</span>
+            <span class="card-duration">6 Slides • Barômetro de Torricelli</span>
+          </div>
+          <h3 class="card-heading">Pressão nos Líquidos e Limites de Sucção</h3>
+          <p class="card-desc">
+            Conceito de pressão ($p = F/A$), Teorema de Stevin ($\Delta p = \rho g \Delta h$), experimento de Torricelli e a desmistificação da sucção: por que a água nunca sobe mais de 10,3 metros por canudo ou bomba.
+          </p>
+          <div class="card-formulas">
+            $$p = p_0 + \rho g h \quad | \quad h_{máx} = \frac{p_{atm}}{\rho g} \approx 10{,}33\text{ m}$$
+          </div>
+        </div>
+        <a href="topico7.html" class="btn btn-primary card-btn">Abrir Apresentação (Tópico 7) ➔</a>
+      </article>
+
+      <!-- Tópico 8 -->
+      <article class="topic-card">
+        <div>
+          <div class="card-meta">
+            <span class="card-number">TÓPICO 08</span>
+            <span class="card-duration">6 Slides • Tubo em U Interativo</span>
+          </div>
+          <h3 class="card-heading">Pressão em Fluidos e Vasos Comunicantes</h3>
+          <p class="card-desc">
+            O Princípio de Pascal, a Prensa Hidráulica e a multiplicação de forças, conservação do trabalho mecânico ($W_1 = W_2$), vasos comunicantes e o equilíbrio de líquidos imiscíveis em tubo em U.
+          </p>
+          <div class="card-formulas">
+            $$\frac{F_1}{A_1} = \frac{F_2}{A_2} \quad | \quad \rho_1 h_1 = \rho_2 h_2 \quad | \quad F_1 d_1 = F_2 d_2$$
+          </div>
+        </div>
+        <a href="topico8.html" class="btn btn-primary card-btn">Abrir Apresentação (Tópico 8) ➔</a>
+      </article>
+
+    </section>
+
+    <!-- Resumo Geral de Fórmulas / Cheat Sheet -->
+    <section id="cheatsheet" class="cheatsheet-section">
+      <h3 class="cheatsheet-title">📑 Ficha Rápida de Bolso (Fórmulas para a Aluna)</h3>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;">
+        Todas as fórmulas fundamentais das matérias condensadas para consulta rápida durante a resolução de exercícios e véspera de provas.
+      </p>
+
+      <div class="cheatsheet-grid">
+        <div class="formula-pill">
+          <div class="formula-pill-title">Potência Média & Instantânea</div>
+          <p>$$P_m = \frac{\Delta W}{\Delta t} = \frac{\Delta E}{\Delta t}$$</p>
+          <p>$$P = \vec{F} \cdot \vec{v} = F v \cos\theta$$</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">$1\text{ cv} \approx 735\text{ W} \quad 1\text{ kWh} = 3{,}6 \times 10^6\text{ J}$</p>
+        </div>
+
+        <div class="formula-pill">
+          <div class="formula-pill-title">Impulso & Variação de Momento</div>
+          <p>$$\vec{I} = \vec{F} \Delta t = \text{Área }(F \times t)$$</p>
+          <p>$$\vec{I}_{res} = \Delta \vec{Q} = m\vec{v}_f - m\vec{v}_i$$</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Airbag: $\uparrow \Delta t \implies \downarrow F_{\text{máx}}$</p>
+        </div>
+
+        <div class="formula-pill">
+          <div class="formula-pill-title">Sistemas Isolados</div>
+          <p>$$\sum \vec{F}_{ext} = \vec{0}$$</p>
+          <p>$$\vec{Q}_{antes} = \vec{Q}_{depois}$$</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Recuo: $M V + m v = 0$</p>
+        </div>
+
+        <div class="formula-pill">
+          <div class="formula-pill-title">Colisões & Restituição</div>
+          <p>$$e = \frac{|v_{2f} - v_{1f}|}{|v_{1i} - v_{2i}|} = \sqrt{\frac{h'}{h}}$$</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+            $e=1$: Elástica ($E_c$ cons.)<br>
+            $e=0$: Inelástica (saem juntos)
+          </p>
+        </div>
+
+        <div class="formula-pill">
+          <div class="formula-pill-title">Equilíbrio de Ponto Material</div>
+          <p>$$\sum \vec{F} = \vec{0} \iff \begin{cases} \sum F_x = 0 \\ \sum F_y = 0 \end{cases}$$</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Lamy: $\frac{F_1}{\sin\alpha} = \frac{F_2}{\sin\beta} = \frac{F_3}{\sin\gamma}$</p>
+        </div>
+
+        <div class="formula-pill">
+          <div class="formula-pill-title">Torque & Corpo Extenso</div>
+          <p>$$\tau = \pm F \cdot d \cdot \sin\theta$$</p>
+          <p>$$\sum \vec{F} = \vec{0} \quad \text{e} \quad \sum \vec{\tau} = \vec{0}$$</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Alavancas: Interfixa, Resistente, Potente</p>
+        </div>
+
+        <div class="formula-pill">
+          <div class="formula-pill-title">Stevin & Limite de Sucção</div>
+          <p>$$p = p_0 + \rho g h$$</p>
+          <p>$$h_{máx} = \frac{p_{atm}}{\rho g} \approx 10{,}33\text{ m (água)}$$</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Torricelli: $1\text{ atm} = 76\text{ cmHg} = 10^5\text{ Pa}$</p>
+        </div>
+
+        <div class="formula-pill">
+          <div class="formula-pill-title">Pascal & Vasos Comunicantes</div>
+          <p>$$\frac{F_1}{A_1} = \frac{F_2}{A_2} \implies \frac{F_2}{F_1} = \left(\frac{R_2}{R_1}\right)^2$$</p>
+          <p>$$\rho_1 \cdot h_1 = \rho_2 \cdot h_2$$</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Trabalho: $F_1 d_1 = F_2 d_2$</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Theme toggle persistence
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('fisica_theme', theme);
+      if (themeBtn) themeBtn.innerHTML = theme === 'light' ? '🌙' : '☀️';
+    }
+
+    const savedTheme = localStorage.getItem('fisica_theme') || 'dark';
+    setTheme(savedTheme);
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+        }
+      });
+    }
+
+    // KaTeX render
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.renderMathInElement) {
+        window.renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\[', display: true }
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>
