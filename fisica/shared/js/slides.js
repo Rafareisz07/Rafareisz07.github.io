@@ -1,11 +1,9 @@
 /**
  * SISTEMA DE NAVEGAÇÃO DE SLIDES DE FÍSICA
- * Autor: Antigravity / Rafa
- * Compatível com GitHub Pages (100% Client-side e caminhos relativos)
+ * Desenvolvido para Aulas Particulares Sem Spoilers
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Elements
   const slides = Array.from(document.querySelectorAll('.slide'));
   if (!slides.length) return;
 
@@ -15,17 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentCounter = document.getElementById('current-slide');
   const totalCounter = document.getElementById('total-slides');
   const progressBar = document.getElementById('progress-bar');
-  const drawer = document.getElementById('drawer');
-  const drawerBackdrop = document.getElementById('drawer-backdrop');
-  const drawerList = document.getElementById('drawer-list');
-  const toggleDrawerBtn = document.getElementById('toggle-drawer-btn');
-  const closeDrawerBtn = document.getElementById('close-drawer-btn');
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const teacherToggleBtn = document.getElementById('teacher-toggle-btn');
   const fullscreenBtn = document.getElementById('fullscreen-btn');
-  const shortcutsModal = document.getElementById('shortcuts-modal');
-  const shortcutsBtn = document.getElementById('shortcuts-btn');
-  const closeShortcutsBtn = document.getElementById('close-shortcuts-btn');
   const topicSelect = document.getElementById('topic-select');
 
   let currentIndex = 0;
@@ -33,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (totalCounter) totalCounter.textContent = totalSlides;
 
-  // 1. Initialise Dots and Drawer List
+  // 1. Indicadores Minimalistas de Bolinhas (Sem Títulos / Sem Spoilers)
   if (indicatorsContainer) {
     indicatorsContainer.innerHTML = '';
     slides.forEach((_, idx) => {
@@ -45,27 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (drawerList) {
-    drawerList.innerHTML = '';
-    slides.forEach((slide, idx) => {
-      const titleEl = slide.querySelector('.slide-title');
-      const title = titleEl ? titleEl.textContent.trim() : `Slide ${idx + 1}`;
-      
-      const item = document.createElement('li');
-      item.className = `drawer-item ${idx === 0 ? 'active' : ''}`;
-      item.innerHTML = `
-        <div class="drawer-item-number">Slide ${idx + 1}</div>
-        <div class="drawer-item-title">${title}</div>
-      `;
-      item.addEventListener('click', () => {
-        goToSlide(idx);
-        closeDrawer();
-      });
-      drawerList.appendChild(item);
-    });
-  }
-
-  // 2. Navigation Core Function
+  // 2. Função Central de Navegação
   function goToSlide(index, updateHash = true) {
     if (index < 0 || index >= totalSlides) return;
 
@@ -73,26 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
       slide.classList.toggle('active', idx === index);
     });
 
-    // Update Indicators
     if (indicatorsContainer) {
       const dots = indicatorsContainer.querySelectorAll('.dot');
       dots.forEach((dot, idx) => dot.classList.toggle('active', idx === index));
     }
 
-    // Update Drawer Active Item
-    if (drawerList) {
-      const items = drawerList.querySelectorAll('.drawer-item');
-      items.forEach((item, idx) => item.classList.toggle('active', idx === index));
-    }
-
-    // Update Counter & Progress Bar
     if (currentCounter) currentCounter.textContent = index + 1;
     if (progressBar) {
       const percent = ((index + 1) / totalSlides) * 100;
       progressBar.style.width = `${percent}%`;
     }
 
-    // Prev/Next Button states
     if (prevBtn) prevBtn.disabled = index === 0;
     if (nextBtn) nextBtn.disabled = index === totalSlides - 1;
 
@@ -102,14 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.hash = `slide-${index + 1}`;
     }
 
-    // Trigger simulator repaint if slide has one
+    // Dispara evento customizado para os simuladores e para o anotador (salvar/restaurar desenhos)
     const activeSlide = slides[currentIndex];
-    if (activeSlide) {
-      const simCanvas = activeSlide.querySelector('canvas');
-      if (simCanvas && window.dispatchEvent) {
-        window.dispatchEvent(new CustomEvent('slideChanged', { detail: { slideIndex: index, slide: activeSlide } }));
-      }
-    }
+    window.dispatchEvent(new CustomEvent('slideChanged', { 
+      detail: { slideIndex: index, slide: activeSlide } 
+    }));
   }
 
   function nextSlide() {
@@ -120,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentIndex > 0) goToSlide(currentIndex - 1);
   }
 
-  // 3. Hash Routing
+  // 3. Roteamento por Hash (#slide-1, #slide-2)
   function readHash() {
     const hash = window.location.hash;
     const match = hash.match(/#slide-(\d+)/);
@@ -137,13 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('hashchange', readHash);
   readHash();
 
-  // 4. Event Listeners for Nav Buttons
   if (prevBtn) prevBtn.addEventListener('click', prevSlide);
   if (nextBtn) nextBtn.addEventListener('click', nextSlide);
 
-  // 5. Keyboard Navigation
+  // 4. Atalhos de Teclado Focados na Apresentação
   window.addEventListener('keydown', (e) => {
-    // Avoid interfering with inputs/selects
     if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
 
     switch (e.key) {
@@ -174,21 +130,10 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'F':
         toggleFullscreen();
         break;
-      case 'm':
-      case 'M':
-        toggleDrawer();
-        break;
-      case '?':
-        toggleShortcutsModal();
-        break;
-      case 'Escape':
-        closeDrawer();
-        closeShortcuts();
-        break;
     }
   });
 
-  // 6. Touch Gestures (Mobile/Tablet)
+  // 5. Suporte a Toque (Swipe) em Tablets e Celulares
   let touchStartX = 0;
   let touchStartY = 0;
   window.addEventListener('touchstart', (e) => {
@@ -199,34 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('touchend', (e) => {
     const deltaX = e.changedTouches[0].screenX - touchStartX;
     const deltaY = e.changedTouches[0].screenY - touchStartY;
-    // Horizontal swipe threshold
-    if (Math.abs(deltaX) > 50 && Math.abs(deltaY) < 60) {
+    if (Math.abs(deltaX) > 60 && Math.abs(deltaY) < 60) {
       if (deltaX < 0) nextSlide();
       else prevSlide();
     }
   }, { passive: true });
 
-  // 7. Drawer Functionality
-  function openDrawer() {
-    if (drawer) drawer.classList.add('open');
-    if (drawerBackdrop) drawerBackdrop.classList.add('open');
-  }
-
-  function closeDrawer() {
-    if (drawer) drawer.classList.remove('open');
-    if (drawerBackdrop) drawerBackdrop.classList.remove('open');
-  }
-
-  function toggleDrawer() {
-    if (drawer && drawer.classList.contains('open')) closeDrawer();
-    else openDrawer();
-  }
-
-  if (toggleDrawerBtn) toggleDrawerBtn.addEventListener('click', toggleDrawer);
-  if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
-  if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
-
-  // 8. Teacher Mode Toggle (P)
+  // 6. Modo Professor / Notas Pedagógicas (P)
   function toggleTeacherMode() {
     document.body.classList.toggle('teacher-mode-active');
     const isActive = document.body.classList.contains('teacher-mode-active');
@@ -240,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (teacherToggleBtn) teacherToggleBtn.classList.add('active');
   }
 
-  // 9. Dark / Light Theme Toggle
+  // 7. Tema Claro / Escuro
   function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('fisica_theme', theme);
@@ -259,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 10. Fullscreen Mode (F)
+  // 8. Tela Cheia (F)
   function toggleFullscreen() {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
@@ -272,22 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-  // 11. Shortcuts Modal (?)
-  function toggleShortcutsModal() {
-    if (shortcutsModal) shortcutsModal.classList.toggle('open');
-  }
-  function closeShortcuts() {
-    if (shortcutsModal) shortcutsModal.classList.remove('open');
-  }
-  if (shortcutsBtn) shortcutsBtn.addEventListener('click', toggleShortcutsModal);
-  if (closeShortcutsBtn) closeShortcutsBtn.addEventListener('click', closeShortcuts);
-  if (shortcutsModal) {
-    shortcutsModal.addEventListener('click', (e) => {
-      if (e.target === shortcutsModal) closeShortcuts();
-    });
-  }
-
-  // 12. Topic Select Switcher
+  // 9. Seletor de Tópico
   if (topicSelect) {
     topicSelect.addEventListener('change', (e) => {
       const dest = e.target.value;
@@ -295,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 13. Step-by-Step Exercise Toggles
+  // 10. Resoluções Passo a Passo Ocultas
   document.querySelectorAll('.solution-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const container = btn.closest('.exercise-box');
@@ -304,13 +213,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (solution) {
           const isOpen = solution.classList.contains('open');
           solution.classList.toggle('open', !isOpen);
-          btn.innerHTML = !isOpen ? '🙈 Ocultar Resolução' : '💡 Ver Resolução Passo a Passo';
+          btn.textContent = !isOpen ? 'Ocultar Resolução' : '💡 Revelar Resolução Passo a Passo';
         }
       }
     });
   });
 
-  // 14. Render KaTeX if available
+  // 11. Render KaTeX
   if (window.renderMathInElement) {
     try {
       window.renderMathInElement(document.body, {

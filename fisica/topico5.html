@@ -45,9 +45,7 @@
       <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
-      <button id="shortcuts-btn" class="btn-icon" title="Atalhos do Teclado (Tecla ?)">⌨️</button>
-      <button id="toggle-drawer-btn" class="btn-icon" title="Índice de Slides (Tecla M)">☰</button>
-    </div>
+      </div>
   </header>
 
   <!-- Progress Bar -->
@@ -350,38 +348,12 @@
     </div>
   </footer>
 
-  <!-- Drawer Menu -->
-  <aside id="drawer" class="drawer">
-    <div class="drawer-header">
-      <h3 class="drawer-title">Índice do Módulo</h3>
-      <button id="close-drawer-btn" class="btn-icon">✕</button>
-    </div>
-    <div class="drawer-content">
-      <ul id="drawer-list" class="drawer-list"></ul>
-    </div>
-  </aside>
-  <div id="drawer-backdrop" class="drawer-backdrop"></div>
-
-  <!-- Shortcuts Modal -->
-  <div id="shortcuts-modal" class="shortcuts-modal">
-    <div class="shortcuts-card">
-      <div class="shortcuts-header">
-        <h3>Atalhos do Teclado</h3>
-        <button id="close-shortcuts-btn" class="btn-icon">✕</button>
-      </div>
-      <div class="shortcuts-list">
-        <div class="shortcut-row"><span>Avançar Slide</span><span class="shortcut-key">→ ou Espaço</span></div>
-        <div class="shortcut-row"><span>Voltar Slide</span><span class="shortcut-key">←</span></div>
-        <div class="shortcut-row"><span>Primeiro / Último</span><span class="shortcut-key">Home / End</span></div>
-        <div class="shortcut-row"><span>Modo Professor (Notas)</span><span class="shortcut-key">P</span></div>
-        <div class="shortcut-row"><span>Tela Cheia</span><span class="shortcut-key">F</span></div>
-        <div class="shortcut-row"><span>Menu de Slides</span><span class="shortcut-key">M</span></div>
-      </div>
-    </div>
+  
   </div>
 
   <!-- Scripts -->
   <script src="./shared/js/slides.js"></script>
+  <script src="./shared/js/annotator.js"></script>
   <script src="./shared/js/simulators.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
