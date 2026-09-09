@@ -51,8 +51,8 @@
   padding: 0;
 }
 
-/* Base dos Slides (Fixed presentation deck) */
-html, body {
+/* Base dos Slides (Fixed presentation deck - APENAS quando não é hub) */
+html:not(.hub-page), body:not(.hub-page) {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -63,13 +63,27 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* CORREÇÃO DO HUB PRINCIPAL (index.html): Permite rolagem suave completa */
-html.hub-page, body.hub-page {
-  width: 100% !important;
+/* HUB PRINCIPAL (index.html): Rolagem 100% livre e natural na raiz html */
+html.hub-page {
+  width: 100%;
   height: auto !important;
-  min-height: 100vh !important;
+  min-height: 100% !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
+  scroll-behavior: smooth;
+  font-family: var(--font-main);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.hub-page {
+  width: 100%;
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow: visible !important;
+  position: relative !important;
 }
 
 /* Atmosfera sutil de sala de aula / lousa */
@@ -1076,4 +1090,79 @@ body::before {
     bottom: 64px;
     right: 12px;
   }
+}
+
+/* =========================================================
+   CAMADA DE DESENHO VINCULADA AO SLIDE & CURSOR PONTO
+   ========================================================= */
+.slide-annotation-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 35;
+  border-radius: inherit;
+  touch-action: none;
+}
+
+#pen-cursor-dot {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 99999;
+  display: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.8), 0 0 0 1.5px #ffffff;
+}
+
+/* CARDS DO MENU & BOTÕES CLICÁVEIS */
+.topic-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.topic-card:hover {
+  border-color: var(--accent-cyan);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+}
+
+.card-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+  margin-top: 14px;
+}
+
+.card-btn:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  color: #0b1120 !important;
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+  transform: translateY(-2px);
 }

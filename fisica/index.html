@@ -16,8 +16,13 @@
   <!-- Estilos Próprios -->
   <link rel="stylesheet" href="./shared/css/slides.css">
   <style>
-    body {
+    html {
       overflow-y: auto !important;
+      height: auto !important;
+    }
+    body {
+      overflow-y: visible !important;
+      overflow-x: hidden !important;
       height: auto !important;
       min-height: 100vh;
     }
@@ -89,22 +94,6 @@
       gap: 20px;
       margin-bottom: 48px;
     }
-    .topic-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: var(--transition);
-      box-shadow: var(--shadow-sm);
-    }
-    .topic-card:hover {
-      border-color: var(--accent-cyan);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
     .card-meta {
       display: flex;
       justify-content: space-between;
@@ -149,12 +138,6 @@
     [data-theme="light"] .card-formulas {
       background: rgba(0, 0, 0, 0.04);
       color: #0f172a;
-    }
-    .card-btn {
-      width: 100%;
-      text-decoration: none;
-      font-size: 0.88rem;
-      padding: 9px 16px;
     }
     .cheatsheet-section {
       background: var(--bg-card);
@@ -228,7 +211,7 @@
     <section class="topics-grid">
 
       <!-- Tópico 1 -->
-      <article class="topic-card">
+      <a href="./topico1.html" class="topic-card">
         <div>
           <div class="card-meta">
             <span class="card-number">MÓDULO 01</span>
@@ -239,14 +222,14 @@
             Definição termodinâmica e mecânica de potência, unidade Watt, cavalo-vapor, análise gráfica de trabalho no diagrama $P \times t$, rendimento mecânico ($\eta$) e a expressão instantânea $P = \vec{F} \cdot \vec{v}$.
           </p>
           <div class="card-formulas">
-            $$P_m = \frac{\Delta W}{\Delta t} \quad | \quad P = \vec{F} \cdot \vec{v} \quad | \quad \eta = \frac{P_{útil}}{P_{total}}$$
+            $P_m = \frac{\Delta W}{\Delta t} \quad | \quad P = \vec{F} \cdot \vec{v} \quad | \quad \eta = \frac{P_{útil}}{P_{total}}$
           </div>
         </div>
-        <a href="topico1.html" class="btn btn-primary card-btn">Iniciar Apresentação ➔</a>
-      </article>
+        <div class="card-btn">Iniciar Apresentação ➔</div>
+      </a>
 
       <!-- Tópico 2 -->
-      <article class="topic-card">
+      <a href="./topico2.html" class="topic-card">
         <div>
           <div class="card-meta">
             <span class="card-number">MÓDULO 02</span>
@@ -257,14 +240,14 @@
             O vetor impulso, a força variável calculada pela integral/área sob a curva $F \times t$, o Teorema do Impulso ($\vec{I} = \Delta \vec{Q}$) e o princípio de absorção de impacto em airbags e zonas deformáveis.
           </p>
           <div class="card-formulas">
-            $$\vec{I} = \int F \, dt = \text{Área} \quad | \quad \vec{I} = \Delta \vec{Q} = m\vec{v}_f - m\vec{v}_i$$
+            $\vec{I} = \int F \, dt = \text{Área} \quad | \quad \vec{I} = \Delta \vec{Q} = m\vec{v}_f - m\vec{v}_i$
           </div>
         </div>
-        <a href="topico2.html" class="btn btn-primary card-btn">Iniciar Apresentação ➔</a>
-      </article>
+        <div class="card-btn">Iniciar Apresentação ➔</div>
+      </a>
 
       <!-- Tópico 3 -->
-      <article class="topic-card">
+      <a href="./topico3.html" class="topic-card">
         <div>
           <div class="card-meta">
             <span class="card-number">MÓDULO 03</span>
@@ -275,14 +258,14 @@
             A Quantidade de Movimento linear ($\vec{Q} = m\vec{v}$), forças internas versus externas, como a Terceira Lei de Newton garante $\Delta \vec{Q} = \vec{0}$, recuo de armas de fogo e propulsão a jato no vácuo.
           </p>
           <div class="card-formulas">
-            $$\sum \vec{F}_{ext} = \vec{0} \implies \vec{Q}_{antes} = \vec{Q}_{depois}$$
+            $\sum \vec{F}_{ext} = \vec{0} \implies \vec{Q}_{antes} = \vec{Q}_{depois}$
           </div>
         </div>
-        <a href="topico3.html" class="btn btn-primary card-btn">Iniciar Apresentação ➔</a>
-      </article>
+        <div class="card-btn">Iniciar Apresentação ➔</div>
+      </a>
 
       <!-- Tópico 4 -->
-      <article class="topic-card">
+      <a href="./topico4.html" class="topic-card">
         <div>
           <div class="card-meta">
             <span class="card-number">MÓDULO 04</span>
@@ -293,14 +276,14 @@
             Colisão perfeitamente elástica ($e=1$), inelástica ($e=0$) e parcialmente elástica. Cálculo do coeficiente de restituição, troca de velocidade de massas iguais e modelo do pêndulo balístico.
           </p>
           <div class="card-formulas">
-            $$e = \frac{v_{afast}}{v_{aprox}} = \frac{|v_{2f} - v_{1f}|}{|v_{1i} - v_{2i}|} \quad | \quad e = \sqrt{\frac{h'}{h}}$$
+            $e = \frac{v_{afast}}{v_{aprox}} = \frac{|v_{2f} - v_{1f}|}{|v_{1i} - v_{2i}|} \quad | \quad e = \sqrt{\frac{h'}{h}}$
           </div>
         </div>
-        <a href="topico4.html" class="btn btn-primary card-btn">Iniciar Apresentação ➔</a>
-      </article>
+        <div class="card-btn">Iniciar Apresentação ➔</div>
+      </a>
 
       <!-- Tópico 5 -->
-      <article class="topic-card">
+      <a href="./topico5.html" class="topic-card">
         <div>
           <div class="card-meta">
             <span class="card-number">MÓDULO 05</span>
@@ -311,14 +294,14 @@
             Condição necessária e suficiente ($\sum \vec{F} = \vec{0}$), equilíbrio estático versus dinâmico, decomposição cartesiana, método do polígono fechado e Teorema de Lamy aplicado a cabos e rampa.
           </p>
           <div class="card-formulas">
-            $$\sum F_x = 0 \quad | \quad \sum F_y = 0 \quad | \quad \frac{F_1}{\sin\alpha} = \frac{F_2}{\sin\beta}$$
+            $\sum F_x = 0 \quad | \quad \sum F_y = 0 \quad | \quad \frac{F_1}{\sin\alpha} = \frac{F_2}{\sin\beta}$
           </div>
         </div>
-        <a href="topico5.html" class="btn btn-primary card-btn">Iniciar Apresentação ➔</a>
-      </article>
+        <div class="card-btn">Iniciar Apresentação ➔</div>
+      </a>
 
       <!-- Tópico 6 -->
-      <article class="topic-card">
+      <a href="./topico6.html" class="topic-card">
         <div>
           <div class="card-meta">
             <span class="card-number">MÓDULO 06</span>
@@ -329,14 +312,14 @@
             A física do corpo extenso, braço de alavanca e Torque ($\tau = F \cdot d \sin\theta$), as duas condições de equilíbrio estático completo, classes de alavancas e escolha estratégica de polo.
           </p>
           <div class="card-formulas">
-            $$\tau = \pm F \cdot d \cdot \sin\theta \quad | \quad \sum \vec{F} = \vec{0} \quad | \quad \sum \tau_{(polo)} = 0$$
+            $\tau = \pm F \cdot d \cdot \sin\theta \quad | \quad \sum \vec{F} = \vec{0} \quad | \quad \sum \tau_{(polo)} = 0$
           </div>
         </div>
-        <a href="topico6.html" class="btn btn-primary card-btn">Iniciar Apresentação ➔</a>
-      </article>
+        <div class="card-btn">Iniciar Apresentação ➔</div>
+      </a>
 
       <!-- Tópico 7 -->
-      <article class="topic-card">
+      <a href="./topico7.html" class="topic-card">
         <div>
           <div class="card-meta">
             <span class="card-number">MÓDULO 07</span>
@@ -347,14 +330,14 @@
             Conceito de pressão hidrostática, Teorema de Stevin ($p = p_0 + \rho gh$), barômetro de Torricelli e o limite físico absoluto da sucção: por que a atmosfera só consegue erguer água até 10,33 metros.
           </p>
           <div class="card-formulas">
-            $$p = p_0 + \rho g h \quad | \quad h_{máx} = \frac{p_{atm}}{\rho g} \approx 10{,}33\text{ m (água)}$$
+            $p = p_0 + \rho g h \quad | \quad h_{máx} = \frac{p_{atm}}{\rho g} \approx 10{,}33\text{ m (água)}$
           </div>
         </div>
-        <a href="topico7.html" class="btn btn-primary card-btn">Iniciar Apresentação ➔</a>
-      </article>
+        <div class="card-btn">Iniciar Apresentação ➔</div>
+      </a>
 
       <!-- Tópico 8 -->
-      <article class="topic-card">
+      <a href="./topico8.html" class="topic-card">
         <div>
           <div class="card-meta">
             <span class="card-number">MÓDULO 08</span>
@@ -365,11 +348,11 @@
             O Princípio de Pascal em fluidos incompressíveis, a Prensa Hidráulica e o ganho mecânico pelo quadrado dos raios, conservação do trabalho mecânico ($W_1 = W_2$) e tubos em U com líquidos imiscíveis.
           </p>
           <div class="card-formulas">
-            $$\frac{F_1}{A_1} = \frac{F_2}{A_2} \implies \frac{F_2}{F_1} = \left(\frac{R_2}{R_1}\right)^2 \quad | \quad \rho_1 h_1 = \rho_2 h_2$$
+            $\frac{F_1}{A_1} = \frac{F_2}{A_2} \implies \frac{F_2}{F_1} = \left(\frac{R_2}{R_1}\right)^2 \quad | \quad \rho_1 h_1 = \rho_2 h_2$
           </div>
         </div>
-        <a href="topico8.html" class="btn btn-primary card-btn">Iniciar Apresentação ➔</a>
-      </article>
+        <div class="card-btn">Iniciar Apresentação ➔</div>
+      </a>
 
     </section>
 
