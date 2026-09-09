@@ -1166,3 +1166,101 @@ body::before {
   box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
   transform: translateY(-2px);
 }
+
+/* =========================================================
+   ESTOJO DE GIZ & FERRAMENTAS DA LOUSA (PENCIL TRAY)
+   ========================================================= */
+.whiteboard-estojo {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 8px 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(56, 189, 248, 0.2);
+  user-select: none;
+}
+
+.estojo-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+.estojo-separator {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.estojo-colors {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wb-color-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+}
+
+.wb-color-btn:hover {
+  transform: scale(1.22);
+}
+
+.wb-color-btn.active {
+  transform: scale(1.28);
+  border-color: #ffffff;
+  box-shadow: 0 0 10px currentColor, 0 0 0 2px #ffffff;
+}
+
+.estojo-tools, .estojo-sizes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wb-tool-btn, .wb-size-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.wb-tool-btn:hover, .wb-size-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.wb-tool-btn.active, .wb-size-btn.active {
+  background: var(--accent-blue);
+  color: #ffffff;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}

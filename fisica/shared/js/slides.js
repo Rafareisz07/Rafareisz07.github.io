@@ -216,20 +216,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 11. Render KaTeX
-  if (window.renderMathInElement) {
-    try {
-      window.renderMathInElement(document.body, {
-        delimiters: [
-          { left: '$$', right: '$$', display: true },
-          { left: '$', right: '$', display: false },
-          { left: '\\(', right: '\\)', display: false },
-          { left: '\\[', right: '\\[', display: true }
-        ],
-        throwOnError: false
-      });
-    } catch (err) {
-      console.warn('KaTeX render warning:', err);
+  // 11. Render KaTeX com auto-retry e suporte assíncrono garantido
+  function runKaTeX(attempts = 0) {
+    if (typeof window.renderMathInElement === 'function') {
+      try {
+        window.renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\[', display: true }
+          ],
+          throwOnError: false
+        });
+      } catch (err) {
+        console.warn('KaTeX render warning:', err);
+      }
+    } else if (attempts < 40) {
+      setTimeout(() => runKaTeX(attempts + 1), 50);
     }
   }
+
+  window.initKaTeX = runKaTeX;
+  runKaTeX();
+  window.addEventListener('load', () => runKaTeX());
 });

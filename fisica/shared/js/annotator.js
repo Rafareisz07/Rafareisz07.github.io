@@ -18,6 +18,9 @@ class SlideAnnotator {
     this.whiteboards = [null];
     this.currentBoardIndex = 0;
     this.boardBgType = 'dark';
+    this.wbColor = '#facc15';
+    this.wbTool = 'pen';
+    this.wbLineWidth = 5;
 
     this.slideLayers = [];
     
@@ -122,6 +125,41 @@ class SlideAnnotator {
 
       <div class="whiteboard-body bg-dark">
         <canvas id="whiteboard-canvas"></canvas>
+
+        <!-- ESTOJO DA LOUSA (Bandeja de Giz, Canetas e Apagador) -->
+        <div class="whiteboard-estojo">
+          <div class="estojo-label">🧰 Estojo da Lousa</div>
+          
+          <div class="estojo-separator"></div>
+
+          <!-- Cores de Giz -->
+          <div class="estojo-colors">
+            <button class="wb-color-btn active" data-color="#facc15" style="background: #facc15;" title="Amarelo Giz"></button>
+            <button class="wb-color-btn" data-color="#38bdf8" style="background: #38bdf8;" title="Ciano Elétrico"></button>
+            <button class="wb-color-btn" data-color="#ffffff" style="background: #ffffff;" title="Branco"></button>
+            <button class="wb-color-btn" data-color="#4ade80" style="background: #4ade80;" title="Verde Neon"></button>
+            <button class="wb-color-btn" data-color="#f87171" style="background: #f87171;" title="Vermelho"></button>
+            <button class="wb-color-btn" data-color="#fb923c" style="background: #fb923c;" title="Laranja"></button>
+          </div>
+
+          <div class="estojo-separator"></div>
+
+          <!-- Ferramentas do Estojo -->
+          <div class="estojo-tools">
+            <button id="wb-tool-pen" class="wb-tool-btn active" title="Giz / Caneta">✏️ Caneta</button>
+            <button id="wb-tool-highlighter" class="wb-tool-btn" title="Marca-Texto">🖍️ Marca-Texto</button>
+            <button id="wb-tool-eraser" class="wb-tool-btn" title="Apagador">🧹 Apagador</button>
+          </div>
+
+          <div class="estojo-separator"></div>
+
+          <!-- Espessura do Traço -->
+          <div class="estojo-sizes">
+            <button class="wb-size-btn" data-size="3" title="Traço Fino">Fino</button>
+            <button class="wb-size-btn active" data-size="6" title="Traço Médio">Médio</button>
+            <button class="wb-size-btn" data-size="12" title="Traço Grosso">Grosso</button>
+          </div>
+        </div>
       </div>
     `;
     document.body.appendChild(this.whiteboardModal);
@@ -526,6 +564,53 @@ class SlideAnnotator {
 
     this.bindWhiteboardEvents();
 
+    // Controles do Estojo da Lousa
+    this.whiteboardModal.querySelectorAll('.wb-color-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.whiteboardModal.querySelectorAll('.wb-color-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.wbColor = btn.getAttribute('data-color');
+        if (this.wbTool === 'eraser') {
+          this.wbTool = 'pen';
+          const penBtn = document.getElementById('wb-tool-pen');
+          if (penBtn) this.updateToolButtons([penBtn, document.getElementById('wb-tool-highlighter'), document.getElementById('wb-tool-eraser')], penBtn);
+        }
+      });
+    });
+
+    const wbBtnPen = document.getElementById('wb-tool-pen');
+    const wbBtnHighlighter = document.getElementById('wb-tool-highlighter');
+    const wbBtnEraser = document.getElementById('wb-tool-eraser');
+
+    if (wbBtnPen) {
+      wbBtnPen.addEventListener('click', () => {
+        this.wbTool = 'pen';
+        this.updateToolButtons([wbBtnPen, wbBtnHighlighter, wbBtnEraser], wbBtnPen);
+      });
+    }
+
+    if (wbBtnHighlighter) {
+      wbBtnHighlighter.addEventListener('click', () => {
+        this.wbTool = 'highlighter';
+        this.updateToolButtons([wbBtnPen, wbBtnHighlighter, wbBtnEraser], wbBtnHighlighter);
+      });
+    }
+
+    if (wbBtnEraser) {
+      wbBtnEraser.addEventListener('click', () => {
+        this.wbTool = 'eraser';
+        this.updateToolButtons([wbBtnPen, wbBtnHighlighter, wbBtnEraser], wbBtnEraser);
+      });
+    }
+
+    this.whiteboardModal.querySelectorAll('.wb-size-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.whiteboardModal.querySelectorAll('.wb-size-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.wbLineWidth = parseInt(btn.getAttribute('data-size'), 10) || 5;
+      });
+    });
+
     const nbToggle = document.getElementById('tool-notebook-toggle');
     const nbClose = document.getElementById('nb-close');
     const nbDownloadAll = document.getElementById('nb-download-all');
@@ -849,24 +934,28 @@ class SlideAnnotator {
       try { this.wbCanvas.setPointerCapture(e.pointerId); } catch(err) {}
 
       const dpr = window.devicePixelRatio || 1;
+      const tool = this.wbTool || this.currentTool;
+      const color = this.wbColor || this.color;
+      const width = this.wbLineWidth || 5;
+
       this.wbCtx.save();
-      if (this.currentTool === 'eraser') {
+      if (tool === 'eraser') {
         this.wbCtx.globalCompositeOperation = 'destination-out';
         this.wbCtx.beginPath();
-        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, 16 * dpr, 0, Math.PI * 2);
+        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, 18 * dpr, 0, Math.PI * 2);
         this.wbCtx.fill();
-      } else if (this.currentTool === 'highlighter') {
+      } else if (tool === 'highlighter') {
         this.wbCtx.globalCompositeOperation = 'source-over';
-        this.wbCtx.fillStyle = this.color;
+        this.wbCtx.fillStyle = color;
         this.wbCtx.globalAlpha = 0.35;
         this.wbCtx.beginPath();
-        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, 10 * dpr, 0, Math.PI * 2);
+        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, 12 * dpr, 0, Math.PI * 2);
         this.wbCtx.fill();
       } else {
         this.wbCtx.globalCompositeOperation = 'source-over';
-        this.wbCtx.fillStyle = this.color;
+        this.wbCtx.fillStyle = color;
         this.wbCtx.beginPath();
-        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, (this.lineWidth * dpr) / 2, 0, Math.PI * 2);
+        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, (width * dpr) / 2, 0, Math.PI * 2);
         this.wbCtx.fill();
       }
       this.wbCtx.restore();
@@ -878,21 +967,25 @@ class SlideAnnotator {
       const currentPoint = getPos(e);
       const dpr = window.devicePixelRatio || 1;
 
+      const tool = this.wbTool || this.currentTool;
+      const color = this.wbColor || this.color;
+      const width = this.wbLineWidth || 5;
+
       this.wbCtx.save();
-      if (this.currentTool === 'eraser') {
+      if (tool === 'eraser') {
         this.wbCtx.globalCompositeOperation = 'destination-out';
-        this.wbCtx.lineWidth = 32 * dpr;
+        this.wbCtx.lineWidth = 36 * dpr;
         this.wbCtx.lineCap = 'round';
         this.wbCtx.lineJoin = 'round';
         this.wbCtx.beginPath();
         this.wbCtx.moveTo(wbLastPoint.x, wbLastPoint.y);
         this.wbCtx.lineTo(currentPoint.x, currentPoint.y);
         this.wbCtx.stroke();
-      } else if (this.currentTool === 'highlighter') {
+      } else if (tool === 'highlighter') {
         this.wbCtx.globalCompositeOperation = 'source-over';
-        this.wbCtx.strokeStyle = this.color;
+        this.wbCtx.strokeStyle = color;
         this.wbCtx.globalAlpha = 0.35;
-        this.wbCtx.lineWidth = 20 * dpr;
+        this.wbCtx.lineWidth = 22 * dpr;
         this.wbCtx.lineCap = 'round';
         this.wbCtx.lineJoin = 'round';
         this.wbCtx.beginPath();
@@ -901,8 +994,8 @@ class SlideAnnotator {
         this.wbCtx.stroke();
       } else {
         this.wbCtx.globalCompositeOperation = 'source-over';
-        this.wbCtx.strokeStyle = this.color;
-        this.wbCtx.lineWidth = this.lineWidth * dpr;
+        this.wbCtx.strokeStyle = color;
+        this.wbCtx.lineWidth = width * dpr;
         this.wbCtx.lineCap = 'round';
         this.wbCtx.lineJoin = 'round';
         this.wbCtx.beginPath();
