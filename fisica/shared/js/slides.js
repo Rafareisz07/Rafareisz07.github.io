@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const totalCounter = document.getElementById('total-slides');
   const progressBar = document.getElementById('progress-bar');
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  const teacherToggleBtn = document.getElementById('teacher-toggle-btn');
+  
   const fullscreenBtn = document.getElementById('fullscreen-btn');
   const topicSelect = document.getElementById('topic-select');
 
@@ -122,10 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         goToSlide(totalSlides - 1);
         break;
-      case 'p':
-      case 'P':
-        toggleTeacherMode();
-        break;
+      
       case 'f':
       case 'F':
         toggleFullscreen();
@@ -158,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('fisica_teacher_mode', isActive ? 'true' : 'false');
   }
 
-  if (teacherToggleBtn) teacherToggleBtn.addEventListener('click', toggleTeacherMode);
+  
   if (localStorage.getItem('fisica_teacher_mode') === 'true') {
     document.body.classList.add('teacher-mode-active');
     if (teacherToggleBtn) teacherToggleBtn.classList.add('active');

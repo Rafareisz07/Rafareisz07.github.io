@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.2.0">
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
     <div class="nav-right">
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
-      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
       </div>
@@ -77,11 +76,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Pergunta Conceitual para a Aluna</div>
-          <p>"Um satélite em órbita circular ao redor da Terra com velocidade escalar constante está em equilíbrio?" Resposta: NÃO! Há aceleração centrípeta apontando para o centro da Terra ($\vec{a}_c \ne \vec{0}$), logo a força resultante (gravidade) não é nula!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 2: CONDIÇÃO DE EQUILÍBRIO -->
@@ -126,11 +121,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Condução</div>
-          <p>Insista para a aluna sempre desenhar o Diagrama de Corpo Livre (DCL) grande e limpo no papel antes de colocar qualquer número. Quase todos os erros acontecem por esquecer uma força ou errar o seno/cosseno da decomposição.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 3: MÉTODOS GEOMÉTRICOS & TEOREMA DE LAMY -->
@@ -167,11 +158,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Quando Usar Lamy</div>
-          <p>Explique: "Lamy é perfeito quando o enunciado dá os ângulos diretos entre os fios (por exemplo, 120°, 150°, 90°). Em 2 linhas de conta você acha as trações sem montar sistema de equações!".</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 4: CASOS CLÁSSICOS: PLANO INCLINADO & CABOS -->
@@ -210,11 +197,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Curiosidade Prática</div>
-          <p>Pergunte: "Por que os fios de alta tensão nos postes nunca são instalados perfeitamente esticados em linha reta e sempre têm uma barriga (catenária)?" Resposta: para não romperem pela tração infinita necessária para sustentar o próprio peso horizontalmente!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 5: SIMULADOR DE CABOS SUSPENSOS -->
@@ -263,11 +246,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Experimento Guiado</div>
-          <p>Deixe $\theta_1 = 70^\circ$ (quase vertical) e $\theta_2 = 25^\circ$ (quase horizontal). Mostre que o cabo 1 carrega muito mais força vertical, mas o cabo 2 é puxado forte para compensar a força lateral em $X$!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
@@ -316,11 +295,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Resolução Rápida</div>
-          <p>Mostre que $30^\circ + 60^\circ = 90^\circ$! Isso significa que os dois fios são perpendiculares entre si. Num triângulo retângulo de forças, $T_A = P \sin(30^\circ) = 120 \times 0{,}5 = 60\text{ N}$ e $T_B = P \sin(60^\circ) = 60\sqrt{3}\text{ N}$ direto em uma linha!</p>
         </div>
-      </div>
     </section>
 
   </main>
@@ -339,9 +314,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js"></script>
-  <script src="./shared/js/annotator.js"></script>
-  <script src="./shared/js/simulators.js"></script>
+  <script src="./shared/js/slides.js?v=2.2.0"></script>
+  <script src="./shared/js/annotator.js?v=2.2.0"></script>
+  <script src="./shared/js/simulators.js?v=2.2.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic5();

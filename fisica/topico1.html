@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.2.0">
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
     <div class="nav-right">
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
-      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
       </div>
@@ -80,11 +79,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica Pedagógica para a Aula Particular</div>
-          <p><strong>Pergunte para a aluna:</strong> "Se dois carros iguais sobem uma mesma serra, mas um chega em 10 minutos e o outro em 30 minutos, qual dos motores realizou maior trabalho? E qual desenvolveu maior potência?" (Resposta esperada: Mesmo trabalho contra a gravidade, mas o que subiu em 10 min desenvolveu 3 vezes mais potência!).</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 2: POTÊNCIA MÉDIA & UNIDADES -->
@@ -140,11 +135,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Alerta para a Aluna</div>
-          <p>Atenção redobrada: é fundamental converter minutos ou horas para segundos antes de dividir $\Delta W / \Delta t$, ou achando que a conta de luz mede potência porque tem "watt" no nome. Reforce bem a relação $E = P \times \Delta t$.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 3: POTÊNCIA INSTANTÂNEA -->
@@ -195,11 +186,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica Pedagógica</div>
-          <p>Peça para a aluna observar as unidades: Força $(\text{N}) \times$ Velocidade $(\text{m/s}) = \text{N}\cdot\text{m/s} = \text{J/s} = \text{Watt}$. Essa análise dimensional ajuda a fixar a fórmula sem decorar cegamente!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 4: GRÁFICO P x t & RENDIMENTO -->
@@ -242,11 +229,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Vestibular</div>
-          <p>Exercícios comuns dão a potência do motor (total) e pedem a altura que uma bomba d'água eleva um volume de água em certo tempo com rendimento de 80%. A fórmula chave é: $P_{útil} = \eta \cdot P_{total} = \frac{mgh}{\Delta t}$.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 5: SIMULADOR INTERATIVO -->
@@ -303,11 +286,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Experimentação Guiada com a Aluna</div>
-          <p>Mude o ângulo da rampa de $0^\circ$ para $25^\circ$ mantendo a velocidade constante. Mostre como a potência salta de meros 10 cv para mais de 150 cv! É por isso que carros populares 1.0 precisam reduzir a marcha na subida.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
@@ -352,11 +331,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Condução com a Aluna</div>
-          <p>Deixe a aluna tentar o Passo 1 sozinha no papel antes de abrir a resolução. Se ela travar no Passo 3, pergunte: "A potência total consumida tem que ser maior ou menor que 6 kW?" para ajudá-la a raciocinar sobre a fração do rendimento.</p>
         </div>
-      </div>
     </section>
 
   </main>
@@ -375,9 +350,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js"></script>
-  <script src="./shared/js/annotator.js"></script>
-  <script src="./shared/js/simulators.js"></script>
+  <script src="./shared/js/slides.js?v=2.2.0"></script>
+  <script src="./shared/js/annotator.js?v=2.2.0"></script>
+  <script src="./shared/js/simulators.js?v=2.2.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic1();

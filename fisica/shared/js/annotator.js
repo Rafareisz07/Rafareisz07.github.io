@@ -1,14 +1,7 @@
 /**
- * MOTOR DE ANOTAÇÕES & LOUSA VIRTUAL INTERATIVA (PADRÃO CANVA / PRESENTIFY)
+ * MOTOR DE ANOTAÇÕES & LOUSA VIRTUAL INTERATIVA
  * Autor: Rafa / Antigravity
- * 
- * Recursos:
- * - Camadas de anotação vinculadas DIRETAMENTE a cada slide (não flutuam na tela)
- * - Traço 100% contínuo, suave e isolado por slide (sem propagação entre slides)
- * - Cursor em formato de Ponto de Precisão (círculo dinâmico colorido, sem traço vertical)
- * - Lousa Virtual com múltiplos quadros e fundos (Lousa grafite, Quadriculado, Branco)
- * - Armazenamento 100% sem cookies: localStorage + Exportação de Caderno (.png / .json / PDF)
- * - Modal "Caderno de Estudos da Aluna" para visualização e impressão completa pós-aula
+ * Versão: 2.2.0 (PointerEvents isolados por slide, sem propagação, traço contínuo)
  */
 
 class SlideAnnotator {
@@ -18,18 +11,16 @@ class SlideAnnotator {
     this.color = '#facc15';   // Amarelo giz por padrão
     this.lineWidth = 3.5;
     
-    // Identificador único do tópico atual (ex: 'topico1')
     this.topicKey = window.location.pathname.split('/').pop().replace('.html', '') || 'topico';
     
-    // Quadros de Lousa
+    // Lousa
     this.whiteboardOpen = false;
     this.whiteboards = [null];
     this.currentBoardIndex = 0;
     this.boardBgType = 'dark';
 
-    this.slideLayers = []; // Referência aos canvases de cada slide
+    this.slideLayers = [];
     
-    // Determina o slide ativo inicial
     const initialActive = document.querySelector('.slide.active');
     const allSlidesList = Array.from(document.querySelectorAll('.slide'));
     this.currentSlideIndex = initialActive ? Math.max(0, allSlidesList.indexOf(initialActive)) : 0;
@@ -37,7 +28,6 @@ class SlideAnnotator {
     this.initDOM();
     this.setupSlideLayers();
     this.setupCursorDot();
-    this.setupDrawingListeners();
     this.setupEvents();
     this.loadSavedAnnotations();
   }
@@ -85,7 +75,7 @@ class SlideAnnotator {
     `;
     document.body.appendChild(this.toolbar);
 
-    // 2. Cursor Ponto de Precisão (Ponto flutuante visível no mouse)
+    // 2. Cursor Ponto de Precisão (Ponto circular nítido no mouse)
     this.cursorDot = document.createElement('div');
     this.cursorDot.id = 'pen-cursor-dot';
     this.cursorDot.style.cssText = `
@@ -95,12 +85,12 @@ class SlideAnnotator {
       z-index: 99999;
       display: none;
       transform: translate(-50%, -50%);
-      transition: width 0.12s ease, height 0.12s ease, background-color 0.12s ease;
-      box-shadow: 0 0 3px rgba(0,0,0,0.8), 0 0 0 1.5px #ffffff;
+      transition: width 0.1s ease, height 0.1s ease, background-color 0.1s ease;
+      box-shadow: 0 0 3px rgba(0,0,0,0.9), 0 0 0 1.5px #ffffff;
     `;
     document.body.appendChild(this.cursorDot);
 
-    // 3. Modal da Lousa Virtual / Quadro Branco
+    // 3. Modal da Lousa Virtual
     this.whiteboardModal = document.createElement('div');
     this.whiteboardModal.id = 'whiteboard-modal';
     this.whiteboardModal.className = 'whiteboard-modal';
@@ -139,7 +129,7 @@ class SlideAnnotator {
     this.wbCanvas = this.whiteboardModal.querySelector('#whiteboard-canvas');
     this.wbCtx = this.wbCanvas.getContext('2d');
 
-    // 4. Modal "Caderno de Estudos da Aluna" (Gera resumo permanente sem cookies)
+    // 4. Modal "Caderno de Estudos da Aluna"
     this.notebookModal = document.createElement('div');
     this.notebookModal.id = 'notebook-modal';
     this.notebookModal.className = 'notebook-modal';
@@ -190,7 +180,7 @@ class SlideAnnotator {
     document.body.appendChild(this.notebookModal);
   }
 
-  // Camada de canvas DEDICADA para CADA slide
+  // Cria e anexa um canvas com PointerEvents totalmente ISOLADO a cada slide
   setupSlideLayers() {
     const slides = document.querySelectorAll('.slide');
     this.slideLayers = [];
@@ -200,8 +190,7 @@ class SlideAnnotator {
       canvas.className = 'slide-annotation-layer';
       canvas.style.cssText = `
         position: absolute;
-        top: 0;
-        left: 0;
+        inset: 0;
         width: 100%;
         height: 100%;
         pointer-events: none;
@@ -212,14 +201,19 @@ class SlideAnnotator {
       slide.appendChild(canvas);
 
       const ctx = canvas.getContext('2d');
-      this.slideLayers.push({ slide, canvas, ctx, index });
+      const layer = { slide, canvas, ctx, index };
+      this.slideLayers.push(layer);
+
+      // Vincula os eventos de PointerEvents EXCLUSIVAMENTE a este canvas específico
+      this.bindLayerPointerDrawing(layer);
     });
 
-    this.resizeSlideCanvases();
+    this.resizeAllCanvases();
     this.updateSlidePointerEvents();
   }
 
-  resizeSlideCanvases() {
+  // Redimensionamento sem perda de dados e mapeamento nativo de pixels
+  resizeAllCanvases() {
     const dpr = window.devicePixelRatio || 1;
 
     this.slideLayers.forEach(layer => {
@@ -227,190 +221,177 @@ class SlideAnnotator {
       const w = Math.round(rect.width) || 1160;
       const h = Math.round(rect.height) || 652;
 
+      const targetW = w * dpr;
+      const targetH = h * dpr;
+
+      if (layer.canvas.width === targetW && layer.canvas.height === targetH) return;
+
       let prevData = null;
       if (layer.canvas.width > 0 && layer.canvas.height > 0) {
-        try {
-          prevData = layer.canvas.toDataURL();
-        } catch (e) {}
+        try { prevData = layer.canvas.toDataURL(); } catch (e) {}
       }
 
-      layer.canvas.width = w * dpr;
-      layer.canvas.height = h * dpr;
-      layer.ctx.scale(dpr, dpr);
+      layer.canvas.width = targetW;
+      layer.canvas.height = targetH;
 
       if (prevData) {
         const img = new Image();
         img.onload = () => {
-          layer.ctx.drawImage(img, 0, 0, w, h);
+          layer.ctx.drawImage(img, 0, 0, targetW, targetH);
         };
         img.src = prevData;
       }
     });
 
+    // Lousa
     const wbBody = this.whiteboardModal.querySelector('.whiteboard-body');
     if (wbBody) {
       const wbW = wbBody.clientWidth || window.innerWidth;
       const wbH = wbBody.clientHeight || (window.innerHeight - 60);
       this.wbCanvas.width = wbW * dpr;
       this.wbCanvas.height = wbH * dpr;
-      this.wbCtx.scale(dpr, dpr);
     }
-  }
-
-  getActiveLayer() {
-    // Retorna explicitamente o layer do slide ativo atual
-    if (this.slideLayers[this.currentSlideIndex]) {
-      return this.slideLayers[this.currentSlideIndex];
-    }
-    return this.slideLayers.find(l => l.slide.classList.contains('active')) || null;
   }
 
   updateSlidePointerEvents() {
     this.slideLayers.forEach((layer, idx) => {
-      layer.canvas.style.pointerEvents = (this.isActive && idx === this.currentSlideIndex) ? 'auto' : 'none';
+      // APENAS o slide ativo no momento aceita eventos de desenho
+      const isCurrentActive = (idx === this.currentSlideIndex) && layer.slide.classList.contains('active');
+      layer.canvas.style.pointerEvents = (this.isActive && isCurrentActive) ? 'auto' : 'none';
     });
   }
 
-  // MOTOR DE DESENHO ROBUSTO: Único controlador global, sem replicação entre slides
-  setupDrawingListeners() {
-    let currentDrawingLayer = null;
+  // Mapeamento matemático perfeito de coordenadas (Independente de zoom, escala ou DPR)
+  getCanvasPoint(e, canvas) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+    const clientY = e.clientY !== undefined ? e.clientY : (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+
+    return {
+      x: (clientX - rect.left) * (canvas.width / rect.width),
+      y: (clientY - rect.top) * (canvas.height / rect.height)
+    };
+  }
+
+  // Motor de Desenho Isolado por Camada (Zero propagação, traço 100% contínuo)
+  bindLayerPointerDrawing(layer) {
+    const canvas = layer.canvas;
+    const ctx = layer.ctx;
     let isDrawing = false;
     let lastPoint = null;
 
-    const getCanvasPoint = (e, layer) => {
-      const rect = layer.slide.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const dpr = window.devicePixelRatio || 1;
-
-      const scaleX = (layer.canvas.width / dpr) / rect.width;
-      const scaleY = (layer.canvas.height / dpr) / rect.height;
-
-      return {
-        x: (clientX - rect.left) * scaleX,
-        y: (clientY - rect.top) * scaleY
-      };
-    };
-
-    const onStart = (e) => {
+    const start = (e) => {
       if (!this.isActive) return;
-      
-      // Desenha EXCLUSIVAMENTE no slide que estiver ativo no momento
-      const activeLayer = this.getActiveLayer();
-      if (!activeLayer) return;
+      if (e.button !== undefined && e.button !== 0) return; // Apenas botão principal
+      if (!layer.slide.classList.contains('active')) return;
 
-      currentDrawingLayer = activeLayer;
+      try { canvas.setPointerCapture(e.pointerId); } catch(err) {}
       isDrawing = true;
-      lastPoint = getCanvasPoint(e, currentDrawingLayer);
 
-      // Marca ponto inicial (garante clique único com ponto nítido)
-      const ctx = currentDrawingLayer.ctx;
+      const pt = this.getCanvasPoint(e, canvas);
+      lastPoint = pt;
+
+      const dpr = window.devicePixelRatio || 1;
       ctx.save();
       if (this.currentTool === 'eraser') {
         ctx.globalCompositeOperation = 'destination-out';
         ctx.beginPath();
-        ctx.arc(lastPoint.x, lastPoint.y, 14, 0, Math.PI * 2);
+        ctx.arc(pt.x, pt.y, 16 * dpr, 0, Math.PI * 2);
         ctx.fill();
       } else if (this.currentTool === 'highlighter') {
         ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = this.color;
         ctx.globalAlpha = 0.35;
         ctx.beginPath();
-        ctx.arc(lastPoint.x, lastPoint.y, 9, 0, Math.PI * 2);
+        ctx.arc(pt.x, pt.y, 10 * dpr, 0, Math.PI * 2);
         ctx.fill();
       } else {
-        // Caneta
+        // Caneta: ponto inicial sólido
         ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(lastPoint.x, lastPoint.y, this.lineWidth / 2, 0, Math.PI * 2);
+        ctx.arc(pt.x, pt.y, (this.lineWidth * dpr) / 2, 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.restore();
     };
 
-    const onMove = (e) => {
-      if (!isDrawing || !this.isActive || !currentDrawingLayer) return;
+    const move = (e) => {
+      if (!isDrawing || !this.isActive) return;
       e.preventDefault();
 
-      const currentPoint = getCanvasPoint(e, currentDrawingLayer);
-      const ctx = currentDrawingLayer.ctx;
+      const pt = this.getCanvasPoint(e, canvas);
+      const dpr = window.devicePixelRatio || 1;
 
       ctx.save();
       if (this.currentTool === 'eraser') {
         ctx.globalCompositeOperation = 'destination-out';
-        ctx.lineWidth = 28;
+        ctx.lineWidth = 32 * dpr;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.beginPath();
         ctx.moveTo(lastPoint.x, lastPoint.y);
-        ctx.lineTo(currentPoint.x, currentPoint.y);
+        ctx.lineTo(pt.x, pt.y);
         ctx.stroke();
       } else if (this.currentTool === 'highlighter') {
         ctx.globalCompositeOperation = 'source-over';
         ctx.strokeStyle = this.color;
         ctx.globalAlpha = 0.35;
-        ctx.lineWidth = 18;
+        ctx.lineWidth = 20 * dpr;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.beginPath();
         ctx.moveTo(lastPoint.x, lastPoint.y);
-        ctx.lineTo(currentPoint.x, currentPoint.y);
+        ctx.lineTo(pt.x, pt.y);
         ctx.stroke();
       } else {
-        // Linha Contínua Suave (Ponta Redonda e Junção Perfeita)
+        // Traço Contínuo Perfeito (Ponta Redonda e Junção Lisa)
         ctx.globalCompositeOperation = 'source-over';
         ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.lineWidth;
+        ctx.lineWidth = this.lineWidth * dpr;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.beginPath();
         ctx.moveTo(lastPoint.x, lastPoint.y);
-        ctx.lineTo(currentPoint.x, currentPoint.y);
+        ctx.lineTo(pt.x, pt.y);
         ctx.stroke();
       }
       ctx.restore();
 
-      lastPoint = currentPoint;
+      lastPoint = pt;
     };
 
-    const onStop = () => {
+    const stop = (e) => {
       if (!isDrawing) return;
       isDrawing = false;
       lastPoint = null;
-      currentDrawingLayer = null;
+      try { canvas.releasePointerCapture(e.pointerId); } catch(err) {}
       this.persistSlideAnnotations();
     };
 
-    // Anexa mousedown a cada canvas de slide
-    this.slideLayers.forEach(layer => {
-      layer.canvas.addEventListener('mousedown', onStart);
-      layer.canvas.addEventListener('touchstart', onStart, { passive: false });
-    });
-
-    // Único listener de movimento e soltura registrado na window
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onStop);
-    window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('touchend', onStop);
+    canvas.addEventListener('pointerdown', start);
+    canvas.addEventListener('pointermove', move);
+    canvas.addEventListener('pointerup', stop);
+    canvas.addEventListener('pointercancel', stop);
   }
 
+  // Cursor em Ponto de Precisão
   setupCursorDot() {
     this.updateCursorVisual();
 
-    window.addEventListener('mousemove', (e) => {
+    window.addEventListener('pointermove', (e) => {
       if (!this.isActive) {
         this.cursorDot.style.display = 'none';
         return;
       }
 
-      const activeLayer = this.getActiveLayer();
-      if (!activeLayer) {
+      const activeSlide = document.querySelector('.slide.active');
+      if (!activeSlide) {
         this.cursorDot.style.display = 'none';
         return;
       }
 
-      const rect = activeLayer.slide.getBoundingClientRect();
+      const rect = activeSlide.getBoundingClientRect();
       const inSlide = (
         e.clientX >= rect.left &&
         e.clientX <= rect.right &&
@@ -442,7 +423,6 @@ class SlideAnnotator {
       this.cursorDot.style.opacity = '0.7';
       this.cursorDot.style.boxShadow = '0 0 4px rgba(0,0,0,0.9), 0 0 0 1.5px #ffffff';
     } else {
-      // Caneta de precisão (ponto cirúrgico nítido)
       this.cursorDot.style.width = '8px';
       this.cursorDot.style.height = '8px';
       this.cursorDot.style.background = this.color;
@@ -468,7 +448,7 @@ class SlideAnnotator {
   }
 
   setupEvents() {
-    window.addEventListener('resize', () => this.resizeSlideCanvases());
+    window.addEventListener('resize', () => this.resizeAllCanvases());
 
     const penToggle = document.getElementById('tool-pen-toggle');
     if (penToggle) {
@@ -580,7 +560,7 @@ class SlideAnnotator {
       }
     });
 
-    // Troca de slide: atualiza índice e restringe pointer-events
+    // Troca de slide: sincroniza índice e ajusta pointer-events
     window.addEventListener('slideChanged', (e) => {
       this.currentSlideIndex = e.detail.slideIndex;
       this.updateSlidePointerEvents();
@@ -593,10 +573,9 @@ class SlideAnnotator {
   }
 
   clearCurrentSlide() {
-    const layer = this.getActiveLayer();
-    if (!layer) return;
-    const dpr = window.devicePixelRatio || 1;
-    layer.ctx.clearRect(0, 0, layer.canvas.width / dpr, layer.canvas.height / dpr);
+    const currentLayer = this.slideLayers[this.currentSlideIndex];
+    if (!currentLayer) return;
+    currentLayer.ctx.clearRect(0, 0, currentLayer.canvas.width, currentLayer.canvas.height);
     this.persistSlideAnnotations();
   }
 
@@ -604,41 +583,38 @@ class SlideAnnotator {
     try {
       const data = {};
       this.slideLayers.forEach((layer, i) => {
-        const dpr = window.devicePixelRatio || 1;
-        const w = Math.round(layer.canvas.width / dpr);
-        const h = Math.round(layer.canvas.height / dpr);
-        if (w > 0 && h > 0) {
+        if (layer.canvas.width > 0 && layer.canvas.height > 0) {
           data[i] = layer.canvas.toDataURL();
         }
       });
-      localStorage.setItem(`fisica_caderno_v2_${this.topicKey}`, JSON.stringify(data));
+      localStorage.setItem(`fisica_caderno_v3_${this.topicKey}`, JSON.stringify(data));
     } catch (e) {
-      console.warn('Erro ao salvar anotações no localStorage:', e);
+      console.warn('Erro ao salvar no localStorage:', e);
     }
   }
 
   loadSavedAnnotations() {
     try {
-      // Remove legado com propagação caso exista
+      // Limpa dados legados corrompidos de versões anteriores
       localStorage.removeItem(`fisica_caderno_${this.topicKey}`);
+      localStorage.removeItem(`fisica_caderno_v2_${this.topicKey}`);
 
-      const raw = localStorage.getItem(`fisica_caderno_v2_${this.topicKey}`);
+      const raw = localStorage.getItem(`fisica_caderno_v3_${this.topicKey}`);
       if (!raw) return;
       const data = JSON.parse(raw);
-      const dpr = window.devicePixelRatio || 1;
 
       Object.keys(data).forEach(idx => {
         const layer = this.slideLayers[parseInt(idx, 10)];
         if (layer && data[idx]) {
           const img = new Image();
           img.onload = () => {
-            layer.ctx.drawImage(img, 0, 0, layer.canvas.width / dpr, layer.canvas.height / dpr);
+            layer.ctx.drawImage(img, 0, 0, layer.canvas.width, layer.canvas.height);
           };
           img.src = data[idx];
         }
       });
     } catch (e) {
-      console.warn('Erro ao carregar anotações salvas:', e);
+      console.warn('Erro ao carregar do localStorage:', e);
     }
   }
 
@@ -724,7 +700,7 @@ class SlideAnnotator {
   }
 
   exportSessionJson() {
-    const raw = localStorage.getItem(`fisica_caderno_v2_${this.topicKey}`) || '{}';
+    const raw = localStorage.getItem(`fisica_caderno_v3_${this.topicKey}`) || '{}';
     const blob = new Blob([raw], { type: 'application/json' });
     const link = document.createElement('a');
     link.download = `anotacoes-aula-${this.topicKey}.json`;
@@ -739,7 +715,7 @@ class SlideAnnotator {
     reader.onload = (ev) => {
       try {
         const data = JSON.parse(ev.target.result);
-        localStorage.setItem(`fisica_caderno_v2_${this.topicKey}`, JSON.stringify(data));
+        localStorage.setItem(`fisica_caderno_v3_${this.topicKey}`, JSON.stringify(data));
         this.loadSavedAnnotations();
         this.renderNotebookPreview();
         alert('Anotações carregadas com sucesso no caderno!');
@@ -753,7 +729,7 @@ class SlideAnnotator {
   openWhiteboard() {
     this.whiteboardOpen = true;
     this.whiteboardModal.style.display = 'flex';
-    this.resizeSlideCanvases();
+    this.resizeAllCanvases();
     this.renderWhiteboardCurrentPage();
   }
 
@@ -773,14 +749,13 @@ class SlideAnnotator {
   }
 
   renderWhiteboardCurrentPage() {
-    const dpr = window.devicePixelRatio || 1;
-    this.wbCtx.clearRect(0, 0, this.wbCanvas.width / dpr, this.wbCanvas.height / dpr);
+    this.wbCtx.clearRect(0, 0, this.wbCanvas.width, this.wbCanvas.height);
 
     const saved = this.whiteboards[this.currentBoardIndex];
     if (saved) {
       const img = new Image();
       img.onload = () => {
-        this.wbCtx.drawImage(img, 0, 0, this.wbCanvas.width / dpr, this.wbCanvas.height / dpr);
+        this.wbCtx.drawImage(img, 0, 0, this.wbCanvas.width, this.wbCanvas.height);
       };
       img.src = saved;
     }
@@ -811,8 +786,7 @@ class SlideAnnotator {
   }
 
   clearWhiteboard() {
-    const dpr = window.devicePixelRatio || 1;
-    this.wbCtx.clearRect(0, 0, this.wbCanvas.width / dpr, this.wbCanvas.height / dpr);
+    this.wbCtx.clearRect(0, 0, this.wbCanvas.width, this.wbCanvas.height);
     this.whiteboards[this.currentBoardIndex] = null;
   }
 
@@ -860,41 +834,67 @@ class SlideAnnotator {
 
     const getPos = (e) => {
       const rect = this.wbCanvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const dpr = window.devicePixelRatio || 1;
-      const scaleX = (this.wbCanvas.width / dpr) / rect.width;
-      const scaleY = (this.wbCanvas.height / dpr) / rect.height;
+      const clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+      const clientY = e.clientY !== undefined ? e.clientY : (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
 
       return {
-        x: (clientX - rect.left) * scaleX,
-        y: (clientY - rect.top) * scaleY
+        x: (clientX - rect.left) * (this.wbCanvas.width / rect.width),
+        y: (clientY - rect.top) * (this.wbCanvas.height / rect.height)
       };
     };
 
     const start = (e) => {
       wbDrawing = true;
       wbLastPoint = getPos(e);
+      try { this.wbCanvas.setPointerCapture(e.pointerId); } catch(err) {}
+
+      const dpr = window.devicePixelRatio || 1;
+      this.wbCtx.save();
+      if (this.currentTool === 'eraser') {
+        this.wbCtx.globalCompositeOperation = 'destination-out';
+        this.wbCtx.beginPath();
+        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, 16 * dpr, 0, Math.PI * 2);
+        this.wbCtx.fill();
+      } else if (this.currentTool === 'highlighter') {
+        this.wbCtx.globalCompositeOperation = 'source-over';
+        this.wbCtx.fillStyle = this.color;
+        this.wbCtx.globalAlpha = 0.35;
+        this.wbCtx.beginPath();
+        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, 10 * dpr, 0, Math.PI * 2);
+        this.wbCtx.fill();
+      } else {
+        this.wbCtx.globalCompositeOperation = 'source-over';
+        this.wbCtx.fillStyle = this.color;
+        this.wbCtx.beginPath();
+        this.wbCtx.arc(wbLastPoint.x, wbLastPoint.y, (this.lineWidth * dpr) / 2, 0, Math.PI * 2);
+        this.wbCtx.fill();
+      }
+      this.wbCtx.restore();
     };
 
     const draw = (e) => {
       if (!wbDrawing) return;
       e.preventDefault();
       const currentPoint = getPos(e);
+      const dpr = window.devicePixelRatio || 1;
 
       this.wbCtx.save();
       if (this.currentTool === 'eraser') {
         this.wbCtx.globalCompositeOperation = 'destination-out';
-        this.wbCtx.lineWidth = 30;
+        this.wbCtx.lineWidth = 32 * dpr;
+        this.wbCtx.lineCap = 'round';
+        this.wbCtx.lineJoin = 'round';
         this.wbCtx.beginPath();
-        this.wbCtx.arc(currentPoint.x, currentPoint.y, 15, 0, Math.PI * 2);
-        this.wbCtx.fill();
+        this.wbCtx.moveTo(wbLastPoint.x, wbLastPoint.y);
+        this.wbCtx.lineTo(currentPoint.x, currentPoint.y);
+        this.wbCtx.stroke();
       } else if (this.currentTool === 'highlighter') {
         this.wbCtx.globalCompositeOperation = 'source-over';
         this.wbCtx.strokeStyle = this.color;
         this.wbCtx.globalAlpha = 0.35;
-        this.wbCtx.lineWidth = 20;
-        this.wbCtx.lineCap = 'square';
+        this.wbCtx.lineWidth = 20 * dpr;
+        this.wbCtx.lineCap = 'round';
+        this.wbCtx.lineJoin = 'round';
         this.wbCtx.beginPath();
         this.wbCtx.moveTo(wbLastPoint.x, wbLastPoint.y);
         this.wbCtx.lineTo(currentPoint.x, currentPoint.y);
@@ -902,7 +902,7 @@ class SlideAnnotator {
       } else {
         this.wbCtx.globalCompositeOperation = 'source-over';
         this.wbCtx.strokeStyle = this.color;
-        this.wbCtx.lineWidth = this.lineWidth + 1;
+        this.wbCtx.lineWidth = this.lineWidth * dpr;
         this.wbCtx.lineCap = 'round';
         this.wbCtx.lineJoin = 'round';
         this.wbCtx.beginPath();
@@ -915,20 +915,18 @@ class SlideAnnotator {
       wbLastPoint = currentPoint;
     };
 
-    const stop = () => {
+    const stop = (e) => {
       if (!wbDrawing) return;
       wbDrawing = false;
       wbLastPoint = null;
+      try { this.wbCanvas.releasePointerCapture(e.pointerId); } catch(err) {}
       this.saveWhiteboardState();
     };
 
-    this.wbCanvas.addEventListener('mousedown', start);
-    window.addEventListener('mousemove', draw);
-    window.addEventListener('mouseup', stop);
-
-    this.wbCanvas.addEventListener('touchstart', start, { passive: false });
-    window.addEventListener('touchmove', draw, { passive: false });
-    window.addEventListener('touchend', stop);
+    this.wbCanvas.addEventListener('pointerdown', start);
+    this.wbCanvas.addEventListener('pointermove', draw);
+    this.wbCanvas.addEventListener('pointerup', stop);
+    this.wbCanvas.addEventListener('pointercancel', stop);
   }
 }
 

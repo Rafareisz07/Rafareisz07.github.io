@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.2.0">
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
     <div class="nav-right">
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
-      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
       </div>
@@ -73,11 +72,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Ponto de Atenção Crucial no Vestibular</div>
-          <p>Diga enfaticamente para a aluna: "Se um exercício de vestibular perguntar 'qual grandeza física se conserva em qualquer choque mecânico?', a resposta é <strong>Quantidade de Movimento</strong>, NUNCA Energia Cinética!".</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 2: O COEFICIENTE DE RESTITUIÇÃO (e) -->
@@ -127,11 +122,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Resolução de Exercício</div>
-          <p>Lembre a aluna: $v_{afast}$ e $v_{aprox}$ são módulos de velocidades RELATIVAS. Se dois carros vêm de frente a 20 m/s e 30 m/s, eles se aproximam a $20 + 30 = 50\text{ m/s}$. Se andam no mesmo sentido a 30 m/s e 20 m/s, aproximam-se a $30 - 20 = 10\text{ m/s}$.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 3: A TRÍADE DAS COLISÕES -->
@@ -176,11 +167,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Regra Prática para Resolução Rápida</div>
-          <p>Quando o enunciado disser: <em>"após o choque, os blocos passam a se mover juntos"</em> ou <em>"o projétil ficou incrustado no bloco"</em>, acenda o alerta imediatamente: É COLISÃO PERFEITAMENTE INELÁSTICA ($e=0$), e a equação é simplesmente: $m_1 v_1 + m_2 v_2 = (m_1 + m_2) v_f$!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 4: CASOS ESPECIAIS CLÁSSICOS -->
@@ -220,11 +207,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Cuidado com o Pêndulo Balístico</div>
-          <p>Avise a aluna: NUNCA tente igualar a energia cinética inicial da bala com a energia potencial final no topo ($\frac{1}{2}mv^2 \ne (M+m)gh$)! Na colisão da bala com o bloco perde-se mais de 95% da energia mecânica em calor e atrito. Apenas na subida a energia se conserva.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 5: SIMULADOR DE COLISÕES 1D -->
@@ -290,11 +273,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Experimento para a Aula</div>
-          <p>Coloque $m_1 = 2$, $m_2 = 2$, $v_1 = 4$, $v_2 = 0$ com $e = 1$. Clique em Iniciar: o bloco 1 para e o bloco 2 sai com velocidade 4. Em seguida, mude $e = 0$ e repita: eles grudam e saem juntos a 2 m/s, com 50% da energia dissipada!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
@@ -343,11 +322,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Ponto para Reforçar</div>
-          <p>Mostre para a aluna que a massa aumentou em $50\%$ (de 20t para 30t) e a velocidade caiu em $33\%$ (de 3 m/s para 2 m/s), mantendo o produto $m \cdot v$ rigorosamente fixo em 60.000 kg·m/s.</p>
         </div>
-      </div>
     </section>
 
   </main>
@@ -366,9 +341,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js"></script>
-  <script src="./shared/js/annotator.js"></script>
-  <script src="./shared/js/simulators.js"></script>
+  <script src="./shared/js/slides.js?v=2.2.0"></script>
+  <script src="./shared/js/annotator.js?v=2.2.0"></script>
+  <script src="./shared/js/simulators.js?v=2.2.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic4();

@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.2.0">
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
     <div class="nav-right">
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
-      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
       </div>
@@ -88,11 +87,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica Pedagógica</div>
-          <p>Pressão é uma grandeza <strong>escalar</strong>! Em qualquer ponto no interior de um líquido em repouso, a pressão atua com o mesmo valor em todas as direções imagináveis (para cima, para baixo e para os lados).</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 2: TEOREMA DE STEVIN -->
@@ -147,11 +142,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Alerta para a Aluna</div>
-          <p>Cuidado com a diferença entre: <strong>Pressão Absoluta</strong> ($p = p_{atm} + \rho gh$) e <strong>Pressão Manométrica / Efetiva</strong> ($\Delta p = \rho gh$). Quando o manômetro do pneu marca 30 psi, ele está medindo a pressão manométrica (o quanto passa da atmosférica)!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 3: O EXPERIMENTO DE TORRICELLI -->
@@ -187,11 +178,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Condução</div>
-          <p>Destaque que Torricelli provou duas coisas geniais de uma só vez: 1) que o ar atmosférico tem peso e exerce pressão sobre nós; 2) que o vácuo pode existir na natureza (derrubando o dogma de Aristóteles do <em>horror vacui</em>).</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 4: OS LIMITES FÍSICOS DA SUCÇÃO -->
@@ -233,11 +220,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Questão Típica de Redação / Oral</div>
-          <p>Pergunte para a aluna: "Galileu Galilei ficou intrigado quando construtores de Florença disseram que suas bombas aspirantes não conseguiam elevar água de poços com mais de 18 braças (cerca de 10 m). Agora você sabe responder a Galileu por quê?". Isso conecta a física à história da ciência de forma inesquecível!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 5: SIMULADOR INTERATIVO: BARÔMETRO & SUCÇÃO -->
@@ -294,11 +277,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Demonstração na Aula</div>
-          <p>Mude o seletor para Mercúrio: a altura da coluna despenca para 0,76 m! Em seguida mude para Álcool: como o álcool é menos denso que a água, a coluna sobe para quase 13 metros de altura!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
@@ -343,11 +322,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Ponto para Reforçar</div>
-          <p>Faça a aluna perceber a relação inversamente proporcional: $h \propto \frac{1}{\rho}$. Menor densidade $\implies$ Maior coluna líquida sustentável!</p>
         </div>
-      </div>
     </section>
 
   </main>
@@ -366,9 +341,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js"></script>
-  <script src="./shared/js/annotator.js"></script>
-  <script src="./shared/js/simulators.js"></script>
+  <script src="./shared/js/slides.js?v=2.2.0"></script>
+  <script src="./shared/js/annotator.js?v=2.2.0"></script>
+  <script src="./shared/js/simulators.js?v=2.2.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic7();

@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.2.0">
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
     <div class="nav-right">
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
-      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
       </div>
@@ -88,11 +87,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Condução</div>
-          <p>Destaque para a aluna que Força sozinha não diz tudo. Um empurrão de 100 N durante 0,001 s mal mexe uma caixa pesada, mas os mesmos 100 N durante 10 segundos geram um impulso 10.000 vezes maior!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 2: FORÇA VARIÁVEL & ÁREA GRÁFICA -->
@@ -138,11 +133,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Pergunta para a Aluna</div>
-          <p>Mostre que em um gráfico triangular de base $\Delta t$ e altura $F_{máx}$, a força média é exatamente a metade do pico: $F_m = \frac{F_{máx}}{2}$. Pergunte a ela por que isso faz sentido geométrico!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 3: TEOREMA DO IMPULSO -->
@@ -191,11 +182,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Fixação Pedagógica</div>
-          <p>Faça a aluna escrever o vetor velocidade antes e depois com setas. Enfatize: "Para inverter o sentido de um corpo, a força precisa primeiro frear a velocidade até zero e depois acelerar no sentido oposto. Por isso o $\Delta v$ dobra!".</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 4: PAPEL DO IMPULSO NA COLISÃO & SEGURANÇA -->
@@ -241,11 +228,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Pergunta Clássica do ENEM</div>
-          <p>O ENEM já cobrou diversas vezes: "Por que os carros antigos, feitos com chapas grossas de aço maciço que quase não amassavam, eram muito mais letais para os passageiros do que os carros modernos que se amassam inteiros na frente?" Resposta: porque sem deformar a lataria, o $\Delta t$ era minúsculo e a força sobre os ocupantes era brutal!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 5: SIMULADOR INTERATIVO DE IMPULSO -->
@@ -286,11 +269,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Demonstração na Aula</div>
-          <p>Arraste o slider para o valor mínimo (15 ms) e mostre a força de pico atingindo 80.000 N. Depois arraste para 200 ms e mostre a força caindo para 6.000 N enquanto a área azul (Impulso) continua estritamente idêntica. Esse impacto visual fixa o conceito para sempre na mente da aluna!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
@@ -338,11 +317,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Resolução</div>
-          <p>Peça para a aluna destacar no enunciado: "inicialmente em repouso" $\implies v_0 = 0$. Esse é o gatilho clássico para simplificar $\Delta Q$ para apenas $m \cdot v$.</p>
         </div>
-      </div>
     </section>
 
   </main>
@@ -361,9 +336,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js"></script>
-  <script src="./shared/js/annotator.js"></script>
-  <script src="./shared/js/simulators.js"></script>
+  <script src="./shared/js/slides.js?v=2.2.0"></script>
+  <script src="./shared/js/annotator.js?v=2.2.0"></script>
+  <script src="./shared/js/simulators.js?v=2.2.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic2();

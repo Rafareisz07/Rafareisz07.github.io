@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.2.0">
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
     <div class="nav-right">
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
-      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
       </div>
@@ -88,11 +87,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica Pedagógica</div>
-          <p>Muitos alunos confundem Energia Cinética com Quantidade de Movimento. Destaque: Energia Cinética ($E_c = \frac{1}{2}mv^2$) é <em>escalar</em> e nunca é negativa. Quantidade de Movimento ($\vec{Q} = m\vec{v}$) é <em>vetorial</em> e pode se anular por direções opostas!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 2: FORÇAS INTERNAS vs EXTERNAS & SISTEMAS ISOLADOS -->
@@ -133,11 +128,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Como Explicar para a Aluna</div>
-          <p>Use a metáfora do barco: Se você estiver dentro de um barco e empurrar o mastro com toda a sua força, o barco sai do lugar? Não! Porque sua força e a reação do mastro são forças internas. Mas se alguém do cais empurrar o barco (força externa), ele acelera!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 3: 3ª LEI DE NEWTON E A CONSERVAÇÃO -->
@@ -188,11 +179,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Vestibular</div>
-          <p>Enfatize: "A energia mecânica pode se perder (virar calor, som, deformação), mas a <strong>Quantidade de Movimento NUNCA se perde</strong> em um sistema isolado!". Essa é a bússola para resolver qualquer problema de colisão.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 4: APLICAÇÕES: RECUO, FOGUETES & PATINADORES -->
@@ -238,11 +225,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Desafio Mental para a Aluna</div>
-          <p>Proponha o enigma do astronauta: "Você está flutuando no espaço sideral, a 10 metros da sua nave, sem cabo de segurança e sem combustível no propulsor. Tudo o que você tem nas mãos é uma chave inglesa pesada de 5 kg. O que você faz para se salvar?" (Resposta: Arremessar a chave com toda a força no sentido OPOSTO ao da nave!).</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 5: SIMULADOR INTERATIVO: RECUO -->
@@ -298,11 +281,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Condução Interativa</div>
-          <p>Peça para a aluna colocar a massa do projétil no máximo e do canhão no mínimo, e disparar. Veja o canhão recuar com velocidade violenta! Depois mostre que se aumentarmos a massa do canhão, o recuo diminui, que é o princípio da artilharia moderna montada em blindados pesados.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
@@ -352,11 +331,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Atenção na Correção</div>
-          <p>Peça para a aluna conferir se a resposta faz sentido: Clara pesa 50 kg e Bruno 80 kg. A velocidade dela ($4\text{ m/s}$) tem que ser maior que a dele ($2{,}5\text{ m/s}$). Essa checagem de plausibilidade física evita erros algébricos em provas.</p>
         </div>
-      </div>
     </section>
 
   </main>
@@ -375,9 +350,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js"></script>
-  <script src="./shared/js/annotator.js"></script>
-  <script src="./shared/js/simulators.js"></script>
+  <script src="./shared/js/slides.js?v=2.2.0"></script>
+  <script src="./shared/js/annotator.js?v=2.2.0"></script>
+  <script src="./shared/js/simulators.js?v=2.2.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic3();

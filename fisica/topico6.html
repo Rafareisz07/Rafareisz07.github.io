@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.2.0">
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
     <div class="nav-right">
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
-      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
       </div>
@@ -79,11 +78,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Pergunta Desafiadora para a Aluna</div>
-          <p>"Se duas forças iguais de 50 N puxam uma barra, uma para a direita na ponta de cima e outra para a esquerda na ponta de baixo, a força resultante $\sum \vec{F}$ é zero? A barra fica em repouso?" Resposta: A resultante é zero, logo ela NÃO translada. Porém, ela começa a GIRAR freneticamente! Isso se chama <em>Binário</em> ou <em>Torque Puro</em>.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 2: MOMENTO DE UMA FORÇA (TORQUE) -->
@@ -135,11 +130,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Atenção nas Unidades</div>
-          <p>Diga para a aluna: Embora $\text{N}\cdot\text{m}$ seja dimensionalmente igual a Joule ($\text{J}$), o torque NUNCA é expresso em Joules! Joule é exclusivo para energia e trabalho. Para torque, a unidade oficial é sempre <strong>Newton-metro ($\text{N}\cdot\text{m}$)</strong>.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 3: AS DUAS CONDIÇÕES DE EQUILÍBRIO -->
@@ -184,11 +175,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica Pedagógica</div>
-          <p>Este é o ponto mais libertador para o estudante: mostre que ele não precisa resolver um sistema 3x3 assustador se escolher o polo de forma esperta. É um alívio enorme para a aluna!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 4: TIPOS DE ALAVANCAS & VANTAGEM MECÂNICA -->
@@ -242,11 +229,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Conexão com Biologia / Medicina</div>
-          <p>Vestibulares adoram cobrar o braço humano como alavanca interpotente: o cotovelo é o apoio, o tendão do bíceps puxa logo à frente (potência) e o objeto na mão é a resistência. O bíceps faz uma força muito maior que o peso do objeto para sustentá-lo!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 5: SIMULADOR DE TORQUE & GANGORRA -->
@@ -303,11 +286,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Interação na Aula</div>
-          <p>Mostre como uma criança de apenas 20 kg consegue equilibrar um adulto de 80 kg na gangorra: basta a criança sentar a 4 metros do centro e o adulto a 1 metro! $20 \times 4 = 80 \times 1 = 80\text{ kg}\cdot\text{m}$.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
@@ -362,11 +341,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Ouro</div>
-          <p>Frise bem o truque do Passo 3: <em>"Na iminência de tombar, o apoio oposto perde o contato, logo a Normal nele zera ($N=0$)!"</em>. Esse é o gatilho clássico para matar qualquer questão de tombamento no vestibular.</p>
         </div>
-      </div>
     </section>
 
   </main>
@@ -385,9 +360,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js"></script>
-  <script src="./shared/js/annotator.js"></script>
-  <script src="./shared/js/simulators.js"></script>
+  <script src="./shared/js/slides.js?v=2.2.0"></script>
+  <script src="./shared/js/annotator.js?v=2.2.0"></script>
+  <script src="./shared/js/simulators.js?v=2.2.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic6();

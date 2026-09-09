@@ -14,7 +14,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
   <!-- Estilos Próprios -->
-  <link rel="stylesheet" href="./shared/css/slides.css">
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.2.0">
 </head>
 <body>
 
@@ -29,7 +29,6 @@
 
     <div class="nav-right">
       <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
-      <button id="teacher-toggle-btn" class="btn-icon" title="Modo Professor / Anotações (Tecla P)">🎓</button>
       <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
       <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
       </div>
@@ -84,11 +83,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Conceito Chave para a Aluna</div>
-          <p>Líquidos são praticamente <strong>incompressíveis</strong> (não diminuem de volume quando apertados). É por isso que transmitem pressão como se fossem barras de metal sólido, mas com a vantagem de poderem fluir por mangueiras curvas!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 2: A PRENSA HIDRÁULICA & MULTIPLICAÇÃO DE FORÇAS -->
@@ -137,11 +132,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Alerta para o Vestibular</div>
-          <p>Diga para a aluna: "Muitas questões dizem: 'o diâmetro do pistão 2 é o triplo do pistão 1'. O aluno desavisado diz que a força é o triplo. O aluno esperto eleva ao quadrado: $3^2 = 9$ vezes maior!". Esse detalhe garante pontos preciosos.</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 3: CONSERVAÇÃO DO TRABALHO -->
@@ -178,11 +169,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Dica de Condução</div>
-          <p>Conecte com as alavancas do Tópico 6: na alavanca e na prensa hidráulica acontece exatamente a mesma coisa: você ganha força, mas paga o preço empurrando por uma distância muito maior para manter o trabalho ($F \times d$) constante!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 4: VASOS COMUNICANTES & LÍQUIDOS IMISCÍVEIS -->
@@ -225,11 +212,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Erro Comum de Prova</div>
-          <p>O aluno desatento mede as alturas $h_1$ e $h_2$ a partir do fundo do tubo. Enfatize: <strong>As alturas são medidas a partir da linha de separação (interface)</strong> entre os líquidos, NUNCA a partir do fundo do tubo!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 5: SIMULADOR DE TUBO EM U -->
@@ -282,11 +265,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Experimento Guiado</div>
-          <p>Coloque $\rho_1 = 0{,}8$ (óleo) e $\rho_2 = 1{,}0$ (água) com $h_1 = 40\text{ cm}$. Mostre que a coluna de água sobe apenas até 32 cm. Se colocarmos densidades iguais (1.0 e 1.0), as duas colunas ficam perfeitamente alinhadas!</p>
         </div>
-      </div>
     </section>
 
     <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
@@ -332,11 +311,7 @@
           </div>
         </div>
 
-        <div class="teacher-notes">
-          <div class="teacher-notes-title">🎓 Conclusão da Aula</div>
-          <p>Finalize comemorando com a aluna o domínio de todos os tópicos e a beleza com que a conservação da energia e as leis de Newton unificam desde o recuo de um canhão até a prensa hidráulica e a coluna de água de Torricelli!</p>
         </div>
-      </div>
     </section>
 
   </main>
@@ -354,9 +329,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./shared/js/slides.js"></script>
-  <script src="./shared/js/annotator.js"></script>
-  <script src="./shared/js/simulators.js"></script>
+  <script src="./shared/js/slides.js?v=2.2.0"></script>
+  <script src="./shared/js/annotator.js?v=2.2.0"></script>
+  <script src="./shared/js/simulators.js?v=2.2.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       PhysicsSims.initTopic8();
