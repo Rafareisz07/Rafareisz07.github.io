@@ -3,6 +3,49 @@
  * Desenvolvido para Aulas Particulares Sem Spoilers
  */
 
+// Função Global para Abrir/Fechar Resolução Passo a Passo (Garantia Total)
+window.toggleSolution = function(btn) {
+  if (!btn) return;
+  const container = btn.closest('.exercise-box') || btn.closest('.slide') || document.body;
+  const solution = container.querySelector('.solution-content') || btn.nextElementSibling;
+  if (!solution) return;
+
+  const isOpen = solution.classList.contains('open') || solution.style.display === 'block';
+
+  if (isOpen) {
+    solution.classList.remove('open');
+    solution.style.display = 'none';
+    btn.innerHTML = '💡 Ver Resolução Passo a Passo';
+    btn.classList.remove('active');
+  } else {
+    solution.classList.add('open');
+    solution.style.display = 'block';
+    btn.innerHTML = '✕ Ocultar Resolução';
+    btn.classList.add('active');
+
+    // Garante que KaTeX renderiza as fórmulas da resolução recém-aberta
+    if (typeof window.renderMathInElement === 'function') {
+      try {
+        window.renderMathInElement(solution, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+          ],
+          throwOnError: false
+        });
+      } catch (err) {}
+    }
+
+    // Rolagem suave até a resolução e notificação para redimensionar o canvas
+    setTimeout(() => {
+      solution.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      window.dispatchEvent(new Event('resize'));
+    }, 60);
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   const slides = Array.from(document.querySelectorAll('.slide'));
   if (!slides.length) return;
@@ -182,19 +225,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 10. Resoluções Passo a Passo Ocultas
-  document.querySelectorAll('.solution-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const container = btn.closest('.exercise-box');
-      if (container) {
-        const solution = container.querySelector('.solution-content');
-        if (solution) {
-          const isOpen = solution.classList.contains('open');
-          solution.classList.toggle('open', !isOpen);
-          btn.textContent = !isOpen ? 'Ocultar Resolução' : '💡 Revelar Resolução Passo a Passo';
-        }
-      }
-    });
+  // 10. Resoluções Passo a Passo com Delegação de Eventos (Garante funcionamento de cliques)
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.solution-toggle');
+    if (btn) {
+      e.preventDefault();
+      window.toggleSolution(btn);
+    }
   });
 
   // 11. Render KaTeX com auto-retry e suporte a múltiplos eventos
@@ -203,8 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         window.renderMathInElement(document.body, {
           delimiters: [
-            { left: '$', right: '$', display: true },
-            { left: ', right: ', display: false },
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
             { left: '\\(', right: '\\)', display: false },
             { left: '\\[', right: '\\]', display: true }
           ],
