@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tópico 9: Energia Mecânica e Conservação | Aulas de Física</title>
+  
+  <!-- Google Fonts & KaTeX -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.7.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 09</span>
+      <h1 class="topic-title-header">Energia Mecânica e Conservação</h1>
+    </div>
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: O QUE É ENERGIA? -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fundamentos da Física</span>
+          <h2 class="slide-title">O que é Energia? Princípio da Transformação</h2>
+          <p class="slide-subtitle">A grandeza escalar universal: ela não é criada nem destruída, apenas muda de forma.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$1\text{ Joule (J)} = 1\text{ Newton} \cdot 1\text{ metro} = 1\text{ kg}\cdot\text{m}^2/\text{s}^2$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>S.I.:</strong> Joule ($\text{J}$)</span>
+            <span><strong>Caloria alimentar:</strong> $1\text{ cal} \approx 4{,}18\text{ J}$</span>
+            <span><strong>Quilocaloria:</strong> $1\text{ kcal} = 1.000\text{ cal} = 4.180\text{ J}$</span>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title">⚡ O Conceito Físico</div>
+            <p>Energia é a <strong>capacidade de produzir transformações</strong>, movimentar corpos ou realizar trabalho mecânico.</p>
+            <p style="margin-top: 8px;">É uma grandeza <strong>estritamente escalar</strong> (não tem seta, direção ou sentido, apenas valor numérico e unidade).</p>
+            <div class="callout success" style="margin-top: 10px; font-size: 0.82rem;">
+              <strong>1ª Lei da Termodinâmica:</strong> A quantidade total de energia do universo permanece eternamente constante!
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🔄 As Múltiplas Formas</div>
+            <p>A energia se manifesta no nosso dia a dia sob várias formas intercambiáveis:</p>
+            <ul>
+              <li><strong>Cinética:</strong> energia associada à velocidade.</li>
+              <li><strong>Potencial:</strong> energia acumulada em espera (altura ou mola).</li>
+              <li><strong>Térmica:</strong> agitação microscópica das moléculas (calor).</li>
+              <li><strong>Química / Elétrica:</strong> ligações atômicas e correntes de elétrons.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">💡 Foco ENEM: Transformações</div>
+            <p>O ENEM adora cobrar as etapas de conversão de usinas e do cotidiano:</p>
+            <ul>
+              <li><strong>Usina Hidrelétrica:</strong><br>Potencial da represa $\to$ Cinética da água $\to$ Mecânica da turbina $\to$ Elétrica.</li>
+              <li><strong>Motor a Combustão:</strong><br>Química da gasolina $\to$ Térmica dos gases $\to$ Mecânica do pistão (+ calor dissipado).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: ENERGIA CINÉTICA E TEC -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Energia do Movimento</span>
+          <h2 class="slide-title">Energia Cinética ($E_c$) e o Teorema (TEC)</h2>
+          <p class="slide-subtitle">A energia associada à velocidade de um corpo e sua relação direta com o trabalho da força resultante.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$E_c = \frac{m \cdot v^2}{2}$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>$E_c$:</strong> Energia Cinética (Joule - $\text{J}$)</span>
+            <span><strong>$m$:</strong> Massa do corpo (quilogramas - $\text{kg}$)</span>
+            <span><strong>$v$:</strong> Velocidade escalar (metros por segundo - $\text{m/s}$)</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🔨 Teorema da Energia Cinética (TEC)</div>
+            <p>O trabalho realizado pela <strong>força resultante ($W_{res}$)</strong> sobre um corpo equivale à variação de sua energia cinética:</p>
+            <div class="formula-card" style="margin: 10px 0; padding: 10px;">
+              <div class="formula-main" style="font-size: 1.25rem;">
+                $$W_{res} = \Delta E_c = E_{c,final} - E_{c,inicial} = \frac{m v_f^2}{2} - \frac{m v_i^2}{2}$$
+              </div>
+            </div>
+            <ul>
+              <li>Se $W_{res} > 0 \implies$ corpo acelera (ganha velocidade e energia).</li>
+              <li>Se $W_{res} < 0 \implies$ corpo freia (força de atrito retira energia).</li>
+              <li>Se $W_{res} = 0 \implies$ velocidade constante (movimento uniforme).</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🚗 Alerta de Segurança no Trânsito (ENEM)</div>
+            <p>A dependência quadrática ($v^2$) é a razão pela qual a velocidade é tão perigosa:</p>
+            <div class="callout danger" style="margin: 8px 0; font-size: 0.85rem;">
+              <strong>Se você dobrar a velocidade do carro ($2v$):</strong><br>
+              A energia cinética <strong>QUADRUPLICA</strong>! ($E_c \propto (2v)^2 = 4 \times E_c$).
+            </div>
+            <p>Como o trabalho dos freios para parar o carro é $W = F_{atrito} \cdot d_{frenagem}$:</p>
+            <p style="text-align: center; font-weight: 700; color: var(--accent-cyan); margin-top: 6px;">
+              $$d_{frenagem} \propto v^2 \implies \text{A distância de parada quadruplica!}$$
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: ENERGIAS POTENCIAIS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Energia Armazenada</span>
+          <h2 class="slide-title">Energias Potenciais: Gravitacional e Elástica</h2>
+          <p class="slide-subtitle">A energia "em espera", pronta para ser liberada instantaneamente em forma de movimento.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <!-- Potencial Gravitacional -->
+          <div class="card">
+            <div class="card-title">🏔️ Energia Potencial Gravitacional ($E_{pg}$)</div>
+            <p>Armazenada quando um corpo de massa $m$ é posicionado a uma altura $h$ de um plano de referência adotado:</p>
+            <div class="formula-card" style="margin: 10px 0; padding: 12px;">
+              <div class="formula-main">
+                $$E_{pg} = m \cdot g \cdot h$$
+              </div>
+              <div class="formula-legend">
+                <span>$m$: massa ($\text{kg}$)</span>
+                <span>$g$: gravidade ($\approx 10\text{ m/s}^2$)</span>
+                <span>$h$: altura ($\text{m}$)</span>
+              </div>
+            </div>
+            <p><strong>Atenção ao Referencial:</strong> A altura $h$ sempre depende de onde você escolhe $h = 0$ (o chão, a mesa ou o fundo de um poço). O importante é manter o mesmo referencial durante todo o cálculo!</p>
+          </div>
+
+          <!-- Potencial Elástica -->
+          <div class="card">
+            <div class="card-title">🏹 Energia Potencial Elástica ($E_{pel}$)</div>
+            <p>Armazenada em molas, elásticos e arcos tensionados quando sofrem uma deformação $x$ (compressão ou distensão):</p>
+            <div class="formula-card" style="margin: 10px 0; padding: 12px;">
+              <div class="formula-main">
+                $$E_{pel} = \frac{k \cdot x^2}{2}$$
+              </div>
+              <div class="formula-legend">
+                <span>$k$: constante da mola ($\text{N/m}$)</span>
+                <span>$x$: deformação sofrida ($\text{m}$)</span>
+              </div>
+            </div>
+            <p><strong>Origem na Lei de Hooke ($F = k \cdot x$):</strong> Como a força varia linearmente conforme a mola se estica, a energia equivale à área do triângulo no gráfico $F \times x$ ($\text{base } x \times \text{altura } kx / 2$).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: ENERGIA MECÂNICA & CONSERVAÇÃO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Princípio Fundamental da Mecânica</span>
+          <h2 class="slide-title">Conservação da Energia Mecânica ($E_{mec}$)</h2>
+          <p class="slide-subtitle">A troca perfeita entre cinética e potencial em sistemas ideais vs. as perdas em sistemas reais com atrito.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$E_{mec} = E_c + E_{pg} + E_{pel}$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>Definição:</strong> A Energia Mecânica Total é a soma de todas as energias cinéticas e potenciais do sistema.</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Sistemas Conservativos -->
+          <div class="card">
+            <div class="card-title">🎢 1. Sistemas Conservativos (Sem Atrito)</div>
+            <p>Quando atuam apenas forças conservativas (gravidade, força elástica):</p>
+            <div class="callout success" style="margin: 8px 0; text-align: center; font-size: 1.05rem;">
+              <strong>$$E_{mec, inicial} = E_{mec, final} \iff E_{c,A} + E_{p,A} = E_{c,B} + E_{p,B}$$</strong>
+            </div>
+            <p><strong>Queda Livre Clássica (solto de altura $h$):</strong></p>
+            <p style="text-align: center; margin-top: 6px;">
+              $$mgh = \frac{m v^2}{2} \implies v = \sqrt{2gh}$$
+            </p>
+            <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">
+              <em>Repare:</em> A velocidade final <strong>não depende da massa</strong> do corpo!
+            </p>
+          </div>
+
+          <!-- Sistemas Dissipativos -->
+          <div class="card">
+            <div class="card-title">🔥 2. Sistemas Dissipativos (Com Atrito)</div>
+            <p>Forças de atrito e resistência do ar transformam energia mecânica em calor e som (energia dissipada $E_{diss}$):</p>
+            <div class="callout warning" style="margin: 8px 0; text-align: center; font-size: 1.05rem;">
+              <strong>$$E_{mec, inicial} = E_{mec, final} + E_{dissipada}$$</strong>
+            </div>
+            <p>O trabalho realizado pelas forças de atrito corresponde à perda de energia mecânica:</p>
+            <p style="text-align: center; margin-top: 6px;">
+              $$W_{atrito} = \Delta E_{mec} = E_{mec, final} - E_{mec, inicial} \quad (< 0)$$
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Montanha-Russa & Barras de Energia</h2>
+          <p class="slide-subtitle">Ajuste altura, massa e atrito para ver as barras de Energia Cinética e Potencial trocarem de lugar ao vivo.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area" style="height: 230px;">
+            <canvas id="sim-canvas-energia" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <label>Altura Inicial ($h_0$): <span id="val-h0-e">20 m</span></label>
+              <input type="range" id="slider-h0-e" min="5" max="35" step="1" value="20">
+            </div>
+            <div class="sim-control-group">
+              <label>Massa do Carrinho ($m$): <span id="val-massa-e">400 kg</span></label>
+              <input type="range" id="slider-massa-e" min="100" max="1000" step="50" value="400">
+            </div>
+            <div class="sim-control-group">
+              <label>Perda por Atrito: <span id="val-atrito-e">0% (Ideal)</span></label>
+              <input type="range" id="slider-atrito-e" min="0" max="0.10" step="0.01" value="0">
+            </div>
+            <div class="sim-control-group" style="justify-content: flex-end;">
+              <button id="btn-reset-e" class="mini-btn primary-btn" style="padding: 6px 12px; margin-top: 14px;">🔄 Soltar do Topo</button>
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Velocidade ($v$)</div>
+              <div id="out-vel-e" class="readout-value">0.0 km/h</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Energia Cinética ($E_c$)</div>
+              <div id="out-ec-e" class="readout-value" style="color: #4ade80;">0.0 kJ</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Energia Potencial ($E_{pg}$)</div>
+              <div id="out-ep-e" class="readout-value" style="color: #38bdf8;">80.0 kJ</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Energia Mecânica ($E_{mec}$)</div>
+              <div id="out-emec-e" class="readout-value" style="color: #facc15;">80.0 kJ</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática</span>
+          <h2 class="slide-title">Exercício Resolvido: Montanha-Russa com Mola</h2>
+          <p class="slide-subtitle">Modelo clássico ENEM / Vestibulares integrando altura, velocidade e deformação elástica.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / FUVEST Clássico</span>
+          <p class="exercise-enunciation">
+            Um carrinho de montanha-russa de massa $m = 400\text{ kg}$ parte do repouso do ponto $A$, situado a uma altura $h_A = 20\text{ metros}$ do solo. Despreze qualquer força de atrito e resistência do ar. Adote $g = 10\text{ m/s}^2$.<br>
+            <strong>a)</strong> Calcule a energia mecânica total do carrinho no ponto $A$.<br>
+            <strong>b)</strong> Determine a velocidade do carrinho ao atingir o ponto $B$, situado no solo ($h_B = 0$).<br>
+            <strong>c)</strong> No final da pista no solo, o carrinho atinge e comprime um amortecedor de mola de constante elástica $k = 16.000\text{ N/m}$. Qual é a deformação máxima ($x$) sofrida pela mola até parar completamente o carrinho?
+          </p>
+
+          <button class="solution-toggle" onclick="window.toggleSolution(this)">💡 Ver Resolução Passo a Passo</button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Energia Mecânica no Ponto A</strong>
+              <p>Como o carrinho parte do repouso ($v_A = 0 \implies E_{c,A} = 0$), toda a energia mecânica está armazenada na forma de energia potencial gravitacional:</p>
+              <p>$$E_{mec,A} = E_{pg,A} = m \cdot g \cdot h_A = 400 \cdot 10 \cdot 20 = 80.000\text{ J} = 80\text{ kJ}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Velocidade no Solo (Ponto B)</strong>
+              <p>Pela Conservação da Energia Mecânica (sem atrito), toda a energia potencial se transformou em energia cinética ao atingir o solo ($h_B = 0 \implies E_{pg,B} = 0$):</p>
+              <p>$$E_{mec,B} = E_{mec,A} \implies \frac{m v_B^2}{2} = 80.000$$</p>
+              <p>$$\frac{400 \cdot v_B^2}{2} = 80.000 \implies 200 \cdot v_B^2 = 80.000 \implies v_B^2 = 400 \implies v_B = 20\text{ m/s} = 72\text{ km/h}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 3: Deformação Máxima da Mola (Parada Total)</strong>
+              <p>Ao parar momentaneamente o carrinho ($v_C = 0$), toda a energia mecânica do sistema foi transferida para a mola como energia potencial elástica:</p>
+              <p>$$E_{pel} = E_{mec} \implies \frac{k \cdot x^2}{2} = 80.000$$</p>
+              <p>$$\frac{16.000 \cdot x^2}{2} = 80.000 \implies 8.000 \cdot x^2 = 80.000 \implies x^2 = 10 \implies x = \sqrt{10} \approx 3{,}16\text{ metros}$$</p>
+              <p><em>Interpretação Física:</em> A mola precisa ser comprimida por aproximadamente $3{,}16\text{ m}$ para absorver com segurança os $80\text{ kJ}$ de energia do carrinho.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.7.0"></script>
+  <script src="./shared/js/annotator.js?v=2.7.0"></script>
+  <script src="./shared/js/simulators.js?v=2.7.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.PhysicsSims && PhysicsSims.initTopic9) {
+        PhysicsSims.initTopic9();
+      }
+    });
+  </script>
+</body>
+</html>

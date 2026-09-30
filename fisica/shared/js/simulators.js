@@ -1060,4 +1060,310 @@ window.PhysicsSims = {
     });
     update();
   }
+,
+
+  // 9. TÓPICO 9: Montanha-Russa & Conservação da Energia Mecânica
+  initTopic9: function() {
+    const canvas = document.getElementById('sim-canvas-energia');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const h0Slider = document.getElementById('slider-h0-e');
+    const massaSlider = document.getElementById('slider-massa-e');
+    const atritoSlider = document.getElementById('slider-atrito-e');
+    const btnReset = document.getElementById('btn-reset-e');
+
+    const valH0 = document.getElementById('val-h0-e');
+    const valMassa = document.getElementById('val-massa-e');
+    const valAtrito = document.getElementById('val-atrito-e');
+
+    const outVel = document.getElementById('out-vel-e');
+    const outEc = document.getElementById('out-ec-e');
+    const outEp = document.getElementById('out-ep-e');
+    const outEmec = document.getElementById('out-emec-e');
+
+    let animId = null;
+    let s = 0; // posição ao longo da curva (0 a 1)
+    let v = 0; // velocidade escalar
+    let animActive = true;
+
+    function resetCart() {
+      s = 0;
+      v = 0;
+    }
+
+    if (btnReset) {
+      btnReset.addEventListener('click', resetCart);
+    }
+
+    function updateLabels() {
+      if (valH0) valH0.textContent = `${h0Slider.value} m`;
+      if (valMassa) valMassa.textContent = `${massaSlider.value} kg`;
+      const mu = parseFloat(atritoSlider.value);
+      if (valAtrito) valAtrito.textContent = mu === 0 ? '0% (Ideal)' : `${Math.round(mu * 100)}%`;
+    }
+
+    [h0Slider, massaSlider, atritoSlider].forEach(input => {
+      if (input) input.addEventListener('input', () => {
+        updateLabels();
+        resetCart();
+      });
+    });
+    updateLabels();
+
+    function getTrackPoint(t, w, h, maxH) {
+      // Pista modelada como curva suave: Topo à esquerda descendo até vale e subindo suave
+      // t varia de 0 a 1
+      const startX = 60;
+      const endX = w - 170; // deixa espaço à direita para barras de energia
+      const x = startX + t * (endX - startX);
+
+      // Perfil de altura física (em metros, de 0 a maxH)
+      // h(t) = maxH * (0.5 * (1 + cos(pi * t))) modificado para ter subida e descida
+      let normHeight;
+      if (t < 0.5) {
+        // descida do topo h0 até o chão (0 m)
+        normHeight = 0.5 * (1 + Math.cos(Math.PI * (t / 0.5)));
+      } else {
+        // sobe até uma colina secundária (60% da altura inicial) e desce
+        const t2 = (t - 0.5) / 0.5;
+        normHeight = 0.6 * Math.sin(Math.PI * t2);
+      }
+
+      const currentH = Math.max(0, normHeight * maxH);
+      // Converter para pixels de canvas
+      const groundY = h - 45;
+      const trackScale = (h - 90) / 35; // 35m max altura
+      const y = groundY - currentH * trackScale;
+
+      return { x, y, currentH, groundY };
+    }
+
+    let lastTime = performance.now();
+
+    function loop(currentTime) {
+      const dt = Math.min((currentTime - lastTime) / 1000, 0.05);
+      lastTime = currentTime;
+
+      canvas.width = canvas.parentElement.clientWidth || 600;
+      canvas.height = canvas.parentElement.clientHeight || 230;
+      const w = canvas.width;
+      const h = canvas.height;
+
+      const h0 = parseFloat(h0Slider.value);
+      const m = parseFloat(massaSlider.value);
+      const mu = parseFloat(atritoSlider.value);
+      const g = 10; // m/s^2
+
+      const E_total_inicial = m * g * h0;
+
+      // Dinâmica simples do carrinho
+      const ptCurrent = getTrackPoint(s, w, h, h0);
+      const hAtual = ptCurrent.currentH;
+
+      // Energia Potencial atual
+      const Ep = m * g * hAtual;
+
+      // Energia Mecânica considerando perda cumulativa
+      const perdaFator = Math.max(0, 1 - mu * s * 1.5);
+      const Emec = E_total_inicial * perdaFator;
+
+      // Energia Cinética
+      let Ec = Math.max(0, Emec - Ep);
+      v = Math.sqrt((2 * Ec) / m);
+
+      // Atualizar posição do carrinho
+      if (v > 0.05 || s < 0.98) {
+        // Velocidade normalizada ao longo do comprimento
+        s += (v / 45) * dt;
+        if (s > 1) {
+          s = 1;
+        }
+      }
+
+      // Se parou ou chegou ao final
+      if (s >= 1) {
+        // pequeno delay e reseta suavemente se for ideal
+        setTimeout(() => {
+          if (s >= 1) resetCart();
+        }, 1200);
+      }
+
+      // Atualizar mostradores numéricos
+      const vKmh = v * 3.6;
+      if (outVel) outVel.textContent = `${vKmh.toFixed(1)} km/h (${v.toFixed(1)} m/s)`;
+      if (outEc) outEc.textContent = `${(Ec / 1000).toFixed(1)} kJ`;
+      if (outEp) outEp.textContent = `${(Ep / 1000).toFixed(1)} kJ`;
+      if (outEmec) outEmec.textContent = `${(Emec / 1000).toFixed(1)} kJ`;
+
+      // RENDERIZAÇÃO NO CANVAS
+      ctx.clearRect(0, 0, w, h);
+
+      // Fundo escuro com gradiente sutil
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+      bgGrad.addColorStop(0, '#0a1020');
+      bgGrad.addColorStop(1, '#0f172a');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Solo
+      const groundY = h - 45;
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(0, groundY, w, h - groundY);
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, groundY);
+      ctx.lineTo(w, groundY);
+      ctx.stroke();
+
+      // Linha de referência h = 0
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px monospace';
+      ctx.fillText('Nível de Referência (Solo: h = 0 m)', 14, groundY + 18);
+
+      // Desenhar suportes da montanha-russa
+      ctx.strokeStyle = 'rgba(71, 85, 105, 0.4)';
+      ctx.lineWidth = 1;
+      for (let st = 0.05; st <= 0.95; st += 0.08) {
+        const spt = getTrackPoint(st, w, h, h0);
+        ctx.beginPath();
+        ctx.moveTo(spt.x, spt.y);
+        ctx.lineTo(spt.x, groundY);
+        ctx.stroke();
+      }
+
+      // Desenhar trilho
+      ctx.strokeStyle = '#6366f1';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      const steps = 80;
+      for (let i = 0; i <= steps; i++) {
+        const pt = getTrackPoint(i / steps, w, h, h0);
+        if (i === 0) ctx.moveTo(pt.x, pt.y);
+        else ctx.lineTo(pt.x, pt.y);
+      }
+      ctx.stroke();
+
+      // Trilho duplo (efeito montanha-russa)
+      ctx.strokeStyle = '#818cf8';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      for (let i = 0; i <= steps; i++) {
+        const pt = getTrackPoint(i / steps, w, h, h0);
+        if (i === 0) ctx.moveTo(pt.x, pt.y - 4);
+        else ctx.lineTo(pt.x, pt.y - 4);
+      }
+      ctx.stroke();
+
+      // Posição atual do carrinho
+      const cartPt = getTrackPoint(Math.min(s, 1), w, h, h0);
+
+      // Desenhar carrinho
+      ctx.save();
+      ctx.translate(cartPt.x, cartPt.y);
+
+      // Calcular inclinação tangente
+      const dtTangent = 0.01;
+      const ptNext = getTrackPoint(Math.min(s + dtTangent, 1), w, h, h0);
+      const angle = Math.atan2(ptNext.y - cartPt.y, ptNext.x - cartPt.x);
+      ctx.rotate(angle);
+
+      // Corpo do carrinho
+      ctx.fillStyle = '#38bdf8';
+      ctx.shadowColor = '#38bdf8';
+      ctx.shadowBlur = 8;
+      ctx.fillRect(-14, -12, 28, 10);
+      ctx.shadowBlur = 0;
+
+      // Rodas
+      ctx.fillStyle = '#f8fafc';
+      ctx.beginPath();
+      ctx.arc(-8, -2, 3, 0, Math.PI * 2);
+      ctx.arc(8, -2, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Cabine / passageiros
+      ctx.fillStyle = '#f43f5e';
+      ctx.beginPath();
+      ctx.arc(-2, -15, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+
+      // Vetor velocidade se v > 0.5 m/s
+      if (v > 0.5) {
+        ctx.save();
+        ctx.translate(cartPt.x, cartPt.y - 18);
+        const vLen = Math.min(v * 2, 50);
+        ctx.strokeStyle = '#4ade80';
+        ctx.fillStyle = '#4ade80';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(vLen * Math.cos(angle), vLen * Math.sin(angle));
+        ctx.stroke();
+        // Seta
+        const arrX = vLen * Math.cos(angle);
+        const arrY = vLen * Math.sin(angle);
+        ctx.beginPath();
+        ctx.arc(arrX, arrY, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // BARRAS DE ENERGIA AO VIVO (CANTO SUPERIOR DIREITO)
+      const barX = w - 140;
+      const barY = 22;
+      const barMaxW = 100;
+      const barH = 12;
+      const maxEnergyRef = Math.max(1, E_total_inicial);
+
+      // Caixa container das barras
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(barX - 12, barY - 14, 142, 130, 8) : ctx.rect(barX - 12, barY - 14, 142, 130);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText('Barras de Energia', barX - 4, barY + 2);
+
+      // 1. Barra Ep (Azul)
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px sans-serif';
+      ctx.fillText('Potencial (Ep)', barX - 4, barY + 20);
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(barX - 4, barY + 24, barMaxW, barH);
+      const epW = Math.min(barMaxW, (Ep / maxEnergyRef) * barMaxW);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(barX - 4, barY + 24, epW, barH);
+
+      // 2. Barra Ec (Verde)
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('Cinética (Ec)', barX - 4, barY + 54);
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(barX - 4, barY + 58, barMaxW, barH);
+      const ecW = Math.min(barMaxW, (Ec / maxEnergyRef) * barMaxW);
+      ctx.fillStyle = '#4ade80';
+      ctx.fillRect(barX - 4, barY + 58, ecW, barH);
+
+      // 3. Barra Emec (Amarela/Cyan)
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('Mecânica (Emec)', barX - 4, barY + 88);
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(barX - 4, barY + 92, barMaxW, barH);
+      const emecW = Math.min(barMaxW, (Emec / maxEnergyRef) * barMaxW);
+      ctx.fillStyle = '#facc15';
+      ctx.fillRect(barX - 4, barY + 92, emecW, barH);
+
+      animId = requestAnimationFrame(loop);
+    }
+
+    if (animId) cancelAnimationFrame(animId);
+    animId = requestAnimationFrame(loop);
+  }
 };
