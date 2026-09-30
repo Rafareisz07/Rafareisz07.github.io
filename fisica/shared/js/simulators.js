@@ -1071,6 +1071,7 @@ window.PhysicsSims = {
     const h0Slider = document.getElementById('slider-h0-e');
     const massaSlider = document.getElementById('slider-massa-e');
     const atritoSlider = document.getElementById('slider-atrito-e');
+    const btnPlay = document.getElementById('btn-play-e');
     const btnReset = document.getElementById('btn-reset-e');
 
     const valH0 = document.getElementById('val-h0-e');
@@ -1084,56 +1085,86 @@ window.PhysicsSims = {
 
     let animId = null;
     let s = 0; // posição ao longo da curva (0 a 1)
-    let v = 0; // velocidade escalar
-    let animActive = true;
+    let isRunning = true;
+    let isResetting = false;
+
+    function updatePlayButtonUI() {
+      if (!btnPlay) return;
+      if (isRunning) {
+        btnPlay.innerHTML = '⏸️ Pausar';
+        btnPlay.classList.remove('sim-btn-secondary');
+        btnPlay.classList.add('sim-btn-primary');
+      } else {
+        btnPlay.innerHTML = '▶️ Iniciar';
+        btnPlay.classList.remove('sim-btn-primary');
+        btnPlay.classList.add('sim-btn-secondary');
+      }
+    }
+
+    function togglePlay() {
+      isRunning = !isRunning;
+      updatePlayButtonUI();
+    }
 
     function resetCart() {
       s = 0;
-      v = 0;
+      isResetting = false;
+    }
+
+    if (btnPlay) {
+      btnPlay.addEventListener('click', togglePlay);
     }
 
     if (btnReset) {
-      btnReset.addEventListener('click', resetCart);
+      btnReset.addEventListener('click', () => {
+        resetCart();
+        isRunning = true;
+        updatePlayButtonUI();
+      });
     }
 
     function updateLabels() {
-      if (valH0) valH0.textContent = `${h0Slider.value} m`;
-      if (valMassa) valMassa.textContent = `${massaSlider.value} kg`;
-      const mu = parseFloat(atritoSlider.value);
-      if (valAtrito) valAtrito.textContent = mu === 0 ? '0% (Ideal)' : `${Math.round(mu * 100)}%`;
+      if (valH0 && h0Slider) valH0.textContent = `${h0Slider.value} m`;
+      if (valMassa && massaSlider) valMassa.textContent = `${massaSlider.value} kg`;
+      if (valAtrito && atritoSlider) {
+        const mu = parseFloat(atritoSlider.value);
+        valAtrito.textContent = mu === 0 ? '0% (Ideal)' : `${Math.round(mu * 100)}%`;
+      }
     }
 
     [h0Slider, massaSlider, atritoSlider].forEach(input => {
       if (input) input.addEventListener('input', () => {
         updateLabels();
-        resetCart();
       });
     });
     updateLabels();
+    updatePlayButtonUI();
 
+    // Perfil suave da pista de montanha-russa:
+    // Topo inicial -> vale principal -> colina secundária -> descida final
     function getTrackPoint(t, w, h, maxH) {
-      // Pista modelada como curva suave: Topo à esquerda descendo até vale e subindo suave
-      // t varia de 0 a 1
-      const startX = 60;
-      const endX = w - 170; // deixa espaço à direita para barras de energia
-      const x = startX + t * (endX - startX);
+      const clampedT = Math.max(0, Math.min(1, t));
+      const startX = 55;
+      const endX = Math.max(startX + 100, w - 175); // preserva espaço para as barras de energia
+      const x = startX + clampedT * (endX - startX);
 
-      // Perfil de altura física (em metros, de 0 a maxH)
-      // h(t) = maxH * (0.5 * (1 + cos(pi * t))) modificado para ter subida e descida
       let normHeight;
-      if (t < 0.5) {
-        // descida do topo h0 até o chão (0 m)
-        normHeight = 0.5 * (1 + Math.cos(Math.PI * (t / 0.5)));
+      if (clampedT < 0.45) {
+        // Descida inicial suave do topo (normHeight 1.0 -> 0.04)
+        normHeight = 1.0 - 0.96 * Math.sin(Math.PI * 0.5 * (clampedT / 0.45));
+      } else if (clampedT < 0.75) {
+        // Colina secundária (sobe até ~60% e desce)
+        const tHill = (clampedT - 0.45) / 0.30;
+        normHeight = 0.04 + 0.56 * Math.sin(Math.PI * tHill);
       } else {
-        // sobe até uma colina secundária (60% da altura inicial) e desce
-        const t2 = (t - 0.5) / 0.5;
-        normHeight = 0.6 * Math.sin(Math.PI * t2);
+        // Reta terminal suave no nível do solo
+        const tEnd = (clampedT - 0.75) / 0.25;
+        normHeight = 0.04 * (1 - tEnd);
       }
 
       const currentH = Math.max(0, normHeight * maxH);
-      // Converter para pixels de canvas
       const groundY = h - 45;
-      const trackScale = (h - 90) / 35; // 35m max altura
+      const trackScale = (h - 90) / 35; // escala proporcional para até 35m
       const y = groundY - currentH * trackScale;
 
       return { x, y, currentH, groundY };
@@ -1145,48 +1176,50 @@ window.PhysicsSims = {
       const dt = Math.min((currentTime - lastTime) / 1000, 0.05);
       lastTime = currentTime;
 
-      canvas.width = canvas.parentElement.clientWidth || 600;
-      canvas.height = canvas.parentElement.clientHeight || 230;
+      const parentW = canvas.parentElement ? canvas.parentElement.clientWidth : 0;
+      const parentH = canvas.parentElement ? canvas.parentElement.clientHeight : 0;
+      canvas.width = parentW > 50 ? parentW : 650;
+      canvas.height = parentH > 50 ? parentH : 230;
       const w = canvas.width;
       const h = canvas.height;
 
-      const h0 = parseFloat(h0Slider.value);
-      const m = parseFloat(massaSlider.value);
-      const mu = parseFloat(atritoSlider.value);
+      const h0 = h0Slider ? parseFloat(h0Slider.value) : 20;
+      const m = massaSlider ? parseFloat(massaSlider.value) : 400;
+      const mu = atritoSlider ? parseFloat(atritoSlider.value) : 0;
       const g = 10; // m/s^2
 
       const E_total_inicial = m * g * h0;
 
-      // Dinâmica simples do carrinho
+      // Posição e altura atual
       const ptCurrent = getTrackPoint(s, w, h, h0);
       const hAtual = ptCurrent.currentH;
 
-      // Energia Potencial atual
+      // Energia Potencial Gravitacional atual
       const Ep = m * g * hAtual;
 
-      // Energia Mecânica considerando perda cumulativa
-      const perdaFator = Math.max(0, 1 - mu * s * 1.5);
+      // Energia Mecânica considerando perda gradual por atrito ao longo do percurso
+      const perdaFator = Math.max(0.05, 1 - mu * s * 1.5);
       const Emec = E_total_inicial * perdaFator;
 
       // Energia Cinética
-      let Ec = Math.max(0, Emec - Ep);
-      v = Math.sqrt((2 * Ec) / m);
+      const Ec = Math.max(0, Emec - Ep);
+      const v = Math.sqrt((2 * Ec) / m);
 
-      // Atualizar posição do carrinho
-      if (v > 0.05 || s < 0.98) {
-        // Velocidade normalizada ao longo do comprimento
-        s += (v / 45) * dt;
-        if (s > 1) {
+      // Movimentação do carrinho
+      if (isRunning) {
+        // Velocidade mínima de avanço para não prender em cristas
+        const vAvanço = Math.max(0.6, v);
+        s += (vAvanço / 40) * dt;
+
+        if (s >= 1) {
           s = 1;
+          if (!isResetting) {
+            isResetting = true;
+            setTimeout(() => {
+              resetCart();
+            }, 1000);
+          }
         }
-      }
-
-      // Se parou ou chegou ao final
-      if (s >= 1) {
-        // pequeno delay e reseta suavemente se for ideal
-        setTimeout(() => {
-          if (s >= 1) resetCart();
-        }, 1200);
       }
 
       // Atualizar mostradores numéricos
@@ -1199,7 +1232,7 @@ window.PhysicsSims = {
       // RENDERIZAÇÃO NO CANVAS
       ctx.clearRect(0, 0, w, h);
 
-      // Fundo escuro com gradiente sutil
+      // Fundo escuro
       const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
       bgGrad.addColorStop(0, '#0a1020');
       bgGrad.addColorStop(1, '#0f172a');
@@ -1222,7 +1255,7 @@ window.PhysicsSims = {
       ctx.font = '10px monospace';
       ctx.fillText('Nível de Referência (Solo: h = 0 m)', 14, groundY + 18);
 
-      // Desenhar suportes da montanha-russa
+      // Suportes da montanha-russa
       ctx.strokeStyle = 'rgba(71, 85, 105, 0.4)';
       ctx.lineWidth = 1;
       for (let st = 0.05; st <= 0.95; st += 0.08) {
@@ -1233,11 +1266,11 @@ window.PhysicsSims = {
         ctx.stroke();
       }
 
-      // Desenhar trilho
+      // Trilho principal
       ctx.strokeStyle = '#6366f1';
       ctx.lineWidth = 4;
       ctx.beginPath();
-      const steps = 80;
+      const steps = 90;
       for (let i = 0; i <= steps; i++) {
         const pt = getTrackPoint(i / steps, w, h, h0);
         if (i === 0) ctx.moveTo(pt.x, pt.y);
@@ -1245,7 +1278,7 @@ window.PhysicsSims = {
       }
       ctx.stroke();
 
-      // Trilho duplo (efeito montanha-russa)
+      // Trilho duplo (detalhe visual)
       ctx.strokeStyle = '#818cf8';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -1256,17 +1289,17 @@ window.PhysicsSims = {
       }
       ctx.stroke();
 
-      // Posição atual do carrinho
-      const cartPt = getTrackPoint(Math.min(s, 1), w, h, h0);
+      // Posição do carrinho
+      const cartPt = getTrackPoint(s, w, h, h0);
+
+      // Ângulo tangente
+      const dtTangent = 0.01;
+      const ptNext = getTrackPoint(s + dtTangent, w, h, h0);
+      const angle = Math.atan2(ptNext.y - cartPt.y, ptNext.x - cartPt.x);
 
       // Desenhar carrinho
       ctx.save();
       ctx.translate(cartPt.x, cartPt.y);
-
-      // Calcular inclinação tangente
-      const dtTangent = 0.01;
-      const ptNext = getTrackPoint(Math.min(s + dtTangent, 1), w, h, h0);
-      const angle = Math.atan2(ptNext.y - cartPt.y, ptNext.x - cartPt.x);
       ctx.rotate(angle);
 
       // Corpo do carrinho
@@ -1283,7 +1316,7 @@ window.PhysicsSims = {
       ctx.arc(8, -2, 3, 0, Math.PI * 2);
       ctx.fill();
 
-      // Cabine / passageiros
+      // Passageiro
       ctx.fillStyle = '#f43f5e';
       ctx.beginPath();
       ctx.arc(-2, -15, 3.5, 0, Math.PI * 2);
@@ -1291,11 +1324,11 @@ window.PhysicsSims = {
 
       ctx.restore();
 
-      // Vetor velocidade se v > 0.5 m/s
+      // Vetor velocidade
       if (v > 0.5) {
         ctx.save();
         ctx.translate(cartPt.x, cartPt.y - 18);
-        const vLen = Math.min(v * 2, 50);
+        const vLen = Math.min(v * 2.2, 55);
         ctx.strokeStyle = '#4ade80';
         ctx.fillStyle = '#4ade80';
         ctx.lineWidth = 2.5;
@@ -1303,7 +1336,7 @@ window.PhysicsSims = {
         ctx.moveTo(0, 0);
         ctx.lineTo(vLen * Math.cos(angle), vLen * Math.sin(angle));
         ctx.stroke();
-        // Seta
+        // Cabeça da seta
         const arrX = vLen * Math.cos(angle);
         const arrY = vLen * Math.sin(angle);
         ctx.beginPath();
@@ -1313,24 +1346,24 @@ window.PhysicsSims = {
       }
 
       // BARRAS DE ENERGIA AO VIVO (CANTO SUPERIOR DIREITO)
-      const barX = w - 140;
-      const barY = 22;
-      const barMaxW = 100;
+      const barX = w - 145;
+      const barY = 20;
+      const barMaxW = 105;
       const barH = 12;
       const maxEnergyRef = Math.max(1, E_total_inicial);
 
       // Caixa container das barras
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
       ctx.strokeStyle = '#334155';
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.roundRect ? ctx.roundRect(barX - 12, barY - 14, 142, 130, 8) : ctx.rect(barX - 12, barY - 14, 142, 130);
+      ctx.roundRect ? ctx.roundRect(barX - 12, barY - 12, 145, 126, 8) : ctx.rect(barX - 12, barY - 12, 145, 126);
       ctx.fill();
       ctx.stroke();
 
       ctx.fillStyle = '#f8fafc';
       ctx.font = 'bold 11px sans-serif';
-      ctx.fillText('Barras de Energia', barX - 4, barY + 2);
+      ctx.fillText('Barras de Energia', barX - 4, barY + 3);
 
       // 1. Barra Ep (Azul)
       ctx.fillStyle = '#94a3b8';
@@ -1344,24 +1377,35 @@ window.PhysicsSims = {
 
       // 2. Barra Ec (Verde)
       ctx.fillStyle = '#94a3b8';
-      ctx.fillText('Cinética (Ec)', barX - 4, barY + 54);
+      ctx.fillText('Cinética (Ec)', barX - 4, barY + 52);
       ctx.fillStyle = '#1e293b';
-      ctx.fillRect(barX - 4, barY + 58, barMaxW, barH);
+      ctx.fillRect(barX - 4, barY + 56, barMaxW, barH);
       const ecW = Math.min(barMaxW, (Ec / maxEnergyRef) * barMaxW);
       ctx.fillStyle = '#4ade80';
-      ctx.fillRect(barX - 4, barY + 58, ecW, barH);
+      ctx.fillRect(barX - 4, barY + 56, ecW, barH);
 
       // 3. Barra Emec (Amarela/Cyan)
       ctx.fillStyle = '#94a3b8';
-      ctx.fillText('Mecânica (Emec)', barX - 4, barY + 88);
+      ctx.fillText('Mecânica (Emec)', barX - 4, barY + 84);
       ctx.fillStyle = '#1e293b';
-      ctx.fillRect(barX - 4, barY + 92, barMaxW, barH);
+      ctx.fillRect(barX - 4, barY + 88, barMaxW, barH);
       const emecW = Math.min(barMaxW, (Emec / maxEnergyRef) * barMaxW);
       ctx.fillStyle = '#facc15';
-      ctx.fillRect(barX - 4, barY + 92, emecW, barH);
+      ctx.fillRect(barX - 4, barY + 88, emecW, barH);
 
       animId = requestAnimationFrame(loop);
     }
+
+    // Escutar evento de transição de slides para ajustar o canvas imediatamente quando o slide 5 for aberto
+    window.addEventListener('slideChanged', (e) => {
+      if (e.detail && e.detail.slideIndex === 4) {
+        lastTime = performance.now();
+        if (canvas.parentElement) {
+          canvas.width = canvas.parentElement.clientWidth || 650;
+          canvas.height = canvas.parentElement.clientHeight || 230;
+        }
+      }
+    });
 
     if (animId) cancelAnimationFrame(animId);
     animId = requestAnimationFrame(loop);
