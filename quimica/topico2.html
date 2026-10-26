@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tópico 2: Balanceamento de Equações Químicas | Caderno de Química</title>
+  
+  <!-- Google Fonts & KaTeX -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.7.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 02</span>
+      <h1 class="topic-title-header">Balanceamento de Equações Químicas</h1>
+    </div>
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      <a href="./index.html" class="btn-icon" title="Voltar ao Hub de Química" style="text-decoration: none;">🏠</a>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: INTRODUÇÃO & CONCEITO -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Contabilidade Atômica</span>
+          <h2 class="slide-title">Por Que Balancear uma Equação?</h2>
+          <p class="slide-subtitle">A expressão quantitativa de Lavoisier: o número de átomos de cada elemento deve ser exatamente igual antes e depois da reação.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🔍 Coeficientes vs. Índices (O Erro Fatal)</div>
+            <p>Em qualquer fórmula química, como $2\text{ H}_2\text{O}$:</p>
+            <ul>
+              <li><strong>Índice (o número pequeno embaixo, ex: $_2$ no $H_2$):</strong> Indica a proporção atômica dentro da molécula. <em>NUNCA PODE SER ALTERADO!</em> (Mudar $H_2O$ para $H_2O_2$ transforma água potável em água oxigenada venenosa!).</li>
+              <li><strong>Coeficiente Estequiométrico (o número grande na frente, ex: $2$ no $2H_2O$):</strong> Indica quantas moléculas ou mols daquela substância estão participando. <em>É esse número que você ajusta!</em></li>
+            </ul>
+            <div class="callout danger" style="margin-top: 10px;">
+              <strong>Regra Inegociável:</strong> Para balancear, você <strong>SÓ PODE MEXER NOS COEFICIENTES DA FRENTE</strong>!
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚖️ A Balança Invisível</div>
+            <p>Observe a combustão incompleta do gás hidrogênio:</p>
+            <div class="callout warning" style="margin: 8px 0; text-align: center;">
+              <strong>Equação NÃO balanceada (FALSA):</strong><br>
+              $\text{H}_2 + \text{O}_2 \rightarrow \text{H}_2\text{O}$<br>
+              <span style="font-size: 0.85rem; color: var(--accent-rose);">(2 oxigênios entraram, mas só 1 saiu! Onde foi parar o outro?)</span>
+            </div>
+            <div class="callout success" style="margin: 8px 0; text-align: center;">
+              <strong>Equação BALANCEADA (VERDADEIRA):</strong><br>
+              $2\text{ H}_2 + 1\text{ O}_2 \rightarrow 2\text{ H}_2\text{O}$<br>
+              <span style="font-size: 0.85rem; color: var(--accent-emerald);">(4 hidrogênios e 2 oxigênios de ambos os lados!)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: O MÉTODO MACHO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Estratégia Infalível para o Ensino Médio</span>
+          <h2 class="slide-title">O Famoso Método das Tentativas: Regra do M-A-C-H-O</h2>
+          <p class="slide-subtitle">A ordem prioritária que resolve 95% das equações de vestibulares sem você ficar preso em loops infinitos.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="card">
+          <div class="card-title">🏆 Ordem de Balanceamento Prioritária (M-A-C-H-O)</div>
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 12px; text-align: center;">
+            <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid var(--accent-cyan); border-radius: 8px; padding: 12px;">
+              <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-cyan);">M</div>
+              <strong style="display: block; margin: 4px 0; font-size: 0.85rem;">Metais</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">$Fe, Na, Ca, Al...$ (aparecem em poucas substâncias)</span>
+            </div>
+
+            <div style="background: rgba(167, 139, 250, 0.1); border: 1px solid var(--accent-indigo); border-radius: 8px; padding: 12px;">
+              <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-indigo);">A</div>
+              <strong style="display: block; margin: 4px 0; font-size: 0.85rem;">Ametais</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">$Cl, N, S, P...$ (exceto Carbono, H e O)</span>
+            </div>
+
+            <div style="background: rgba(250, 204, 21, 0.1); border: 1px solid var(--accent-gold); border-radius: 8px; padding: 12px;">
+              <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-gold);">C</div>
+              <strong style="display: block; margin: 4px 0; font-size: 0.85rem;">Carbono</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Espinha dorsal das reações orgânicas</span>
+            </div>
+
+            <div style="background: rgba(52, 211, 153, 0.1); border: 1px solid var(--accent-emerald); border-radius: 8px; padding: 12px;">
+              <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-emerald);">H</div>
+              <strong style="display: block; margin: 4px 0; font-size: 0.85rem;">Hidrogênio</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Geralmente o penúltimo a ajustar</span>
+            </div>
+
+            <div style="background: rgba(244, 63, 94, 0.1); border: 1px solid var(--accent-rose); border-radius: 8px; padding: 12px;">
+              <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-rose);">O</div>
+              <strong style="display: block; margin: 4px 0; font-size: 0.85rem;">Oxigênio</strong>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">O último! Se fez tudo certo, ele se fecha sozinho!</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout tip" style="margin-top: 14px;">
+          <strong>O Segredo do Oxigênio:</strong> Como o oxigênio costuma aparecer espalhado em 3 ou 4 substâncias ao mesmo tempo (água, gás oxigênio, dióxido de carbono, óxidos), tentar começar por ele é garantia de frustração. Deixe-o sempre por último para servir de prova real!
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: PASSO A PASSO DA COMBUSTÃO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Aplicação Direta</span>
+          <h2 class="slide-title">Exemplo Guiado: Combustão do Gás Propano ($C_3H_8$)</h2>
+          <p class="slide-subtitle">A reação que acontece no botijão de cozinha das nossas casas, balanceada passo a passo.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <p style="font-size: 0.95rem;">Equação esqueleto da queima completa:</p>
+        <div class="formula-card" style="margin: 8px 0; padding: 10px;">
+          <div class="formula-main" style="font-size: 1.3rem;">
+            $$	ext{C}_3	ext{H}_8 + 	ext{O}_2 ightarrow 	ext{CO}_2 + 	ext{H}_2	ext{O}$$
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 10px;">
+          <div class="card">
+            <div class="card-title">1º Passo: Carbono (C)</div>
+            <p>Temos 3 carbonos no reagente ($C_3H_8$). Para ter 3 carbonos no produto, colocamos coeficiente <strong>3</strong> na frente do $CO_2$:</p>
+            <p style="color: var(--accent-cyan); font-weight: 700; margin-top: 6px;">
+              $$1	ext{ C}_3	ext{H}_8 + 	ext{O}_2 ightarrow mathbf{3}	ext{ CO}_2 + 	ext{H}_2	ext{O}$$
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">2º Passo: Hidrogênio (H)</div>
+            <p>Temos 8 hidrogênios no $C_3H_8$. Na água ($H_2O$), cada molécula tem 2. Logo, $8 / 2 =$ colocamos <strong>4</strong> na frente da água:</p>
+            <p style="color: var(--accent-emerald); font-weight: 700; margin-top: 6px;">
+              $$1	ext{ C}_3	ext{H}_8 + 	ext{O}_2 ightarrow 3	ext{ CO}_2 + mathbf{4}	ext{ H}_2	ext{O}$$
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">3º Passo: Oxigênio (O)</div>
+            <p>Contamos os oxigênios dos produtos:<br>
+            $3 	imes 2 = 6$ (no $CO_2$) $+ 4 	imes 1 = 4$ (na água) $= 10$ átomos de O.<br>
+            Como o reagente é $O_2$, dividimos $10 / 2 = mathbf{5}$!</p>
+            <p style="color: var(--accent-gold); font-weight: 700; margin-top: 6px;">
+              $$mathbf{1}	ext{ C}_3	ext{H}_8 + mathbf{5}	ext{ O}_2 ightarrow mathbf{3}	ext{ CO}_2 + mathbf{4}	ext{ H}_2	ext{O}$$
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: COEFICIENTES FRACIONÁRIOS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Dicas Práticas de Vestibular</span>
+          <h2 class="slide-title">O Truque dos Coeficientes Fracionários</h2>
+          <p class="slide-subtitle">Como lidar com oxigênios ímpares e transformar frações nos menores números inteiros.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🔥 O Caso da Queima do Butano ($C_4H_{10}$)</div>
+            <p>Balanceando o butano do isqueiro:</p>
+            <ol>
+              <li>Carbono: 4 no $CO_2$.</li>
+              <li>Hidrogênio: 10 no $H_2O implies 5	ext{ H}_2	ext{O}$.</li>
+              <li>Oxigênio: $4 	imes 2 + 5 	imes 1 = 13$ oxigênios nos produtos!</li>
+            </ol>
+            <p style="margin-top: 6px;">Para obter 13 átomos a partir de moléculas biatômicas $O_2$, usamos a fração $rac{13}{2}$:</p>
+            <p style="text-align: center; color: var(--accent-cyan); font-weight: 700; margin: 6px 0;">
+              $$1	ext{ C}_4	ext{H}_{10} + rac{13}{2}	ext{ O}_2 ightarrow 4	ext{ CO}_2 + 5	ext{ H}_2	ext{O}$$
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">✨ Eliminando a Fração com Multiplicação</div>
+            <p>Se a questão pedir <em>"os menores coeficientes inteiros"</em>, basta multiplicar a equação inteira pelo denominador <strong>2</strong>:</p>
+            <div class="callout success" style="margin-top: 10px; text-align: center;">
+              <strong>$$mathbf{2}	ext{ C}_4	ext{H}_{10} + mathbf{13}	ext{ O}_2 ightarrow mathbf{8}	ext{ CO}_2 + mathbf{10}	ext{ H}_2	ext{O}$$</strong>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+              Soma dos coeficientes inteiros $= 2 + 13 + 8 + 10 = 33$. (Muito comum em questões de múltipla escolha!).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Laboratório de Balanceamento Atômico</h2>
+          <p class="slide-subtitle">Ajuste os coeficientes estequiométricos da síntese da amônia ($N_2 + H_2 ightarrow NH_3$) e veja os átomos conferidos em tempo real.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area" style="height: 230px;">
+            <canvas id="sim-canvas-balanc" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <label>Coeficiente de $N_2$: <span id="val-coef-n2">1</span></label>
+              <input type="range" id="coef-n2" min="1" max="4" step="1" value="1">
+            </div>
+            <div class="sim-control-group">
+              <label>Coeficiente de $H_2$: <span id="val-coef-h2">1</span></label>
+              <input type="range" id="coef-h2" min="1" max="6" step="1" value="1">
+            </div>
+            <div class="sim-control-group">
+              <label>Coeficiente de $NH_3$: <span id="val-coef-nh3">1</span></label>
+              <input type="range" id="coef-nh3" min="1" max="6" step="1" value="1">
+            </div>
+            <div class="sim-control-group" style="justify-content: flex-end;">
+              <button id="btn-check-balanc" class="sim-btn sim-btn-primary" style="margin-top: 14px;">🔍 Verificar Equação</button>
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card" style="grid-column: 1 / -1;">
+              <div class="readout-label">Status do Balanceamento</div>
+              <div id="out-status-balanc" class="readout-value" style="font-size: 1.05rem; color: #f87171;">Ajuste os coeficientes para igualar os átomos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática de Prova</span>
+          <h2 class="slide-title">Exercício Resolvido: Neutralização Ácido-Base</h2>
+          <p class="slide-subtitle">Balanceando a reação de ataque de ácido fosfórico sobre o hidróxido de cálcio.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / UNESP • BALANCEAMENTO</span>
+          <p class="exercise-enunciation">
+            O fosfato de cálcio, $Ca_3(PO_4)_2$, é o principal constituinte mineral dos ossos e dentes humanos. Ele pode ser obtido em laboratório pela neutralização total entre o hidróxido de cálcio, $Ca(OH)_2$, e o ácido fosfórico, $H_3PO_4$, segundo a equação não balanceada:<br>
+            $$	ext{Ca(OH)}_2 + 	ext{H}_3	ext{PO}_4 ightarrow 	ext{Ca}_3(	ext{PO}_4)_2 + 	ext{H}_2	ext{O}$$<br>
+            Determine os menores coeficientes inteiros que balanceiam corretamente essa reação e calcule a sua soma total.
+          </p>
+
+          <button class="solution-toggle" onclick="toggleSolution(this)">
+            💡 Ver Resolução Passo a Passo
+          </button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>1. Aplicando o Método MACHO: Metal Cálcio (Ca)</strong>
+              <p>No produto há 3 átomos de cálcio em $Ca_3(PO_4)_2$. Portanto, colocamos coeficiente <strong>3</strong> na frente do $Ca(OH)_2$:</p>
+              <p>$$mathbf{3}	ext{ Ca(OH)}_2 + 	ext{H}_3	ext{PO}_4 ightarrow mathbf{1}	ext{ Ca}_3(	ext{PO}_4)_2 + 	ext{H}_2	ext{O}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>2. Ametal Fósforo (P)</strong>
+              <p>No produto há 2 átomos de fósforo no radical fosfato $(PO_4)_2$. Portanto, colocamos coeficiente <strong>2</strong> na frente do $H_3PO_4$:</p>
+              <p>$$3	ext{ Ca(OH)}_2 + mathbf{2}	ext{ H}_3	ext{PO}_4 ightarrow 1	ext{ Ca}_3(	ext{PO}_4)_2 + 	ext{H}_2	ext{O}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>3. Hidrogênio (H) e Prova Real do Oxigênio (O)</strong>
+              <p>Contamos os hidrogênios dos reagentes:<br>
+              $3 	imes 2 = 6$ (do $Ca(OH)_2$) $+ 2 	imes 3 = 6$ (do $H_3PO_4$) $= 12$ átomos de H.<br>
+              Na água ($H_2O$), cada molécula tem 2 hidrogênios. Logo: $12 / 2 = mathbf{6}$ águas!</p>
+              <p><strong>Equação Final Perfeitamente Balanceada:</strong></p>
+              <p style="text-align: center; color: var(--accent-cyan); font-weight: 700; font-size: 1.1rem;">
+                $$3	ext{ Ca(OH)}_2 + 2	ext{ H}_3	ext{PO}_4 ightarrow 1	ext{ Ca}_3(	ext{PO}_4)_2 + 6	ext{ H}_2	ext{O}$$
+              </p>
+              <p><strong>Soma dos coeficientes:</strong> $3 + 2 + 1 + 6 = mathbf{12}$.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      <a href="./topico3.html" class="nav-btn next-topic-btn">Próximo Módulo ➔</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.7.0"></script>
+  <script src="./shared/js/annotator.js?v=2.7.0"></script>
+  <script src="./shared/js/simulators.js?v=2.7.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.ChemistrySims && ChemistrySims.initTopic2) {
+        ChemistrySims.initTopic2();
+      }
+    });
+  </script>
+</body>
+</html>

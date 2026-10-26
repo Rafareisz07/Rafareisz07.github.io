@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tópico 4: Estequiometria, Reagente Limitante e Excesso | Caderno de Química</title>
+  
+  <!-- Google Fonts & KaTeX -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.7.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 04</span>
+      <h1 class="topic-title-header">Estequiometria, Reagente Limitante e Excesso</h1>
+    </div>
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      <a href="./index.html" class="btn-icon" title="Voltar ao Hub de Química" style="text-decoration: none;">🏠</a>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: INTRODUÇÃO À ESTEQUIOMETRIA -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Relações Quantitativas</span>
+          <h2 class="slide-title">As Leis da Receita: O Roteiro em 3 Passos</h2>
+          <p class="slide-subtitle">A estequiometria é a arte de calcular quantidades exatas de reagentes e produtos antes de ir para o laboratório.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📜 O Algoritmo Universal da Estequiometria</div>
+            <p>Qualquer problema de estequiometria do Ensino Médio segue rigidamente 3 etapas:</p>
+            <ol>
+              <li><strong>1º Passo: Escrever e Balancear a Equação</strong><br>Sem coeficientes corretos, qualquer conta seguinte estará errada.</li>
+              <li><strong>2º Passo: Escrever a Linha Proporcional de Mols</strong><br>A proporção da receita vem diretamente dos coeficientes (ex: $2 : 1 ightarrow 2$).</li>
+              <li><strong>3º Passo: Converter para a Unidade Pedida e Fazer Regra de Três</strong><br>Converter mols para gramas, litros ou número de moléculas de acordo com a pergunta do enunciado.</li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🍔 A Analogia do Sanduíche Duplo</div>
+            <p>Imagine a "reação" de montar um sanduíche:</p>
+            <p style="text-align: center; color: var(--accent-cyan); font-weight: 700; margin: 8px 0;">
+              $$2	ext{ Fatias de Pão} + 1	ext{ Hambúrguer} ightarrow 1	ext{ Sanduíche}$$
+            </p>
+            <p>Se você tem <strong>10 fatias de pão</strong> e <strong>3 hambúrgueres</strong> na geladeira:</p>
+            <ul>
+              <li>Quantos sanduíches você consegue fazer? <strong>Apenas 3!</strong></li>
+              <li>Quem acabou primeiro? O <strong>hambúrguer (Reagente Limitante)</strong>!</li>
+              <li>O que sobrou? Sobraram <strong>4 fatias de pão (Reagente em Excesso)</strong>!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: COMO IDENTIFICAR O LIMITANTE -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Método Prático de Prova</span>
+          <h2 class="slide-title">Como Identificar o Limitante Sem Erro</h2>
+          <p class="slide-subtitle">O macete matemático para descobrir na hora quem comanda a reação e quem vai sobrar.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="card">
+          <div class="card-title">🎯 Como saber se uma questão tem Reagente em Excesso?</div>
+          <div class="callout warning" style="margin-bottom: 12px;">
+            <strong>O Sinal de Alerta:</strong> Sempre que o enunciado fornecer as quantidades de <strong>DOIS (ou mais) REAGENTES</strong> ao mesmo tempo, <strong>desconfie imediatamente</strong>! Quase com certeza um deles estará em excesso.
+          </div>
+
+          <p><strong>O Truque da Divisão Mols / Coeficiente:</strong></p>
+          <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-top: 8px;">
+            <p>Para cada reagente, calcule a fração:</p>
+            <p style="text-align: center; font-size: 1.3rem; color: var(--accent-gold); font-weight: 700;">
+              $$	ext{Razão} = rac{	ext{Número de Mols Fornecido pelo Enunciado}}{	ext{Coeficiente Estequiométrico da Equação}}$$
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px;">
+              <div style="background: rgba(244, 63, 94, 0.1); border: 1px solid var(--accent-rose); border-radius: 6px; padding: 8px;">
+                <strong style="color: var(--accent-rose);">Menor Razão:</strong><br>
+                É o <strong>REAGENTE LIMITANTE</strong>. Ele acaba primeiro e <strong>determina</strong> todo o cálculo de produto formado!
+              </div>
+              <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid var(--accent-cyan); border-radius: 6px; padding: 8px;">
+                <strong style="color: var(--accent-cyan);">Maior Razão:</strong><br>
+                É o <strong>REAGENTE EM EXCESSO</strong>. Parte dele será consumida e o restante sobrará intacto no vaso.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: APLICAÇÕES PRÁTICAS REAIS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Química do Cotidiano & Indústria</span>
+          <h2 class="slide-title">Duas Grandes Aplicações: Airbags e Respiração Submarina</h2>
+          <p class="slide-subtitle">Como os engenheiros e médicos utilizam excesso e limitante para salvar vidas humanas.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <!-- Aplicação 1: Airbag -->
+          <div class="card">
+            <div class="card-title">🚗 Aplicação 1: A Química do Airbag Automotivo</div>
+            <p>Em uma colisão de trânsito, a pastilha de azida de sódio ($NaN_3$) sofre detonação elétrica em 30 milissegundos:</p>
+            <p style="text-align: center; color: var(--accent-cyan); font-weight: 700; margin: 6px 0;">
+              $$2\text{ NaN}_{3\,(s)} \rightarrow 2\text{ Na}_{(s)} + 3\text{ N}_{2\,(g)} \uparrow$$
+            </p>
+            <p>O gás nitrogênio ($N_2$) infla a bolsa. Porém, o sódio metálico ($Na$) formado é perigosamente cáustico e reativo! Por isso, adiciona-se <strong>óxido de ferro e sílica em excesso calculado</strong> para neutralizar todo o sódio e transformá-lo em vidro inerte e seguro.</p>
+          </div>
+
+          <!-- Aplicação 2: Submarinos -->
+          <div class="card">
+            <div class="card-title">🚀 Aplicação 2: Foguetes e Submarinos (Remoção de $CO_2$)</div>
+            <p>Em ambientes fechados como estações espaciais e submarinos nucleares, o gás carbônico exalado pelos tripulantes é venenoso em altas concentrações.</p>
+            <p style="text-align: center; color: var(--accent-emerald); font-weight: 700; margin: 6px 0;">
+              $$2	ext{ LiOH}_{(s)} + 	ext{CO}_{2,(g)} ightarrow 	ext{Li}_2	ext{CO}_{3,(s)} + 	ext{H}_2	ext{O}_{(l)}$$
+            </p>
+            <p>Usa-se cartuchos com <strong>hidróxido de lítio ($LiOH$) em grande excesso</strong> para garantir que o $CO_2$ seja o reagente limitante absoluto e seja 100% retirado do ar que respiramos!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: COMO CALCULAR A SOBRA -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Roteiro Numérico</span>
+          <h2 class="slide-title">Calculando a Sobra de Excesso com Precisão</h2>
+          <p class="slide-subtitle">A fórmula simples para responder: "Quantos gramas de reagente restaram sem reagir?".</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main" style="font-size: 1.35rem;">
+            $$	ext{Massa da Sobra (Excesso)} = m_{	ext{adicionada no início}} - m_{	ext{efetivamente consumida}}$$
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 12px;">
+          <div class="card">
+            <div class="card-title">1º: Descubra o Consumo</div>
+            <p>Após descobrir quem é o Limitante, use <strong>APENAS O LIMITANTE</strong> para fazer uma regra de três e descobrir quanto do outro reagente foi de fato consumido pela estequiometria.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">2º: Subtraia da Quantidade Inicial</div>
+            <p>Pegue o total que você colocou no frasco no início da experiência e diminua do valor consumido calculado no passo 1. O resultado é o que restou boiando ou sobrando no fundo!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Reagente Limitante e Excesso (Síntese da Água)</h2>
+          <p class="slide-subtitle">Altere a quantidade de mols de $H_2$ e $O_2$ e veja a reação $2H_2 + O_2 ightarrow 2H_2O$ consumir o limitante e deixar a sobra ao vivo.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area" style="height: 230px;">
+            <canvas id="sim-canvas-limitante" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <label>Mols de Hidrogênio ($H_2$): <span id="val-n-h2">4 mol</span></label>
+              <input type="range" id="slider-n-h2" min="1" max="10" step="1" value="4">
+            </div>
+            <div class="sim-control-group">
+              <label>Mols de Oxigênio ($O_2$): <span id="val-n-o2">2 mol</span></label>
+              <input type="range" id="slider-n-o2" min="1" max="6" step="1" value="2">
+            </div>
+            <div class="sim-control-group" style="justify-content: flex-end; flex-direction: row; align-items: flex-end; gap: 8px;">
+              <button id="btn-reagir-lim" class="sim-btn sim-btn-primary" style="margin-top: 14px; flex: 1;">🔥 Simular Reação</button>
+              <button id="btn-reset-lim" class="sim-btn sim-btn-secondary" style="margin-top: 14px;" title="Resetar proporção padrão">🔄 Resetar</button>
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Reagente Limitante</div>
+              <div id="out-limitante" class="readout-value" style="font-size: 0.95rem; color: #f87171;">Nenhum (Ideal)</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Reagente em Excesso</div>
+              <div id="out-excesso" class="readout-value" style="font-size: 0.95rem; color: #38bdf8;">Nenhum</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Água ($H_2O$) Formada</div>
+              <div id="out-h2o-formado" class="readout-value" style="color: #4ade80;">4 mol (72 g)</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Sobra Sem Reagir</div>
+              <div id="out-sobra" class="readout-value" style="font-size: 0.95rem; color: #facc15;">0 mol</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática de Prova</span>
+          <h2 class="slide-title">Exercício Resolvido: Síntese de Cloreto de Hidrogênio</h2>
+          <p class="slide-subtitle">Identificando o reagente limitante e calculando a massa excedente que sobrou.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">ENEM / UNICAMP • LIMITANTE & EXCESSO</span>
+          <p class="exercise-enunciation">
+            Em um reator industrial fechado, foram misturados $10	ext{ g}$ de gás hidrogênio ($H_2$) e $142	ext{ g}$ de gás cloro ($Cl_2$). Sob a ação de luz ultravioleta, eles reagem segundo a equação:<br>
+            $$	ext{H}_{2,(g)} + 	ext{Cl}_{2,(g)} ightarrow 2	ext{ HCl}_{(g)}$$<br>
+            Dados de massas molares: $H_2 = 2	ext{ g/mol}$; $Cl_2 = 71	ext{ g/mol}$; $HCl = 36{,}5	ext{ g/mol}$.<br>
+            <strong>a)</strong> Qual é o reagente limitante da reação?<br>
+            <strong>b)</strong> Qual a massa de $HCl$ formada?<br>
+            <strong>c)</strong> Qual a massa de reagente em excesso que sobrou intacta?
+          </p>
+
+          <button class="solution-toggle" onclick="toggleSolution(this)">
+            💡 Ver Resolução Passo a Passo
+          </button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Passo 1: Converter as massas iniciais para mols</strong>
+              <p>$$n(H_2) = rac{10	ext{ g}}{2	ext{ g/mol}} = 5	ext{ mols de } H_2$$</p>
+              <p>$$n(Cl_2) = rac{142	ext{ g}}{71	ext{ g/mol}} = 2	ext{ mols de } Cl_2$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 2: Identificar o Reagente Limitante</strong>
+              <p>A proporção da equação é $1	ext{ mol de } H_2 : 1	ext{ mol de } Cl_2$.<br>
+              Para reagir com os $2	ext{ mols}$ de $Cl_2$, precisamos de apenas $2	ext{ mols}$ de $H_2$.<br>
+              Como temos $5	ext{ mols}$ de $H_2$ disponíveis (muito mais do que o necessário):</p>
+              <p>• <strong>Reagente Limitante:</strong> $Cl_2$ (Cloro, acaba primeiro!).<br>
+              • <strong>Reagente em Excesso:</strong> $H_2$ (Hidrogênio).</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 3: Massa de $HCl$ produzida (baseada no limitante!)</strong>
+              <p>$$1	ext{ mol } Cl_2 ightarrow 2	ext{ mols } HCl$$</p>
+              <p>$$2	ext{ mols } Cl_2 ightarrow 4	ext{ mols } HCl$$</p>
+              <p>$$	ext{Massa de } HCl = 4	ext{ mols} 	imes 36{,}5	ext{ g/mol} = mathbf{146	ext{ g de } HCl}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Passo 4: Sobra de Hidrogênio</strong>
+              <p>$$	ext{Mols que sobraram} = 5	ext{ mols iniciais} - 2	ext{ mols consumidos} = 3	ext{ mols de } H_2$$</p>
+              <p>$$	ext{Massa da sobra} = 3	ext{ mols} 	imes 2	ext{ g/mol} = mathbf{6	ext{ gramas de } H_2	ext{ sem reagir}}.$$</p>
+              <p><em>(Verificação de Lavoisier: $146	ext{ g de produto} + 6	ext{ g de sobra} = 152	ext{ g} = 10	ext{ g} + 142	ext{ g}$ iniciais!).</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      <a href="./topico5.html" class="nav-btn next-topic-btn">Próximo Módulo ➔</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.7.0"></script>
+  <script src="./shared/js/annotator.js?v=2.7.0"></script>
+  <script src="./shared/js/simulators.js?v=2.7.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.ChemistrySims && ChemistrySims.initTopic4) {
+        ChemistrySims.initTopic4();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tópico 3: Como Medir o Que Não se Vê (O Conceito de Mol) | Caderno de Química</title>
+  
+  <!-- Google Fonts & KaTeX -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.7.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 03</span>
+      <h1 class="topic-title-header">O Mol, Massa Molar e Número de Avogadro</h1>
+    </div>
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      <a href="./index.html" class="btn-icon" title="Voltar ao Hub de Química" style="text-decoration: none;">🏠</a>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: O DILEMA DA BALANÇA -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">A Ponte Micro-Macro</span>
+          <h2 class="slide-title">Como Medir Aquilo Que Não se Consegue Ver?</h2>
+          <p class="slide-subtitle">Átomos são incrivelmente leves e pequenos demais para serem colocados um a um na balança do laboratório.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🔬 A Ordem de Grandeza Real</div>
+            <p>Se você colocar um copo com água sobre a mesa:</p>
+            <ul>
+              <li>1 única molécula de água tem massa aproximada de $0{,}00000000000000000000003\text{ gramas}$ ($3 \times 10^{-23}\text{ g}$).</li>
+              <li>Nenhuma balança do planeta tem sensibilidade para medir um único átomo isolado.</li>
+              <li>Por outro lado, no laboratório nós pesamos <strong>gramas</strong> em béqueres!</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 12px;">
+              <strong>A Pergunta Crucial:</strong> Quantas moléculas precisamos juntar em um "pacote" para que a massa atômica da Tabela Periódica possa ser lida diretamente em <strong>gramas</strong>?
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">📦 Analogia: A Dúzia, a Resma e o Mol</div>
+            <p>Na vida diária, criamos nomes especiais para agrupar coisas:</p>
+            <ul>
+              <li><strong>1 Par</strong> $= 2$ sapatos.</li>
+              <li><strong>1 Dúzia</strong> $= 12$ ovos ou laranjas.</li>
+              <li><strong>1 Cento</strong> $= 100$ brigadeiros de festa.</li>
+              <li><strong>1 Resma</strong> $= 500$ folhas de papel sulfite.</li>
+              <li><strong>1 MOL</strong> $= 602.000.000.000.000.000.000.000$ unidades!</li>
+            </ul>
+            <div class="callout success" style="margin-top: 12px;">
+              <strong>Definição Sem Medo:</strong> O <strong>Mol</strong> é simplesmente a "dúzia do químico"! Uma unidade de contagem de coisas minúsculas.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: O NÚMERO DE AVOGADRO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Constante Universal</span>
+          <h2 class="slide-title">A Constante de Avogadro ($N_A = 6{,}02 \times 10^{23}$)</h2>
+          <p class="slide-subtitle">A quantidade exata de partículas contida em exatamente 1 mol de qualquer substância.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$1\text{ mol} = 6{,}02 \times 10^{23}\text{ entidades elementares}$$
+          </div>
+          <div class="formula-legend">
+            <span>Seja 1 mol de átomos de Ferro, 1 mol de moléculas de Água ou 1 mol de grãos de areia, o número de unidades é o mesmo!</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🌌 Quão Gigante é $6{,}02 \times 10^{23}$?</div>
+            <p>É uma quantidade difícil de imaginar na cabeça humana:</p>
+            <ul>
+              <li>Se você distribuísse $6 \times 10^{23}$ moedas de 1 real igualmente entre todos os 8 bilhões de habitantes da Terra, cada ser humano seria trilionário centenas de vezes!</li>
+              <li>Se você empilhasse $6 \times 10^{23}$ folhas de papel, a pilha iria e voltaria da Lua à Terra milhares de vezes.</li>
+            </ul>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+              E ainda assim, $6{,}02 \times 10^{23}$ moléculas de água cabem em apenas <strong>18 mililitros</strong> (um pequeno gole)!
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚖️ A Mágica da Unidade de Massa Atômica ($u$)</div>
+            <p>A massa de 1 átomo na Tabela Periódica é dada em $u$ (unidades de massa atômica, relativa ao Carbono-12):</p>
+            <p style="text-align: center; color: var(--accent-cyan); font-weight: 700; margin: 8px 0;">
+              $$1\text{ átomo de Carbono} = 12\text{ u}$$
+              $$1\text{ MOL de átomos de Carbono} = mathbf{12\text{ GRAMAS!}}$$
+            </p>
+            <p>O número de Avogadro é a constante matemática exata que converte a unidade subatômica $u$ diretamente para a escala de gramas!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: MASSA MOLAR & FÓRMULAS QUÍMICAS -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Cálculo Fundamental</span>
+          <h2 class="slide-title">Massa Molar ($M$) e Fórmulas Químicas</h2>
+          <p class="slide-subtitle">Como somar as massas atômicas da Tabela Periódica para descobrir o peso de 1 mol de qualquer molécula.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🧮 Como Calcular a Massa Molar ($M$) em $\text{g/mol}$</div>
+            <p>Basta consultar as massas atômicas na Tabela ($H=1, C=12, O=16, N=14, Ca=40$) e multiplicar pelas quantidades da fórmula:</p>
+            
+            <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; margin-top: 8px;">
+              <strong style="color: var(--accent-cyan);">Exemplo 1: Glicose ($C_6H_{12}O_6$)</strong><br>
+              $C: 6 \times 12 = 72\text{ g}$<br>
+              $H: 12 \times 1 = 12\text{ g}$<br>
+              $O: 6 \times 16 = 96\text{ g}$<br>
+              <span style="font-weight: 700; color: var(--accent-gold);">Massa Molar $= 72 + 12 + 96 = mathbf{180\text{ g/mol}}$</span>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; margin-top: 8px;">
+              <strong style="color: var(--accent-emerald);">Exemplo 2: Ácido Sulfúrico ($H_2SO_4$)</strong> ($S=32$)<br>
+              $H: 2 \times 1 = 2\text{ g}$<br>
+              $S: 1 \times 32 = 32\text{ g}$<br>
+              $O: 4 \times 16 = 64\text{ g}$<br>
+              <span style="font-weight: 700; color: var(--accent-gold);">Massa Molar $= 2 + 32 + 64 = mathbf{98\text{ g/mol}}$</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">📐 Fórmulas Centesimal, Mínima e Molecular</div>
+            <p>As 3 formas que a Química usa para expressar compostos:</p>
+            <ul>
+              <li><strong>Fórmula Percentual (Centesimal):</strong> A porcentagem em massa de cada elemento (ex: Água tem $11{,}1\%$ de H e $88{,}9\%$ de O).</li>
+              <li><strong>Fórmula Mínima (Empírica):</strong> A menor proporção inteira de átomos (ex: glicose simplificada $= CH_2O$).</li>
+              <li><strong>Fórmula Molecular Real:</strong> A quantidade verdadeira de átomos em cada molécula isolada (ex: $C_6H_{12}O_6 = 6 \times CH_2O$).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: O MAPA DO MOL -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">O Trevo de 4 Folhas da Estequiometria</span>
+          <h2 class="slide-title">O Mapa Central de Conversões do Mol</h2>
+          <p class="slide-subtitle">O mol é o centro de comando que conecta Massa (gramas), Número de Partículas e Volume de Gás na CNTP.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main" style="font-size: 1.35rem;">
+            $$1\text{ MOL} = M\text{ (gramas)} = 6{,}02 \times 10^{23}\text{ moléculas} = 22{,}4\text{ Litros (gases na CNTP)}$$
+          </div>
+          <div class="formula-legend">
+            <span><strong>CNTP:</strong> Condições Normais de Temperatura e Pressão ($0^\circ\text{C}$ e $1\text{ atm}$).</span>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 10px;">
+          <div class="card">
+            <div class="card-title">1. Massa $\leftrightarrow$ Mol</div>
+            <p>Usa a <strong>Massa Molar ($M$)</strong>:</p>
+            <p style="text-align: center; color: var(--accent-cyan); font-weight: 700; margin: 8px 0;">
+              $$n = \frac{m}{M}$$
+            </p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Ex: Quantos mols há em $90\text{ g}$ de água ($M=18\text{ g/mol}$)?<br>
+              $n = 90 / 18 = 5\text{ mols}$.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">2. Partículas $\leftrightarrow$ Mol</div>
+            <p>Usa a <strong>Constante de Avogadro ($N_A$)</strong>:</p>
+            <p style="text-align: center; color: var(--accent-emerald); font-weight: 700; margin: 8px 0;">
+              $$N = n \times 6{,}02 \times 10^{23}$$
+            </p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Ex: Em $2\text{ mols}$ de ferro há:<br>
+              $2 \times 6{,}02 \times 10^{23} = 1{,}2 \times 10^{24}$ átomos.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">3. Volume Gasoso $\leftrightarrow$ Mol</div>
+            <p>Usa o <strong>Volume Molar ($22{,}4\text{ L/mol}$)</strong>:</p>
+            <p style="text-align: center; color: var(--accent-gold); font-weight: 700; margin: 8px 0;">
+              $$V = n \times 22{,}4\text{ L}$$
+            </p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Ex: Qual o volume de $0{,}5\text{ mol}$ de gás $O_2$ na CNTP?<br>
+              $V = 0{,}5 \times 22{,}4 = 11{,}2\text{ Litros}$.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: A Balança do Mol & Visualizador de Partículas</h2>
+          <p class="slide-subtitle">Selecione a substância e o número de mols para ver a massa correspondente e a quantidade astronômica de moléculas em tempo real.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area" style="height: 230px;">
+            <canvas id="sim-canvas-mol" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <label>Escolha a Substância:</label>
+              <select id="select-subst-mol" style="background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 6px; border-radius: 6px; font-weight: 600;">
+                <option value="H2O">Água (H₂O) - 18 g/mol</option>
+                <option value="CO2">Dióxido de Carbono (CO₂) - 44 g/mol</option>
+                <option value="NaCl">Sal de Cozinha (NaCl) - 58.5 g/mol</option>
+                <option value="Fe">Ferro Metálico (Fe) - 56 g/mol</option>
+                <option value="C12H22O11">Açúcar / Sacarose - 342 g/mol</option>
+              </select>
+            </div>
+            <div class="sim-control-group">
+              <label>Quantidade de Matéria ($n$): <span id="val-mols">1.0 mol</span></label>
+              <input type="range" id="slider-mols" min="0.5" max="5.0" step="0.5" value="1.0">
+            </div>
+            <div class="sim-control-group" style="grid-column: span 2;">
+              <label>Equivalência Visual no Mundo Real:</label>
+              <div id="out-visual-mol" style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600; padding: 6px 0;">18g = ~18 mL (um gole de água)</div>
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Massa na Balança ($m$)</div>
+              <div id="out-massa-mol" class="readout-value" style="color: #38bdf8;">18.0 g</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Nº Real de Partículas</div>
+              <div id="out-particulas-mol" class="readout-value" style="color: #4ade80;">6.02 × 10²³</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Volume Equivalente</div>
+              <div id="out-volume-mol" class="readout-value" style="color: #a78bfa;">18.0 mL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática de Prova</span>
+          <h2 class="slide-title">Exercício Resolvido: Dosagem de Medicamento</h2>
+          <p class="slide-subtitle">Calculando o número de moléculas e mols a partir da massa em miligramas de um analgésico.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">FUVEST / UNICAMP • CÁLCULO DE MOL</span>
+          <p class="exercise-enunciation">
+            Um comprimido de ácido acetilsalicílico (aspirina, fórmula molecular $C_9H_8O_4$) contém exatamente $540\text{ mg}$ do princípio ativo. Dados: Massas molares em $\text{g/mol}$: $C=12; H=1; O=16$. Constante de Avogadro $= 6{,}0 \times 10^{23}\text{ mol}^{-1}$.<br>
+            <strong>a)</strong> Qual é a massa molar da aspirina?<br>
+            <strong>b)</strong> Quantos mols de aspirina existem nesse comprimido?<br>
+            <strong>c)</strong> Quantas moléculas de aspirina são ingeridas pelo paciente ao tomar esse comprimido?
+          </p>
+
+          <button class="solution-toggle" onclick="toggleSolution(this)">
+            💡 Ver Resolução Passo a Passo
+          </button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>Item a: Massa Molar ($M$) de $C_9H_8O_4$</strong>
+              <p>Somamos os elementos multiplicados pelos índices da fórmula:</p>
+              <p>$$M = (9 \times 12) + (8 \times 1) + (4 \times 16) = 108 + 8 + 64 = mathbf{180\text{ g/mol}}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Item b: Quantidade de Matéria em Mols ($n$)</strong>
+              <p>Primeiro convertemos miligramas para gramas ($540\text{ mg} = 0{,}54\text{ g}$):</p>
+              <p>$$n = \frac{m}{M} = \frac{0{,}54\text{ g}}{180\text{ g/mol}} = mathbf{0{,}003\text{ mol}} = mathbf{3 \times 10^{-3}\text{ mol}}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>Item c: Número Total de Moléculas Ingeridas</strong>
+              <p>Multiplicamos o número de mols pela Constante de Avogadro:</p>
+              <p>$$N = n \times 6{,}0 \times 10^{23}$$</p>
+              <p>$$N = 3 \times 10^{-3} \times 6{,}0 \times 10^{23} = mathbf{1{,}8 \times 10^{21}\text{ moléculas de aspirina}}$$</p>
+              <p><em>(Ou seja: 1 bilhão e 800 milhões de trilhões de moléculas em um comprimidinho de farmácia!)</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      <a href="./topico4.html" class="nav-btn next-topic-btn">Próximo Módulo ➔</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.7.0"></script>
+  <script src="./shared/js/annotator.js?v=2.7.0"></script>
+  <script src="./shared/js/simulators.js?v=2.7.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.ChemistrySims && ChemistrySims.initTopic3) {
+        ChemistrySims.initTopic3();
+      }
+    });
+  </script>
+</body>
+</html>

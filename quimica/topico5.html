@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tópico 5: Impurezas e Rendimento de Reações Químicas | Caderno de Química</title>
+  
+  <!-- Google Fonts & KaTeX -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function renderMath() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } else {
+          setTimeout(renderMath, 40);
+        }
+      }
+      renderMath();
+    });
+  </script>
+
+  <!-- Estilos Próprios -->
+  <link rel="stylesheet" href="./shared/css/slides.css?v=2.7.0">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="nav-header">
+    <div class="nav-left">
+      <span class="topic-badge">Módulo 05</span>
+      <h1 class="topic-title-header">Grau de Pureza e Rendimento Real</h1>
+    </div>
+
+    <div class="nav-right">
+      <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+      <button id="theme-toggle-btn" class="btn-icon" title="Alternar Tema Claro/Escuro">☀️</button>
+      <button id="fullscreen-btn" class="btn-icon" title="Tela Cheia (Tecla F)">⛶</button>
+      <a href="./index.html" class="btn-icon" title="Voltar ao Hub de Química" style="text-decoration: none;">🏠</a>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Slides Viewport -->
+  <main class="slides-viewport">
+
+    <!-- SLIDE 1: O MUNDO REAL VS O PAPEL -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Química Industrial & Laboratorial</span>
+          <h2 class="slide-title">Por Que Reações Nunca Dão 100% no Mundo Real?</h2>
+          <p class="slide-subtitle">A teoria no papel assume reagentes perfeitamente puros e processos sem nenhuma perda. A realidade exige correções.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🪨 1. Reagentes com Impurezas (A Entrada)</div>
+            <p>Na natureza e na mineração, matérias-primas nunca são puras:</p>
+            <ul>
+              <li>O <strong>calcário</strong> extraído de jazidas não é $100%$ carbonato de cálcio ($CaCO_3$); vem misturado com areia, argila e sílica.</li>
+              <li>O <strong>minério de ferro (hematita)</strong> vem cheio de terra e rochas.</li>
+            </ul>
+            <div class="callout warning" style="margin-top: 10px;">
+              <strong>Princípio Básico:</strong> <em>Impureza não reage!</em> Só o que é quimicamente puro participa da transformação estequiométrica.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">📉 2. Rendimento Incompleto (A Saída)</div>
+            <p>Mesmo com reagentes 100% puros, a quantidade de produto obtido na prática é menor do que a prevista no papel por várias razões:</p>
+            <ul>
+              <li><strong>Reações paralelas / secundárias</strong> indesejadas consumindo reagente.</li>
+              <li><strong>Perdas mecânicas:</strong> respingos, aderência nas paredes do vidro e filtros.</li>
+              <li><strong>Equilíbrio químico reversível:</strong> a reação para antes de completar.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: GRAU DE PUREZA -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Cálculo de Pureza ($p$)</span>
+          <h2 class="slide-title">1. Grau de Pureza: Filtrando o que Realmente Reage</h2>
+          <p class="slide-subtitle">A porcentagem em massa da substância de interesse contida na amostra bruta inicial.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$p = rac{m_{	ext{pura}}}{m_{	ext{total bruta}}} 	imes 100% iff m_{	ext{pura}} = m_{	ext{bruta}} 	imes rac{p}{100}$$
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="card">
+            <div class="card-title">💡 Dica de Ouro da Pureza</div>
+            <p>O cálculo de pureza é feito <strong>SEMPRE NO INÍCIO</strong> do problema, antes de aplicar qualquer proporção estequiométrica!</p>
+            <div class="callout tip" style="margin-top: 10px;">
+              <strong>Exemplo Rápido:</strong> Se você coloca $500	ext{ g}$ de calcário com $80%$ de pureza no forno:<br>
+              $$m_{	ext{pura}} = 500	ext{ g} 	imes 0{,}80 = mathbf{400	ext{ g de } CaCO_3}$$
+              Os outros $100	ext{ g}$ são areia inerte e são descartados da conta!
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚠️ Pegadinha Clássica de Prova</div>
+            <p>Às vezes a questão não diz a pureza, diz o <strong>teor de impureza</strong>:</p>
+            <div class="callout alert" style="margin-top: 10px;">
+              <em>"Uma amostra de carvão contém 5% de cinzas e impurezas..."</em><br>
+              <strong>Cuidado!</strong> Se a impureza é de $5%$, a pureza real que você deve usar na conta é de <strong>$95%$</strong> ($100% - 5%$)!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: RENDIMENTO REAL -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Cálculo de Rendimento ($eta$)</span>
+          <h2 class="slide-title">2. Rendimento da Reação: Teoria vs. Prática</h2>
+          <p class="slide-subtitle">A razão percentual entre a massa real colhida na balança e a massa máxima teoricamente esperada.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="formula-card">
+          <div class="formula-main">
+            $$eta = rac{m_{	ext{obtida real}}}{m_{	ext{esperada teórica}}} 	imes 100%$$
+          </div>
+          <div class="formula-legend">
+            <span>$m_{	ext{teórica}}$ ($100%$): calculada no papel pela estequiometria balanceada.</span>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="card">
+            <div class="card-title">💡 Dica de Ouro do Rendimento</div>
+            <p>Ao contrário da pureza, o rendimento é aplicado <strong>SEMPRE NO FINAL</strong> sobre os produtos formados!</p>
+            <div class="callout tip" style="margin-top: 10px;">
+              <strong>Exemplo Rápido:</strong> A estequiometria calculou que deveriam ser formados $200	ext{ g}$ de aspirina. Porém, a reação tem rendimento de apenas $85%$:<br>
+              $$m_{	ext{real colhida}} = 200	ext{ g} 	imes 0{,}85 = mathbf{170	ext{ g de aspirina}}$$
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🧭 O Mapa Mental Definitivo</div>
+            <p style="font-weight: 700; color: var(--accent-cyan);">A linha do tempo de qualquer exercício completo:</p>
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-top: 8px; font-size: 0.88rem; line-height: 1.6;">
+              $1º.$ Amostra Bruta $\rightarrow$ Massa Pura de Reagente (aplica Pureza).<br>
+              $2º.$ Massa Pura $\rightarrow$ Produto Teórico ($100\%$ pela Estequiometria).<br>
+              $3º.$ Produto Teórico $\rightarrow$ Produto Real Obtido (aplica Rendimento)!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: PROBLEMAS DE ALTO NÍVEL -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Estratégia para o ENEM & FUVEST</span>
+          <h2 class="slide-title">Reações Combinando Impurezas e Rendimento</h2>
+          <p class="slide-subtitle">Como montar uma única regra de três ou resolver com segurança sem se perder nas porcentagens.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="card">
+          <div class="card-title">🎯 Modelo Geral de Resolução</div>
+          <p>Imagine queimar $1000\text{ g}$ de carvão com $90\%$ de pureza, sabendo que a queima tem rendimento de $80\%$ ($C + O_2 \rightarrow CO_2$, massas: $C=12; CO_2=44$):</p>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem;">
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 8px; font-weight: 700; color: var(--accent-cyan); width: 30%;">Etapa 1: Pureza</td>
+              <td style="padding: 8px;">$m_{\text{pura de } C} = 1000\text{ g} \times 0{,}90 = \mathbf{900\text{ g de Carbono Real}}$.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 8px; font-weight: 700; color: var(--accent-gold);">Etapa 2: Estequiometria</td>
+              <td style="padding: 8px;">$12\text{ g de } C \rightarrow 44\text{ g de } CO_2$<br>$900\text{ g de } C \rightarrow x \implies x = \frac{900 \times 44}{12} = \mathbf{3.300\text{ g de } CO_2\text{ (Teórico)}}$.</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px; font-weight: 700; color: var(--accent-emerald);">Etapa 3: Rendimento</td>
+              <td style="padding: 8px;">Como o rendimento é de $80\%$:<br>$m_{\text{final}} = 3.300\text{ g} \times 0{,}80 = \mathbf{2.640\text{ g de } CO_2\text{ emitidos}}$.</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: SIMULADOR INTERATIVO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Laboratório Virtual</span>
+          <h2 class="slide-title">Simulador: Cascata de Pureza & Rendimento Real</h2>
+          <p class="slide-subtitle">Acompanhe a perda de massa em cada estágio: amostra bruta impura $\rightarrow$ estequiometria teórica $\rightarrow$ massa real obtida no frasco.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="sim-container">
+          <div class="sim-display-area" style="height: 230px;">
+            <canvas id="sim-canvas-rendimento" class="sim-canvas"></canvas>
+          </div>
+
+          <div class="sim-controls">
+            <div class="sim-control-group">
+              <label>Massa Bruta Inicial: <span id="val-m-bruta">100 g</span></label>
+              <input type="range" id="slider-m-bruta" min="50" max="300" step="10" value="100">
+            </div>
+            <div class="sim-control-group">
+              <label>Grau de Pureza ($p$): <span id="val-pureza">80%</span></label>
+              <input type="range" id="slider-pureza" min="40" max="100" step="5" value="80">
+            </div>
+            <div class="sim-control-group">
+              <label>Rendimento Real ($\eta$): <span id="val-rendimento">75%</span></label>
+              <input type="range" id="slider-rendimento" min="30" max="100" step="5" value="75">
+            </div>
+          </div>
+
+          <div class="sim-readouts">
+            <div class="readout-card">
+              <div class="readout-label">Reagente Puro ($CaCO_3$)</div>
+              <div id="out-m-pura" class="readout-value" style="color: #38bdf8;">80.0 g</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Produto Teórico ($\eta=100\%$)</div>
+              <div id="out-teorico" class="readout-value" style="color: #facc15;">44.8 g CaO</div>
+            </div>
+            <div class="readout-card">
+              <div class="readout-label">Produto Real Coletado</div>
+              <div id="out-real" class="readout-value" style="color: #4ade80;">33.6 g CaO</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: EXERCÍCIO RESOLVIDO PASSO A PASSO -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <span class="slide-category">Fixação Prática de Prova</span>
+          <h2 class="slide-title">Exercício Resolvido: Produção de Cal Virgem na Indústria</h2>
+          <p class="slide-subtitle">Exercício clássico de vestibular combinando pureza de calcário e rendimento de fornalha.</p>
+        </div>
+      </div>
+      <div class="slide-content">
+        <div class="exercise-box">
+          <span class="exercise-tag">FUVEST / ENEM • PUREZA E RENDIMENTO</span>
+          <p class="exercise-enunciation">
+            O óxido de cálcio ($CaO$, cal virgem) é amplamente utilizado na construção civil para preparo de argamassas e na agricultura para correção de acidez do solo. Ele é produzido pela calcinação do calcário segundo a reação:<br>
+            $$\text{CaCO}_{3\,(s)} \xrightarrow{\Delta} \text{CaO}_{(s)} + \text{CO}_{2\,(g)}$$<br>
+            Em uma caieira industrial, aqueceu-se $200\text{ toneladas}$ de uma rocha calcária com $90\%$ de pureza em $CaCO_3$. Sabendo que o forno opera com rendimento de $80\%$, qual é a massa de cal virgem ($CaO$) efetivamente obtida?<br>
+            <em>Dados de massas molares em $\text{g/mol}$: $Ca=40; C=12; O=16$. ($CaCO_3 = 100\text{ g/mol}$; $CaO = 56\text{ g/mol}$).</em>
+          </p>
+
+          <button class="solution-toggle" onclick="toggleSolution(this)">
+            💡 Ver Resolução Passo a Passo
+          </button>
+
+          <div class="solution-content">
+            <div class="solution-step">
+              <strong>1º Passo: Calcular a massa pura de carbonato de cálcio ($CaCO_3$)</strong>
+              <p>Nem todas as 200 toneladas são de reagente; 10% é terra e areia inerte:</p>
+              <p>$$m_{	ext{pura}} = 200	ext{ toneladas} 	imes 0{,}90 = mathbf{180	ext{ toneladas de } CaCO_3}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>2º Passo: Estequiometria Teórica ($100%$ de rendimento)</strong>
+              <p>Pela equação balanceada ($1	ext{ mol } CaCO_3 ightarrow 1	ext{ mol } CaO$):</p>
+              <p>$$100	ext{ g de } CaCO_3 ightarrow 56	ext{ g de } CaO$$</p>
+              <p>$$180	ext{ toneladas} ightarrow m_{	ext{teórica}}$$</p>
+              <p>$$m_{	ext{teórica}} = rac{180 	imes 56}{100} = mathbf{100{,}8	ext{ toneladas de } CaO}$$</p>
+            </div>
+
+            <div class="solution-step">
+              <strong>3º Passo: Aplicar o Rendimento Real do Forno ($80%$)</strong>
+              <p>Como o forno perde parte do calor e da reação ($eta = 80%$):</p>
+              <p>$$m_{	ext{obtida}} = 100{,}8	ext{ toneladas} 	imes 0{,}80 = mathbf{80{,}64	ext{ toneladas de Cal Virgem (CaO)}}$$</p>
+              <p><em>(Resposta final da questão: $80{,}64$ toneladas).</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="nav-footer">
+    <button id="prev-btn" class="nav-btn" disabled>← Anterior</button>
+    <div class="nav-indicators"></div>
+    <div class="nav-buttons">
+      <button id="next-btn" class="nav-btn">Próximo →</button>
+      <a href="./index.html" class="nav-btn next-topic-btn">Voltar ao Hub 🏠</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./shared/js/slides.js?v=2.7.0"></script>
+  <script src="./shared/js/annotator.js?v=2.7.0"></script>
+  <script src="./shared/js/simulators.js?v=2.7.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.ChemistrySims && ChemistrySims.initTopic5) {
+        ChemistrySims.initTopic5();
+      }
+    });
+  </script>
+</body>
+</html>
