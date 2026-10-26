@@ -11,7 +11,12 @@ class SlideAnnotator {
     this.color = '#facc15';   // Amarelo giz por padrão
     this.lineWidth = 3.5;
     
-    this.topicKey = window.location.pathname.split('/').pop().replace('.html', '') || 'topico';
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const filePart = pathParts.length > 0 ? pathParts[pathParts.length - 1].replace('.html', '') : 'topico';
+    const folderPart = pathParts.length > 1 ? pathParts[pathParts.length - 2] : (window.location.pathname.includes('quimica') ? 'quimica' : 'fisica');
+    this.subject = folderPart.includes('quimica') ? 'quimica' : 'fisica';
+    this.topicKey = filePart || 'topico';
+    this.storageKey = `caderno_v4_${this.subject}_${this.topicKey}`;
     
     // Lousa
     this.whiteboardOpen = false;
@@ -672,7 +677,7 @@ class SlideAnnotator {
           data[i] = layer.canvas.toDataURL();
         }
       });
-      localStorage.setItem(`fisica_caderno_v3_${this.topicKey}`, JSON.stringify(data));
+      localStorage.setItem(this.storageKey, JSON.stringify(data));
     } catch (e) {
       console.warn('Erro ao salvar no localStorage:', e);
     }
@@ -680,11 +685,7 @@ class SlideAnnotator {
 
   loadSavedAnnotations() {
     try {
-      // Limpa dados legados corrompidos de versões anteriores
-      localStorage.removeItem(`fisica_caderno_${this.topicKey}`);
-      localStorage.removeItem(`fisica_caderno_v2_${this.topicKey}`);
-
-      const raw = localStorage.getItem(`fisica_caderno_v3_${this.topicKey}`);
+      const raw = localStorage.getItem(this.storageKey);
       if (!raw) return;
       const data = JSON.parse(raw);
 
@@ -768,7 +769,7 @@ class SlideAnnotator {
       const btnSingle = card.querySelector('.btn-download-single');
       btnSingle.addEventListener('click', () => {
         const link = document.createElement('a');
-        link.download = `aula-fisica-${this.topicKey}-slide-${idx + 1}.png`;
+        link.download = `aula-${this.subject}-${this.topicKey}-slide-${idx + 1}.png`;
         link.href = layer.canvas.toDataURL('image/png');
         link.click();
       });
@@ -778,17 +779,17 @@ class SlideAnnotator {
   downloadAllSlidesAnnotated() {
     this.slideLayers.forEach((layer, idx) => {
       const link = document.createElement('a');
-      link.download = `caderno-fisica-${this.topicKey}-slide-${idx + 1}.png`;
+      link.download = `caderno-${this.subject}-${this.topicKey}-slide-${idx + 1}.png`;
       link.href = layer.canvas.toDataURL('image/png');
       link.click();
     });
   }
 
   exportSessionJson() {
-    const raw = localStorage.getItem(`fisica_caderno_v3_${this.topicKey}`) || '{}';
+    const raw = localStorage.getItem(this.storageKey) || '{}';
     const blob = new Blob([raw], { type: 'application/json' });
     const link = document.createElement('a');
-    link.download = `anotacoes-aula-${this.topicKey}.json`;
+    link.download = `anotacoes-${this.subject}-${this.topicKey}.json`;
     link.href = URL.createObjectURL(blob);
     link.click();
   }
@@ -800,7 +801,7 @@ class SlideAnnotator {
     reader.onload = (ev) => {
       try {
         const data = JSON.parse(ev.target.result);
-        localStorage.setItem(`fisica_caderno_v3_${this.topicKey}`, JSON.stringify(data));
+        localStorage.setItem(this.storageKey, JSON.stringify(data));
         this.loadSavedAnnotations();
         this.renderNotebookPreview();
         alert('Anotações carregadas com sucesso no caderno!');
